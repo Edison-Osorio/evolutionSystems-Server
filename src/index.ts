@@ -3,10 +3,10 @@ import morgan from 'morgan';
 import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
 
-import adminDocenteRoutes from "./routes/adminDocenteRoutes";
-import adminEstudianteRoutes from "./routes/adminEstudianteRoutes";
-import adminServiciosRoutes from "./routes/adminServiciosRoutes";
+import adminEstudianteRoutes from "./routes/routesAdmin/adminEstudianteRoutes";
+import adminServiciosRoutes from "./routes/routesAdmin/adminServiciosRoutes";
 import adminAlu_SerRoutes from "./routes/routesAdmin/adminAlu_serRoutes"
+import adminDocenteRoutes from "./routes/routesAdmin/adminDocenteRoutes";
 class Server {
     public app: Application;
     constructor() {
@@ -14,7 +14,7 @@ class Server {
         this.config();
         this.routes();
     }
-
+    
     config(): void {
         this.app.set("port", process.env.PORT || 3000);
         this.app.use(morgan('dev'))

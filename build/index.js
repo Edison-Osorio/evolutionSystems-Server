@@ -7,10 +7,10 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
-const adminDocenteRoutes_1 = __importDefault(require("./routes/adminDocenteRoutes"));
-const adminEstudianteRoutes_1 = __importDefault(require("./routes/adminEstudianteRoutes"));
-const adminServiciosRoutes_1 = __importDefault(require("./routes/adminServiciosRoutes"));
+const adminEstudianteRoutes_1 = __importDefault(require("./routes/routesAdmin/adminEstudianteRoutes"));
+const adminServiciosRoutes_1 = __importDefault(require("./routes/routesAdmin/adminServiciosRoutes"));
 const adminAlu_serRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAlu_serRoutes"));
+const adminDocenteRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDocenteRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
