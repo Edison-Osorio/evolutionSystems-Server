@@ -13,62 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminEstudianteController {
-    //listar
+class AdminAlu_SerController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM alumno');
-            res.json(query);
+            const alu_ser = yield datadase_1.default.query('SELECT * FROM alumno_servicio');
+            res.json(alu_ser);
         });
     }
-    //crear
-    create(req, res, next) {
+    // crear
+    createAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query('INSERT INTO alumno set ?', [req.body]);
-                res.json({ message: 'Alumno guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO alumno_servicio set ?", [req.body]);
+                res.json({ text: 'Se ha asignado un servicio al alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
     }
-    //borrar
-    delete(req, res, next) {
+    //eliminar
+    deleteAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ message: 'alumno eliminado' });
+                const { id_alu, cod_ser } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM alumno_servicio WHERE id_alu = ? AND cod_ser =?', [id_alu, cod_ser]);
+                res.json({ message: 'Se ha eliminado el servicio del alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log('ERROR ----> ', error);
                 next();
             }
         });
     }
-    //actualizar 
-    update(req, res, next) {
+    //Actualizar
+    updateAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('UPDATE alumno set ? WHERE id_alu = ?', [req.body, id_alu]);
-                res.json({ message: 'Alumno modificado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //listar solo por id
-    getOne(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ text: query });
+                const { id_alu, cod_ser } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE alumno_servicio set ? WHERE id_alu = ? AND cod_ser = ?', [req.body, id_alu, cod_ser]);
+                res.json({ text: 'Se ha actualizado el servicio al alumno' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +64,5 @@ class AdminEstudianteController {
         });
     }
 }
-const adminEstudianteController = new AdminEstudianteController();
-exports.default = adminEstudianteController;
+const adminAlu_SerController = new AdminAlu_SerController();
+exports.default = adminAlu_SerController;

@@ -1,3 +1,4 @@
+import { NextFunction } from 'express';
 //import { Docente } from './../../../client/src/app/models/interfaces';
 import { Request, Response } from "express";
 import pool from '../../datadase';
@@ -5,43 +6,60 @@ import pool from '../../datadase';
 class AdminEstudianteController {
     //listar
     public async list(req: Request, res: Response) {
-        const alumno = await pool.query('SELECT * FROM alumno');
-        res.json(alumno);
+        const query = await pool.query('SELECT * FROM alumno');
+        res.json(query);
     }
 
     //crear
-    public async create(req: Request, res: Response): Promise<void> {
-        await pool.query('INSERT INTO alumno set ?', [req.body]);
-        res.json({ message: 'Alumno guardado' });
+    public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const query = await pool.query('INSERT INTO alumno set ?', [req.body]);
+            res.json({ message: 'Alumno guardado' });
+        } catch (error) {
+            console.log('ERROR ---->', error);
+            next();
+        }
+
     }
+
     //borrar
+    public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { id_alu } = req.params;
+            const query = await pool.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
+            res.json({ message: 'alumno eliminado' });
+        } catch (error) {
+            console.log('ERROR ---->', error);
+            next();
+        }
 
-    public async delete(req: Request, res: Response): Promise<void> {
-        const { id_alu } = req.params;
-        const alumno = await pool.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
-        res.json({ message: 'alumno eliminado' });
     }
-
-
 
     //actualizar 
+    public async update(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { id_alu } = req.params;
+            const query = await pool.query('UPDATE alumno set ? WHERE id_alu = ?', [req.body, id_alu]);
 
-    public async update(req: Request, res: Response): Promise<void> {
-        const { id_alu } = req.params;
-        const alumno = await pool.query('UPDATE alumno set ? WHERE id_alu = ?', [req.body, id_alu]);
+            res.json({ message: 'Alumno modificado' });
+        } catch (error) {
+            console.log('ERROR ---->', error);
+            next();
+        }
 
-        res.json({ message: 'Alumno modificado' });
     }
 
     //listar solo por id
+    public async getOne(req: Request, res: Response, next: NextFunction): Promise<any> { // para poder retornar , <void> no retorna
+        try {
+            const { id_alu } = req.params;
+            const query = await pool.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
+            res.json({ text: query });
+        } catch (error) {
+            console.log('ERROR ---->', error);
+            next()
+        }
 
-    public async getOne(req: Request, res: Response): Promise<any> { // para poder retornar , <void> no retorna
-        const { id_alu } = req.params;
-        const alumno = await pool.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
-        if (alumno.length > 0) {
-            return res.json(alumno);
-        } res.status(404).json({ text: 'No se encontro el alumno ' })
-        res.json({ text: 'Alumno encontrado' });
     }
 
 

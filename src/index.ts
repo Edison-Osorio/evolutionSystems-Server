@@ -5,8 +5,15 @@ import indexRoutes from './routes/indexRoutes';
 
 import adminEstudianteRoutes from "./routes/routesAdmin/adminEstudianteRoutes";
 import adminServiciosRoutes from "./routes/routesAdmin/adminServiciosRoutes";
-import adminAlu_SerRoutes from "./routes/routesAdmin/adminAlu_serRoutes"
+import adminAlu_SerRoutes from "./routes/routesAdmin/adminAlu_serRoutes";
 import adminDocenteRoutes from "./routes/routesAdmin/adminDocenteRoutes";
+import adminGradoRoutes from "./routes/routesAdmin/adminGradoRoutes";
+import adminAsignaturaRoutes from "./routes/routesAdmin/adminAsignaturaRoutes";
+import adminHorarioRoutes from "./routes/routesAdmin/adminHorarioRoutes";
+import adminDocente_GradoRoutes from "./routes/routesAdmin/adminDoc_GraRoutes";
+import adminAsi_AluRoutes from "./routes/routesAdmin/adminAsi_AluRoutes";
+import adminDoc_AsiRoutes from "./routes/routesAdmin/adminDoc_AsiRoutes";
+import adminFacturaRoute from "./routes/routesAdmin/adminFacturaRoute";
 class Server {
     public app: Application;
     constructor() {
@@ -29,6 +36,13 @@ class Server {
         this.app.use ('/api/admin/docente',adminDocenteRoutes);
         this.app.use ('/api/admin/servicios', adminServiciosRoutes);
         this.app.use ('/api/admin/alu_ser', adminAlu_SerRoutes);
+        this.app.use ('/api/admin/grado', adminGradoRoutes );
+        this.app.use ('/api/admin/asignatura', adminAsignaturaRoutes );
+        this.app.use ('/api/admin/horario', adminHorarioRoutes );
+        this.app.use ('/api/admin/doc_gra', adminDocente_GradoRoutes );
+        this.app.use('/api/admin/asi_alu',adminAsi_AluRoutes);
+        this.app.use('/api/admin/doc_asi',adminDoc_AsiRoutes);
+        this.app.use('/api/admin/factura',adminFacturaRoute);
     }
 
     start(): void {

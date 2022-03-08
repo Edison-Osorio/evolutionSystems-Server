@@ -13,62 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminEstudianteController {
-    //listar
+class AdminAsi_AluController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM alumno');
+            const query = yield datadase_1.default.query('SELECT * FROM asignatura_alumno');
             res.json(query);
         });
     }
-    //crear
-    create(req, res, next) {
+    // crear
+    createAsi_Alu(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query('INSERT INTO alumno set ?', [req.body]);
-                res.json({ message: 'Alumno guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO asignatura_alumno set ?", [req.body]);
+                res.json({ text: 'Se ha asignado una asignatura al alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
     }
-    //borrar
-    delete(req, res, next) {
+    //eliminar
+    deleteAsi_Alu(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ message: 'alumno eliminado' });
+                const { id_alu, id_asi } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM asignatura_alumno WHERE id_alu = ? AND id_asi =?', [id_alu, id_asi]);
+                res.json({ message: 'Se ha eliminado la asignatura al alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log('ERROR ----> ', error);
                 next();
             }
         });
     }
-    //actualizar 
-    update(req, res, next) {
+    //Actualizar
+    updateAsi_Alu(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('UPDATE alumno set ? WHERE id_alu = ?', [req.body, id_alu]);
-                res.json({ message: 'Alumno modificado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //listar solo por id
-    getOne(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ text: query });
+                const { id_alu, id_asi } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE asignatura_alumno set ? WHERE id_alu = ? AND id_asi = ?', [req.body, id_alu, id_asi]);
+                res.json({ text: 'Se ha actualizado la asignatura al alumno al alumno' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +64,5 @@ class AdminEstudianteController {
         });
     }
 }
-const adminEstudianteController = new AdminEstudianteController();
-exports.default = adminEstudianteController;
+const adminAsi_AluController = new AdminAsi_AluController();
+exports.default = adminAsi_AluController;

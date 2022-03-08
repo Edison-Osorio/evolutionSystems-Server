@@ -41,7 +41,7 @@ const signin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         if (!correctPaassword)
             return res.status(400).json("Invalid Password");
         const token = jsonwebtoken_1.default.sign(data, keyIncryp, {
-            expiresIn: 60 * 60 * 24
+            expiresIn: 60 * 60
         });
         res.header("auth-token", token).json({ token });
         // // token con expiracion

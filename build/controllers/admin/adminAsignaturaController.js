@@ -13,20 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminEstudianteController {
-    //listar
+class AdminAsignaturaController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM alumno');
+            const query = yield datadase_1.default.query('SELECT * FROM asignatura');
             res.json(query);
         });
     }
-    //crear
-    create(req, res, next) {
+    // crear
+    createAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query('INSERT INTO alumno set ?', [req.body]);
-                res.json({ message: 'Alumno guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO asignatura set ?", [req.body]);
+                res.json({ text: 'Se ha crado una nueva asignatura ' });
+            }
+            catch (error) {
+                console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    //eliminar
+    deleteAsignatura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_asi } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM asignatura WHERE id_asi = ?', [id_asi]);
+                res.json({ message: 'Se ha eliminado la asignatura' });
+            }
+            catch (error) {
+                console.log('ERROR ----> ', error);
+                next();
+            }
+        });
+    }
+    //Actualizar
+    updateAsignatura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_asi } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE asignatura set ? WHERE id_asi = ?', [req.body, id_asi]);
+                res.json({ text: 'Se ha actualizado la asignatura' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -34,41 +63,12 @@ class AdminEstudianteController {
             }
         });
     }
-    //borrar
-    delete(req, res, next) {
+    getOneAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ message: 'alumno eliminado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //actualizar 
-    update(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('UPDATE alumno set ? WHERE id_alu = ?', [req.body, id_alu]);
-                res.json({ message: 'Alumno modificado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //listar solo por id
-    getOne(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ text: query });
+                const { id_asi } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM asignatura WHERE id_asi = ? ', [id_asi]);
+                res.json(query);
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +77,5 @@ class AdminEstudianteController {
         });
     }
 }
-const adminEstudianteController = new AdminEstudianteController();
-exports.default = adminEstudianteController;
+const adminaAsignaturaController = new AdminAsignaturaController();
+exports.default = adminaAsignaturaController;

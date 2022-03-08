@@ -15,8 +15,8 @@ class AdminRoutes {
         this.router.get('/', adminEstudianteController_1.default.list);
         this.router.get('/:id_alu', adminEstudianteController_1.default.getOne);
         this.router.post('/add', adminEstudianteController_1.default.create);
-        this.router.put('/:id_alu', adminEstudianteController_1.default.update);
-        this.router.delete('/:id_alu', adminEstudianteController_1.default.delete);
+        this.router.put('/update/:id_alu', adminEstudianteController_1.default.update);
+        this.router.delete('/delete/:id_alu', adminEstudianteController_1.default.delete);
     }
 }
 const adminEstudiantenRoutes = new AdminRoutes();

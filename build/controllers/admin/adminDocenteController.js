@@ -17,43 +17,63 @@ class AdminDocenteController {
     // 1 listar
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const docente = yield datadase_1.default.query('SELECT * FROM docente');
-            res.json(docente);
+            const query = yield datadase_1.default.query('SELECT * FROM docente');
+            res.json(query);
         });
     }
     // 2 crear
-    createDocente(req, res) {
+    createDocente(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const docente = yield datadase_1.default.query(`INSERT INTO docente set ?`, [req.body]);
-            res.json({ message: 'Docente guardado' });
+            try {
+                const query = yield datadase_1.default.query(`INSERT INTO docente set ?`, [req.body]);
+                res.json({ message: 'Docente guardado' });
+            }
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
     //3 borrar
-    deleteDocente(req, res) {
+    deleteDocente(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { nif_doc } = req.params;
-            const docente = yield datadase_1.default.query('DELETE FROM docente WHERE nif_doc = ?', [nif_doc]);
-            res.json({ message: 'Docente eliminado' });
+            try {
+                const { nif_doc } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM docente WHERE nif_doc = ?', [nif_doc]);
+                res.json({ message: 'Docente eliminado' });
+            }
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
     //4 actualizar 
-    updateDocente(req, res) {
+    updateDocente(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { nif_doc } = req.params;
-            const docente = yield datadase_1.default.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
-            res.json({ message: 'Docente actualizado' });
+            try {
+                const { nif_doc } = req.params;
+                const query = yield datadase_1.default.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
+                res.json({ message: 'Docente actualizado' });
+            }
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
     //5 listar por nif
-    getOneDocente(req, res) {
+    getOneDocente(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { nif_doc } = req.params;
-            const docente = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-            if (docente.length > 0) {
-                return res.json(docente);
+            try {
+                const { nif_doc } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
+                res.json({ text: query });
             }
-            res.status(404).json({ text: 'No se encontro el Docente ' });
-            res.json({ text: 'Docente encontrado' });
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
 }

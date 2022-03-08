@@ -17,9 +17,9 @@ class AdminRoutes {
 
         this.router.post('/add', adminEstudianteController.create);
 
-        this.router.put('/:id_alu', adminEstudianteController.update);
+        this.router.put('/update/:id_alu', adminEstudianteController.update);
 
-        this.router.delete('/:id_alu', adminEstudianteController.delete);
+        this.router.delete('/delete/:id_alu', adminEstudianteController.delete);
 
     }
 }

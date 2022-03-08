@@ -17,42 +17,63 @@ class AdminServiciosController {
     // listar
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const servicio = yield datadase_1.default.query('SELECT * FROM servicio');
-            res.json(servicio);
+            const query = yield datadase_1.default.query('SELECT * FROM servicio');
+            res.json(query);
         });
     }
     //crear
-    createServicio(req, res) {
+    createServicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const servicio = yield datadase_1.default.query('INSERT INTO servicio set ?', [req.body]);
-            res.json({ message: 'Servicio agregado' });
+            try {
+                const query = yield datadase_1.default.query('INSERT INTO servicio set ?', [req.body]);
+                res.json({ message: 'Servicio agregado' });
+            }
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
     //eliminar
-    deleteServicio(req, res) {
+    deleteServicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { cod_ser } = req.params;
-            const servicio = yield datadase_1.default.query('DELETE FROM servicio ? WHERE cod_ser = ?', [cod_ser]);
-            res.json(servicio);
+            try {
+                const { cod_ser } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM servicio WHERE cod_ser = ?', [cod_ser]);
+                res.json({ text: 'Servicio eliminado con exito' });
+            }
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
     //actualizar 
-    updateServicio(req, res) {
+    updateServicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { cod_ser } = req.params;
-            const servicio = yield datadase_1.default.query('UPDATE servicio SET ? WHERE cod_ser = ?', [req.body, cod_ser]);
-            res.json({ message: 'Servicio actualizado' });
+            try {
+                const { cod_ser } = req.params;
+                const query = yield datadase_1.default.query('UPDATE servicio SET ? WHERE cod_ser = ?', [req.body, cod_ser]);
+                res.json({ message: 'Servicio actualizado' });
+            }
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
     //listar por cod
-    getOneServicio(req, res) {
+    getOneServicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { cod_ser } = req.params;
-            const servicio = yield datadase_1.default.query('SELECT * FROM servicio WHERE cod_ser = ? ', [cod_ser]);
-            if (servicio.length > 0) {
-                return res.json(servicio);
+            try {
+                const { cod_ser } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM servicio WHERE cod_ser = ? ', [cod_ser]);
+                res.json(query);
             }
-            res.status(404).json({ text: 'Servicio no encontrado' });
+            catch (error) {
+                console.log('ERROR ---->', error);
+                next();
+            }
         });
     }
 }

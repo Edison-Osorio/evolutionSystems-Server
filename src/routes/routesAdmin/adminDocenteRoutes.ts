@@ -11,8 +11,8 @@ class AdminDocenteRoutes {
         this.router.get('/', adminDocenteController.list);
         this.router.get('/:nif_doc', adminDocenteController.getOneDocente);
         this.router.post('/add', adminDocenteController.createDocente);
-        this.router.put('/:nif_doc', adminDocenteController.updateDocente);
-        this.router.delete('/:nif_doc', adminDocenteController.deleteDocente);
+        this.router.put('/update/:nif_doc', adminDocenteController.updateDocente);
+        this.router.delete('/delete/:nif_doc', adminDocenteController.deleteDocente);
     }
 }
 

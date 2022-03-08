@@ -13,20 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminEstudianteController {
-    //listar
+class AdminGradoController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM alumno');
+            const query = yield datadase_1.default.query('SELECT * FROM grado');
             res.json(query);
         });
     }
-    //crear
-    create(req, res, next) {
+    // crear
+    createGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query('INSERT INTO alumno set ?', [req.body]);
-                res.json({ message: 'Alumno guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO grado set ?", [req.body]);
+                res.json({ text: 'Se ha crado un nuevo grado' });
+            }
+            catch (error) {
+                console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    //eliminar
+    deleteGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_gra } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM grado WHERE cod_gra = ?', [cod_gra]);
+                res.json({ message: 'Se ha eliminado el grado' });
+            }
+            catch (error) {
+                console.log('ERROR ----> ', error);
+                next();
+            }
+        });
+    }
+    //Actualizar
+    updateGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_gra } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE grado set ? WHERE cod_gra = ?', [req.body, cod_gra]);
+                res.json({ text: 'Se ha actualizado el servicio al alumno' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -34,41 +63,12 @@ class AdminEstudianteController {
             }
         });
     }
-    //borrar
-    delete(req, res, next) {
+    getOneGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ message: 'alumno eliminado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //actualizar 
-    update(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('UPDATE alumno set ? WHERE id_alu = ?', [req.body, id_alu]);
-                res.json({ message: 'Alumno modificado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //listar solo por id
-    getOne(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ text: query });
+                const { cod_gra } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM grado WHERE cod_gra = ? ', [cod_gra]);
+                res.json(query);
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +77,5 @@ class AdminEstudianteController {
         });
     }
 }
-const adminEstudianteController = new AdminEstudianteController();
-exports.default = adminEstudianteController;
+const adminGradoController = new AdminGradoController();
+exports.default = adminGradoController;

@@ -17,8 +17,8 @@ class AdminAlu_SerController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const alu_ser = yield datadase_1.default.query('SELECT * FROM alumno_servicio');
-            res.json(alu_ser);
+            const query = yield datadase_1.default.query('SELECT * FROM alumno_servicio');
+            res.json(query);
         });
     }
     // crear
@@ -29,7 +29,7 @@ class AdminAlu_SerController {
                 res.json({ text: 'Se ha asignado un servicio al alumno' });
             }
             catch (error) {
-                console.log("El error es ", error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
@@ -43,7 +43,7 @@ class AdminAlu_SerController {
                 res.json({ message: 'Se ha eliminado el servicio del alumno' });
             }
             catch (error) {
-                console.log('No se pudo eliminar el servicio del alumno ', error);
+                console.log('ERROR ----> ', error);
                 next();
             }
         });
@@ -58,7 +58,7 @@ class AdminAlu_SerController {
                 res.json({ text: 'Se ha actualizado el servicio al alumno' });
             }
             catch (error) {
-                console.log('error al actualizar', error);
+                console.log('ERROR ---->', error);
                 next();
             }
         });

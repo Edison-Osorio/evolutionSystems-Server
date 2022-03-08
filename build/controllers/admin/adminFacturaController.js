@@ -13,20 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminEstudianteController {
-    //listar
+class AdminFacturaController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM alumno');
+            const query = yield datadase_1.default.query('SELECT * FROM factura');
             res.json(query);
         });
     }
-    //crear
-    create(req, res, next) {
+    // crear
+    createFactura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query('INSERT INTO alumno set ?', [req.body]);
-                res.json({ message: 'Alumno guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO factura set ?", [req.body]);
+                res.json({ text: 'Se ha crado una nueva factura ' });
+            }
+            catch (error) {
+                console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    //eliminar
+    deleteFactura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_fac } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM factura WHERE cod_fac = ?', [cod_fac]);
+                res.json({ message: 'Se ha eliminado factura' });
+            }
+            catch (error) {
+                console.log('ERROR ----> ', error);
+                next();
+            }
+        });
+    }
+    //Actualizar
+    updateFactura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_fac } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE factura set ? WHERE cod_fac = ?', [req.body, cod_fac]);
+                res.json({ text: 'Se ha actualizado la factura', query });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -34,41 +63,12 @@ class AdminEstudianteController {
             }
         });
     }
-    //borrar
-    delete(req, res, next) {
+    getOneFactura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ message: 'alumno eliminado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //actualizar 
-    update(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('UPDATE alumno set ? WHERE id_alu = ?', [req.body, id_alu]);
-                res.json({ message: 'Alumno modificado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //listar solo por id
-    getOne(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
-                res.json({ text: query });
+                const { cod_fac } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM factura WHERE cod_fac = ? ', [cod_fac]);
+                res.json(query);
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +77,5 @@ class AdminEstudianteController {
         });
     }
 }
-const adminEstudianteController = new AdminEstudianteController();
-exports.default = adminEstudianteController;
+const adminFacturaController = new AdminFacturaController();
+exports.default = adminFacturaController;

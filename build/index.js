@@ -11,6 +11,13 @@ const adminEstudianteRoutes_1 = __importDefault(require("./routes/routesAdmin/ad
 const adminServiciosRoutes_1 = __importDefault(require("./routes/routesAdmin/adminServiciosRoutes"));
 const adminAlu_serRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAlu_serRoutes"));
 const adminDocenteRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDocenteRoutes"));
+const adminGradoRoutes_1 = __importDefault(require("./routes/routesAdmin/adminGradoRoutes"));
+const adminAsignaturaRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAsignaturaRoutes"));
+const adminHorarioRoutes_1 = __importDefault(require("./routes/routesAdmin/adminHorarioRoutes"));
+const adminDoc_GraRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDoc_GraRoutes"));
+const adminAsi_AluRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAsi_AluRoutes"));
+const adminDoc_AsiRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDoc_AsiRoutes"));
+const adminFacturaRoute_1 = __importDefault(require("./routes/routesAdmin/adminFacturaRoute"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -30,6 +37,13 @@ class Server {
         this.app.use('/api/admin/docente', adminDocenteRoutes_1.default);
         this.app.use('/api/admin/servicios', adminServiciosRoutes_1.default);
         this.app.use('/api/admin/alu_ser', adminAlu_serRoutes_1.default);
+        this.app.use('/api/admin/grado', adminGradoRoutes_1.default);
+        this.app.use('/api/admin/asignatura', adminAsignaturaRoutes_1.default);
+        this.app.use('/api/admin/horario', adminHorarioRoutes_1.default);
+        this.app.use('/api/admin/doc_gra', adminDoc_GraRoutes_1.default);
+        this.app.use('/api/admin/asi_alu', adminAsi_AluRoutes_1.default);
+        this.app.use('/api/admin/doc_asi', adminDoc_AsiRoutes_1.default);
+        this.app.use('/api/admin/factura', adminFacturaRoute_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

@@ -14,8 +14,8 @@ class AdminServiciosRoutes {
         this.router.get('/', adminServiciosController_1.default.list);
         this.router.get('/:cod_ser', adminServiciosController_1.default.getOneServicio);
         this.router.post('/add', adminServiciosController_1.default.createServicio);
-        this.router.put('/:cod_ser', adminServiciosController_1.default.updateServicio);
-        this.router.delete('/:cod_ser', adminServiciosController_1.default.deleteServicio);
+        this.router.put('/update/:cod_ser', adminServiciosController_1.default.updateServicio);
+        this.router.delete('/delete/:cod_ser', adminServiciosController_1.default.deleteServicio);
     }
 }
 const adminServiciosRoutes = new AdminServiciosRoutes();

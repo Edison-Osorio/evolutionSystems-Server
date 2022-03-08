@@ -4,8 +4,8 @@ import pool from '../../datadase';
 class AdminAlu_SerController {
     //listar todos
     public async list(req: Request, res: Response,) {
-        const alu_ser = await pool.query('SELECT * FROM alumno_servicio');
-        res.json(alu_ser);
+        const query = await pool.query('SELECT * FROM alumno_servicio');
+        res.json(query);
     }
     // crear
     public async createAlu_Ser(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -13,7 +13,7 @@ class AdminAlu_SerController {
             const query = await pool.query("INSERT INTO alumno_servicio set ?", [req.body]);
             res.json({ text: 'Se ha asignado un servicio al alumno' });
         } catch (error) {
-            console.log("El error es ", error)
+            console.log("ERROR ----> ", error)
             next();
         }
 
@@ -27,7 +27,7 @@ class AdminAlu_SerController {
             res.json({ message: 'Se ha eliminado el servicio del alumno' })
 
         } catch (error) {
-            console.log('No se pudo eliminar el servicio del alumno ', error);
+            console.log('ERROR ----> ', error);
             next();
         }
     }
@@ -39,7 +39,7 @@ class AdminAlu_SerController {
             const query = await pool.query('UPDATE alumno_servicio set ? WHERE id_alu = ? AND cod_ser = ?', [req.body, id_alu, cod_ser]);
             res.json({ text: 'Se ha actualizado el servicio al alumno' })
         } catch (error) {
-            console.log('error al actualizar', error);
+            console.log('ERROR ---->', error);
             next();
         }
 

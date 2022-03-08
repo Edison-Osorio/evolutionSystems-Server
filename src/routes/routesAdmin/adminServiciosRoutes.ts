@@ -12,8 +12,8 @@ class AdminServiciosRoutes{
         this.router.get('/', adminServiciosController.list);
         this.router.get('/:cod_ser', adminServiciosController.getOneServicio);
         this.router.post('/add',adminServiciosController.createServicio);
-        this.router.put('/:cod_ser', adminServiciosController.updateServicio);
-        this.router.delete('/:cod_ser', adminServiciosController.deleteServicio);
+        this.router.put('/update/:cod_ser', adminServiciosController.updateServicio);
+        this.router.delete('/delete/:cod_ser', adminServiciosController.deleteServicio);
     }
 }
 

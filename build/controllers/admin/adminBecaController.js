@@ -22,16 +22,25 @@ class AdminBecaController {
         });
     }
     //crear
-    createBeca(req, res) {
+    createBeca(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { id_alu } = req.params;
-            //pool alumno=id>1 otro pool
-            const beca = yield datadase_1.default.query('INSERT INTO beca set ? ', [req.body]);
-            res.json({ message: 'Beca creada' });
+            try {
+                const { id_alu } = req.params;
+                //pool alumno=id>1 otro pool
+                const beca = yield datadase_1.default.query('INSERT INTO beca set ? ', [req.body]);
+                res.json({ message: 'Beca creada' });
+            }
+            catch (error) {
+                console.log('El error es ', error);
+                next();
+            }
         });
     }
-    deleteBeca(req, res) {
+    //eliminar
+    deleteBeca(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { id_alu } = req.params;
+            const beca = yield datadase_1.default.query('DELETE FROM beca WHERE id_alu =? ', id_alu);
         });
     }
 }
