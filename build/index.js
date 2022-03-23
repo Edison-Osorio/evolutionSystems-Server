@@ -18,6 +18,7 @@ const adminDoc_GraRoutes_1 = __importDefault(require("./routes/routesAdmin/admin
 const adminAsi_AluRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAsi_AluRoutes"));
 const adminDoc_AsiRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDoc_AsiRoutes"));
 const adminFacturaRoute_1 = __importDefault(require("./routes/routesAdmin/adminFacturaRoute"));
+const authRoutes_1 = __importDefault(require("./routes/routesAuth/authRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -44,6 +45,7 @@ class Server {
         this.app.use('/api/admin/asi_alu', adminAsi_AluRoutes_1.default);
         this.app.use('/api/admin/doc_asi', adminDoc_AsiRoutes_1.default);
         this.app.use('/api/admin/factura', adminFacturaRoute_1.default);
+        this.app.use('/api/auth', authRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

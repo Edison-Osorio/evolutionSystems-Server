@@ -22,59 +22,85 @@ export const signin = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { documento } = req.body;
-  const result = await pool.query("SELECT * FROM usuario WHERE documento = ?", [
-    documento,
+  const { documento, tipoDocumento } = req.body;
+  const result = await pool.query("SELECT * FROM usuario WHERE documento = ? and tipoDocumento=  ? ", [
+    documento, tipoDocumento
   ]);
+  try {
+    if (result.length > 0 && result != null) {
+      const user = result[0];
 
-  if (result.length > 0) {
-    const user = result[0];
+      if (!user)
+        return res.json({
+          ok: false,
+          msg: "Informacion del Usuario Invalida",
+        });
 
-    if (!user) return res.status(400).json("Documento o contraseña incorrecta");
+      let data = JSON.stringify(result[0]);
+      const correctPaassword: boolean = await validatePassword(
+        req.body.contrasena,
+        user.contrasena
+      );
+      if (!correctPaassword)
+        return res.json({
+          // ok: false,
+          msg: "Informacion del Usuario Invalida",
+        });
 
-    let data = JSON.stringify(result[0]);
+      const token: string = jwt.sign(data, keyIncryp);
 
-    const correctPaassword: boolean = await validatePassword(
-      req.body.contrasena,
-      user.contrasena
-    );
+      res.header("auth-token", token).json({ token });
 
-    if (documento != user.documento)
-      return res.status(400).json("Documento invalido");
-    if (!correctPaassword) return res.status(400).json("Invalid Password");
-
-    const token: string = jwt.sign(data, keyIncryp, {
-    expiresIn: 60*60
+      // // token con expiracion
+    }else{
+      console.log('Este es un error');
+      return res.json({
+        msg: 'Informacion del Usuario Invalida'
+      })
+      
+    }
+  } catch (error) {
+    console.log("Ocurrio un error -->", error);
+    return res.json({
+      msg: "Ocurrio un error al autentificarse",
     });
-
-    res.header("auth-token", token).json({ token });
-
-    // // token con expiracion
   }
 };
 
-export const updateUser = async (req: Request, res: Response,     next: NextFunction) => {
-
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    
-  const { documento } = req.params;
+    const { documento } = req.params;
 
-  req.body.contrasena = await encryptPassword(req.body.contrasena);
+    req.body.contrasena = await encryptPassword(req.body.contrasena);
 
-  console.log(req.body);
+    console.log(req.body);
 
-  const result = await pool.query("UPDATE usuario set ? WHERE documento = ? ", [
-    req.body,
-    documento,
-  ]);
-  const token: string = jwt.sign({ result }, "edison");
+    const result = await pool.query(
+      "UPDATE usuario set ? WHERE documento = ? ",
+      [req.body, documento]
+    );
+    const token: string = jwt.sign({ result }, "edison");
 
-  res.header("auth-token", token).json(result);
+    res.header("auth-token", token).json(result);
   } catch (error) {
-    console.log('el error es --->', error);
+    console.log("el error es --->", error);
     next();
-    
   }
+};
 
+// Metodo para revisar documento
 
+const validateDocument = async function (
+  documento: string,
+  userDocumento: string
+): Promise<boolean> {
+  if (documento === userDocumento) {
+    return true;
+  } else {
+    return false;
+  }
 };
