@@ -10,7 +10,7 @@ class AdminHorarioController {
     // crear
     public async createHorario(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const query = await pool.query("INSERT INTO horario set ?", [req.body]);
+            const query = await pool.query("INSERT INTO horario set ? ", [req.body]);
             res.json({ text: 'Se ha crado un nuevo horario ' });
         } catch (error) {
             console.log("ERROR ----> ", error)

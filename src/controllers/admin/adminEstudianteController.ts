@@ -1,6 +1,4 @@
-import { NextFunction } from 'express';
-//import { Docente } from './../../../client/src/app/models/interfaces';
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import pool from '../../datadase';
 
 class AdminEstudianteController {
@@ -13,7 +11,8 @@ class AdminEstudianteController {
     //crear
     public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const query = await pool.query('INSERT INTO alumno set ?', [req.body]);
+            
+            const query = await pool.query('INSERT INTO alumno set ? ', [req.body]);
             res.json({ message: 'Alumno guardado' });
         } catch (error) {
             console.log('ERROR ---->', error);
@@ -26,7 +25,8 @@ class AdminEstudianteController {
     public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { id_alu } = req.params;
-            const query = await pool.query('DElETE FROM alumno WHERE id_alu = ?', [id_alu]);
+            const query = await pool.query('call deleteAlumno(?)', [id_alu]);
+            //DElETE FROM alumno WHERE id_alu = ?
             res.json({ message: 'alumno eliminado' });
         } catch (error) {
             console.log('ERROR ---->', error);
@@ -53,7 +53,7 @@ class AdminEstudianteController {
     public async getOne(req: Request, res: Response, next: NextFunction): Promise<any> { // para poder retornar , <void> no retorna
         try {
             const { id_alu } = req.params;
-            const query = await pool.query('SELECT * FROM alumno WHERE id_alu = ?', [id_alu]);
+            const query = await pool.query('SELECT * FROM alumno WHERE id_alu =? ', [id_alu]);
             res.json({ text: query });
         } catch (error) {
             console.log('ERROR ---->', error);

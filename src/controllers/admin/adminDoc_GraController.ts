@@ -4,7 +4,7 @@ import pool from '../../datadase';
 class AdminDocente_GradoController {
     //listar todos
     public async list(req: Request, res: Response,) {
-        const query = await pool.query('SELECT * FROM docente_grado');
+        const query = await pool.query('SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra');
         res.json(query);
     }
     // crear

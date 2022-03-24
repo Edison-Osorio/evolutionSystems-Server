@@ -17,7 +17,7 @@ class AdminAlu_SerController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM alumno_servicio');
+            const query = yield datadase_1.default.query('SELECT alumno.nom_alu,servicio.tipo_ser,servicio.desc_ser FROM alumno_servicio INNER JOIN alumno ON alumno.id_alu=alumno_servicio.id_alu INNER JOIN servicio on servicio.cod_ser=alumno_servicio.cod_ser');
             res.json(query);
         });
     }

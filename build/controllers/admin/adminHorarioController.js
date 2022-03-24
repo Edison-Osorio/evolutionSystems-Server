@@ -25,7 +25,7 @@ class AdminHorarioController {
     createHorario(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("INSERT INTO horario set ?", [req.body]);
+                const query = yield datadase_1.default.query("INSERT INTO horario set ? ", [req.body]);
                 res.json({ text: 'Se ha crado un nuevo horario ' });
             }
             catch (error) {

@@ -13,7 +13,7 @@ class AdminDoc_AsiRoutes {
     config() {
         this.routes.get('/', adminDoc_AsiController_1.default.list);
         this.routes.post('/add', adminDoc_AsiController_1.default.createDocente_Asignatura);
-        this.routes.put('/update/:nif/:id_asi', adminDoc_AsiController_1.default.updateDocente_Asignatura);
+        this.routes.put('/update/:nif_doc/:id_asi', adminDoc_AsiController_1.default.updateDocente_Asignatura);
         this.routes.delete('/delete/:nif_doc/:id_asi', adminDoc_AsiController_1.default.deleteDocente_Asignatura);
     }
 }

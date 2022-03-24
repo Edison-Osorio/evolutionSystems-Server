@@ -17,7 +17,7 @@ class AdminFacturaController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM factura');
+            const query = yield datadase_1.default.query('SELECT servicio.tipo_ser,servicio.desc_ser, factura.cod_fac,factura.cod_ser,factura.fec_fac FROM factura INNER JOIN servicio ON factura.cod_ser=servicio.cod_ser');
             res.json(query);
         });
     }
@@ -55,7 +55,7 @@ class AdminFacturaController {
                 const { cod_fac } = req.params;
                 console.log(req.body);
                 const query = yield datadase_1.default.query('UPDATE factura set ? WHERE cod_fac = ?', [req.body, cod_fac]);
-                res.json({ text: 'Se ha actualizado la factura', query });
+                res.json({ text: 'Se ha actualizado la factura' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);

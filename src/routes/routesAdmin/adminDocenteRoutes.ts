@@ -2,12 +2,12 @@ import { Router } from "express";
 import adminDocenteController from '../../controllers/admin/adminDocenteController'
 
 class AdminDocenteRoutes {
-    router: Router= Router();
+    router: Router = Router();
     constructor() {
         this.config();
     }
 
-    config():void{
+    config(): void {
         this.router.get('/', adminDocenteController.list);
         this.router.get('/:nif_doc', adminDocenteController.getOneDocente);
         this.router.post('/add', adminDocenteController.createDocente);

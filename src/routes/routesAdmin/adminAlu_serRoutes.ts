@@ -3,16 +3,16 @@ import adminAlu_SerController from "../../controllers/admin/adminAlu_SerControll
 
 class AdminAlu_Ser {
     router: Router = Router();
-    constructor(){
+    constructor() {
         this.config();
     }
 
-    config(): void{
-        this.router.get('/',adminAlu_SerController.list);
-        this.router.post('/add',adminAlu_SerController.createAlu_Ser);
-        this.router.delete('/delete/:id_alu/:cod_ser',adminAlu_SerController.deleteAlu_Ser);
-        this.router.put('/update/:id_alu/:cod_ser',adminAlu_SerController.updateAlu_Ser);
+    config(): void {
+        this.router.get('/', adminAlu_SerController.list);
+        this.router.post('/add', adminAlu_SerController.createAlu_Ser);
+        this.router.delete('/delete/:id_alu/:cod_ser', adminAlu_SerController.deleteAlu_Ser);
+        this.router.put('/update/:id_alu/:cod_ser', adminAlu_SerController.updateAlu_Ser);
     }
-} 
-const adminAlu_SerRoutes= new AdminAlu_Ser();
+}
+const adminAlu_SerRoutes = new AdminAlu_Ser();
 export default adminAlu_SerRoutes.router;

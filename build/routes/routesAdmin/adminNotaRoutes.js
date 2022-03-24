@@ -13,8 +13,9 @@ class AdminNotaRoutes {
     config() {
         this.routes.get('/', adminNotaContrioller_1.default.list);
         this.routes.post('/add', adminNotaContrioller_1.default.createNota);
-        this.routes.put('/update/:id_alu/:id_asi', adminNotaContrioller_1.default.updateNota);
-        this.routes.delete('/delete/:id_alu/:id_asi', adminNotaContrioller_1.default.deleteNota);
+        this.routes.put('/update/:id_asi/:id_alu', adminNotaContrioller_1.default.updateNota);
+        this.routes.delete('/delete/:id_asi/:id_alu', adminNotaContrioller_1.default.deleteNota);
+        this.routes.get('/:alu_id', adminNotaContrioller_1.default.listOne);
     }
 }
 const adminNotaRoutes = new AdminNotaRoutes();

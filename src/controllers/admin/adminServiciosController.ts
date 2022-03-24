@@ -1,5 +1,4 @@
-import { NextFunction } from 'express';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import pool from '../../datadase';
 
 class AdminServiciosController {
@@ -26,7 +25,7 @@ class AdminServiciosController {
         try {
             const { cod_ser } = req.params;
             const query = await pool.query('DELETE FROM servicio WHERE cod_ser = ?', [cod_ser]);
-            res.json({text: 'Servicio eliminado con exito'});
+            res.json({ text: 'Servicio eliminado con exito' });
         } catch (error) {
             console.log('ERROR ---->', error);
             next();

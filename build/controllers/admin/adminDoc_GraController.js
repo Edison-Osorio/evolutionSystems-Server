@@ -17,7 +17,7 @@ class AdminDocente_GradoController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM docente_grado');
+            const query = yield datadase_1.default.query('SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra');
             res.json(query);
         });
     }
