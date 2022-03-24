@@ -15,9 +15,9 @@ import adminNotaRoutes from "./routes/routesAdmin/adminNotaRoutes";
 import adminDoc_AsiRoutes from "./routes/routesAdmin/adminDoc_AsiRoutes";
 import adminFacturaRoute from "./routes/routesAdmin/adminFacturaRoute";
 import routesDocente from "./routes/rotesDocente/routesDocente";
-
-
 import alumnoRoutes from "./routes/routesAlumno/alumnoRoutes";
+import authRoutes from "./routes/routesAuth/authRoutes";
+
 class Server {
     public app: Application;
     constructor() {
@@ -48,7 +48,9 @@ class Server {
         this.app.use('/api/admin/doc_asi', adminDoc_AsiRoutes);/*listo */
         this.app.use('/api/admin/factura', adminFacturaRoute);/*listo */
         this.app.use('/api/docente/', routesDocente);/*listo */
-        this.app.use('/api/alumno/', alumnoRoutes)
+        this.app.use('/api/alumno/', alumnoRoutes);
+        this.app.use('/api/auth', authRoutes)
+
     }
 
     start(): void {
@@ -60,3 +62,4 @@ class Server {
 
 const server = new Server();
 server.start();
+    

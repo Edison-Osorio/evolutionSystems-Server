@@ -26,25 +26,41 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.signup = signup;
 const signin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { documento } = req.body;
-    const result = yield datadase_1.default.query("SELECT * FROM usuario WHERE documento = ?", [
-        documento,
+    const { documento, tipoDocumento } = req.body;
+    const result = yield datadase_1.default.query("SELECT * FROM usuario WHERE documento = ? and tipoDocumento=  ? ", [
+        documento, tipoDocumento
     ]);
-    if (result.length > 0) {
-        const user = result[0];
-        if (!user)
-            return res.status(400).json("Documento o contraseña incorrecta");
-        let data = JSON.stringify(result[0]);
-        const correctPaassword = yield (0, bcrypt_1.validatePassword)(req.body.contrasena, user.contrasena);
-        if (documento != user.documento)
-            return res.status(400).json("Documento invalido");
-        if (!correctPaassword)
-            return res.status(400).json("Invalid Password");
-        const token = jsonwebtoken_1.default.sign(data, keyIncryp, {
-            expiresIn: 60 * 60
+    try {
+        if (result.length > 0 && result != null) {
+            const user = result[0];
+            if (!user)
+                return res.json({
+                    ok: false,
+                    msg: "Informacion del Usuario Invalida",
+                });
+            let data = JSON.stringify(result[0]);
+            const correctPaassword = yield (0, bcrypt_1.validatePassword)(req.body.contrasena, user.contrasena);
+            if (!correctPaassword)
+                return res.json({
+                    // ok: false,
+                    msg: "Informacion del Usuario Invalida",
+                });
+            const token = jsonwebtoken_1.default.sign(data, keyIncryp);
+            res.header("auth-token", token).json({ token });
+            // // token con expiracion
+        }
+        else {
+            console.log('Este es un error');
+            return res.json({
+                msg: 'Informacion del Usuario Invalida'
+            });
+        }
+    }
+    catch (error) {
+        console.log("Ocurrio un error -->", error);
+        return res.json({
+            msg: "Ocurrio un error al autentificarse",
         });
-        res.header("auth-token", token).json({ token });
-        // // token con expiracion
     }
 });
 exports.signin = signin;
@@ -53,16 +69,24 @@ const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const { documento } = req.params;
         req.body.contrasena = yield (0, bcrypt_1.encryptPassword)(req.body.contrasena);
         console.log(req.body);
-        const result = yield datadase_1.default.query("UPDATE usuario set ? WHERE documento = ? ", [
-            req.body,
-            documento,
-        ]);
+        const result = yield datadase_1.default.query("UPDATE usuario set ? WHERE documento = ? ", [req.body, documento]);
         const token = jsonwebtoken_1.default.sign({ result }, "edison");
         res.header("auth-token", token).json(result);
     }
     catch (error) {
-        console.log('el error es --->', error);
+        console.log("el error es --->", error);
         next();
     }
 });
 exports.updateUser = updateUser;
+// Metodo para revisar documento
+const validateDocument = function (documento, userDocumento) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (documento === userDocumento) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+};

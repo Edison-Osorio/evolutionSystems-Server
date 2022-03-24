@@ -18,8 +18,12 @@ const adminDoc_GraRoutes_1 = __importDefault(require("./routes/routesAdmin/admin
 const adminNotaRoutes_1 = __importDefault(require("./routes/routesAdmin/adminNotaRoutes"));
 const adminDoc_AsiRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDoc_AsiRoutes"));
 const adminFacturaRoute_1 = __importDefault(require("./routes/routesAdmin/adminFacturaRoute"));
+<<<<<<< HEAD
 const routesDocente_1 = __importDefault(require("./routes/rotesDocente/routesDocente"));
 const alumnoRoutes_1 = __importDefault(require("./routes/routesAlumno/alumnoRoutes"));
+=======
+const authRoutes_1 = __importDefault(require("./routes/routesAuth/authRoutes"));
+>>>>>>> 95e5e8de8f84e8ed6cc4278b56b6cd43afdd8dc1
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -35,6 +39,7 @@ class Server {
     }
     routes() {
         this.app.use(indexRoutes_1.default);
+<<<<<<< HEAD
         this.app.use('/api/admin/estudiante', adminEstudianteRoutes_1.default); /*listo */
         this.app.use('/api/admin/docente', adminDocenteRoutes_1.default); /**listo */
         this.app.use('/api/admin/servicios', adminServiciosRoutes_1.default); /*listo*/
@@ -48,6 +53,20 @@ class Server {
         this.app.use('/api/admin/factura', adminFacturaRoute_1.default); /*listo */
         this.app.use('/api/docente/', routesDocente_1.default); /*listo */
         this.app.use('/api/alumno/', alumnoRoutes_1.default);
+=======
+        this.app.use('/api/admin/estudiante', adminEstudianteRoutes_1.default);
+        this.app.use('/api/admin/docente', adminDocenteRoutes_1.default);
+        this.app.use('/api/admin/servicios', adminServiciosRoutes_1.default);
+        this.app.use('/api/admin/alu_ser', adminAlu_serRoutes_1.default);
+        this.app.use('/api/admin/grado', adminGradoRoutes_1.default);
+        this.app.use('/api/admin/asignatura', adminAsignaturaRoutes_1.default);
+        this.app.use('/api/admin/horario', adminHorarioRoutes_1.default);
+        this.app.use('/api/admin/doc_gra', adminDoc_GraRoutes_1.default);
+        this.app.use('/api/admin/asi_alu', adminAsi_AluRoutes_1.default);
+        this.app.use('/api/admin/doc_asi', adminDoc_AsiRoutes_1.default);
+        this.app.use('/api/admin/factura', adminFacturaRoute_1.default);
+        this.app.use('/api/auth', authRoutes_1.default);
+>>>>>>> 95e5e8de8f84e8ed6cc4278b56b6cd43afdd8dc1
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
