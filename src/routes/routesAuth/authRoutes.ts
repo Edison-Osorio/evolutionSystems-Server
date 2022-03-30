@@ -9,10 +9,12 @@ class AuthRoutes {
 
   config(): void {
     this.router.post("/signup", signup);
+    
 
     this.router.post("/signin", signin);
     this.router.put("/updateUser/:id", updateUser);
   }
+  
 }
 
 const authRoutes = new AuthRoutes();

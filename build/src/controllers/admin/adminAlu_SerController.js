@@ -13,62 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminDocenteController {
-    // 1 listar
+class AdminAlu_SerController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM docente');
+            const query = yield datadase_1.default.query('SELECT alumno.nom_alu,servicio.tipo_ser,servicio.desc_ser FROM alumno_servicio INNER JOIN alumno ON alumno.id_alu=alumno_servicio.id_alu INNER JOIN servicio on servicio.cod_ser=alumno_servicio.cod_ser');
             res.json(query);
         });
     }
-    // 2 crear
-    createDocente(req, res, next) {
+    // crear
+    createAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query(`INSERT INTO docente set ?`, [req.body]);
-                res.json({ message: 'Docente guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO alumno_servicio set ?", [req.body]);
+                res.json({ text: 'Se ha asignado un servicio al alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
     }
-    //3 borrar
-    deleteDocente(req, res, next) {
+    //eliminar
+    deleteAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json({ message: 'Docente eliminado' });
+                const { id_alu, cod_ser } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM alumno_servicio WHERE id_alu = ? AND cod_ser =?', [id_alu, cod_ser]);
+                res.json({ message: 'Se ha eliminado el servicio del alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log('ERROR ----> ', error);
                 next();
             }
         });
     }
-    //4 actualizar 
-    updateDocente(req, res, next) {
+    //Actualizar
+    updateAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
-                res.json({ message: 'Docente actualizado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //5 listar por nif
-    getOneDocente(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json(query);
+                const { id_alu, cod_ser } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE alumno_servicio set ? WHERE id_alu = ? AND cod_ser = ?', [req.body, id_alu, cod_ser]);
+                res.json({ text: 'Se ha actualizado el servicio al alumno' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +64,5 @@ class AdminDocenteController {
         });
     }
 }
-const adminDocenteController = new AdminDocenteController();
-exports.default = adminDocenteController;
+const adminAlu_SerController = new AdminAlu_SerController();
+exports.default = adminAlu_SerController;

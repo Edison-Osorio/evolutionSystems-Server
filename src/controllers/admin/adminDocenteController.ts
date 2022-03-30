@@ -52,7 +52,7 @@ class AdminDocenteController {
         try {
             const { nif_doc } = req.params;
             const query = await pool.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-            res.json({ text: query });
+            res.json(query);
         } catch (error) {
             console.log('ERROR ---->', error);
             next();
