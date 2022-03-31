@@ -12,7 +12,7 @@ class AdminDocenteRoutes {
     }
     config() {
         this.router.get('/', adminDocenteController_1.default.list);
-        this.router.get('/:nif_doc', adminDocenteController_1.default.getOneDocent);
+        this.router.get('/:nif_doc', adminDocenteController_1.default.getOneDocente);
         this.router.post('/add', adminDocenteController_1.default.createDocente);
         this.router.put('/update/:nif_doc', adminDocenteController_1.default.updateDocente);
         this.router.delete('/delete/:nif_doc', adminDocenteController_1.default.deleteDocente);

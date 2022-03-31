@@ -13,20 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminDocenteController {
-    // 1 listar
+class AdminGradoController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM docente');
+            const query = yield datadase_1.default.query('SELECT * FROM grado');
             res.json(query);
         });
     }
-    // 2 crear
-    createDocente(req, res, next) {
+    // crear
+    createGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query(`INSERT INTO docente set ?`, [req.body]);
-                res.json({ message: 'Docente guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO grado set ?", [req.body]);
+                res.json({ text: 'Se ha crado un nuevo grado' });
+            }
+            catch (error) {
+                console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    //eliminar
+    deleteGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_gra } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM grado WHERE cod_gra = ?', [cod_gra]);
+                res.json({ message: 'Se ha eliminado el grado' });
+            }
+            catch (error) {
+                console.log('ERROR ----> ', error);
+                next();
+            }
+        });
+    }
+    //Actualizar
+    updateGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_gra } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE grado set ? WHERE cod_gra = ?', [req.body, cod_gra]);
+                res.json({ text: 'Se ha actualizado el servicio al alumno' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -34,40 +63,11 @@ class AdminDocenteController {
             }
         });
     }
-    //3 borrar
-    deleteDocente(req, res, next) {
+    getOneGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json({ message: 'Docente eliminado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //4 actualizar 
-    updateDocente(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
-                res.json({ message: 'Docente actualizado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //5 listar por nif
-    getOneDocent(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
+                const { cod_gra } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM grado WHERE cod_gra = ? ', [cod_gra]);
                 res.json(query);
             }
             catch (error) {
@@ -77,5 +77,5 @@ class AdminDocenteController {
         });
     }
 }
-const adminDocenteController = new AdminDocenteController();
-exports.default = adminDocenteController;
+const adminGradoController = new AdminGradoController();
+exports.default = adminGradoController;

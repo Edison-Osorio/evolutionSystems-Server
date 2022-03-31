@@ -13,62 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminDocenteController {
-    // 1 listar
+class AdminDocente_GradoController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM docente');
+            const query = yield datadase_1.default.query('SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra');
             res.json(query);
         });
     }
-    // 2 crear
-    createDocente(req, res, next) {
+    // crear
+    createDocente_Grado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query(`INSERT INTO docente set ?`, [req.body]);
-                res.json({ message: 'Docente guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO docente_grado set ?", [req.body]);
+                res.json({ text: 'Se le ha asignado un nuevo grado al docente' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
     }
-    //3 borrar
-    deleteDocente(req, res, next) {
+    //eliminar
+    deleteDocente_Grado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json({ message: 'Docente eliminado' });
+                const { cod_gra, nif_doc } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM docente_grado WHERE cod_gra = ? AND nif_doc =?', [cod_gra, nif_doc]);
+                res.json({ message: 'Se le ha eliminado el grado al docente' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log('ERROR ----> ', error);
                 next();
             }
         });
     }
-    //4 actualizar 
-    updateDocente(req, res, next) {
+    //Actualizar
+    updateDocente_Grado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
-                res.json({ message: 'Docente actualizado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //5 listar por nif
-    getOneDocent(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json(query);
+                const { cod_gra, nif_doc } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE docente_grado set ? WHERE cod_gra = ? AND nif_doc = ?', [req.body, cod_gra, nif_doc]);
+                res.json({ text: 'Se ha actualizado el grado al docente' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +64,5 @@ class AdminDocenteController {
         });
     }
 }
-const adminDocenteController = new AdminDocenteController();
-exports.default = adminDocenteController;
+const adminDocente_GradoController = new AdminDocente_GradoController();
+exports.default = adminDocente_GradoController;

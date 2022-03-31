@@ -13,62 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminDocenteController {
-    // 1 listar
+class DocenteNotaController {
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM docente');
+            const query = yield datadase_1.default.query('SELECT alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final FROM nota INNER JOIN alumno ON nota.id_alu=alumno.id_alu');
             res.json(query);
         });
     }
-    // 2 crear
-    createDocente(req, res, next) {
+    // crear
+    createNota(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query(`INSERT INTO docente set ?`, [req.body]);
-                res.json({ message: 'Docente guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO nota set ?", [req.body]);
+                res.json({ text: 'Se ha asignado una asignatura al alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
     }
-    //3 borrar
-    deleteDocente(req, res, next) {
+    //eliminar
+    deleteNota(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json({ message: 'Docente eliminado' });
+                const { id_alu, id_asi } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM nota WHERE id_asi = ? AND id_alu =?', [id_asi, id_alu]);
+                res.json({ message: 'Se ha eliminado la asignatura al alumno' });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log('ERROR ----> ', error);
                 next();
             }
         });
     }
-    //4 actualizar 
-    updateDocente(req, res, next) {
+    //Actualizar
+    updateNota(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
-                res.json({ message: 'Docente actualizado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //5 listar por nif
-    getOneDocent(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json(query);
+                const { id_alu, id_asi } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE nota set ? WHERE id_asi = ? AND id_alu = ?', [req.body, id_asi, id_alu]);
+                const procedure = yield datadase_1.default.query('call cali(?)', [id_alu]);
+                res.json({ text: 'Se ha actualizado la asignatura al alumno al alumno' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -77,5 +64,5 @@ class AdminDocenteController {
         });
     }
 }
-const adminDocenteController = new AdminDocenteController();
-exports.default = adminDocenteController;
+const docenteNotaController = new DocenteNotaController();
+exports.default = docenteNotaController;

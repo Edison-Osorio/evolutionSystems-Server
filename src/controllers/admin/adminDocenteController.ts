@@ -48,11 +48,11 @@ class AdminDocenteController {
     }
 
     //5 listar por nif
-    public async getOneDocente(req: Request, res: Response, next: NextFunction): Promise<any> {
+    public async getOneDocent(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
             const { nif_doc } = req.params;
             const query = await pool.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-            res.json({ text: query });
+            res.json(query);
         } catch (error) {
             console.log('ERROR ---->', error);
             next();

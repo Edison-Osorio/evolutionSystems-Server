@@ -63,12 +63,12 @@ class AdminDocenteController {
         });
     }
     //5 listar por nif
-    getOneDocent(req, res, next) {
+    getOneDocente(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { nif_doc } = req.params;
                 const query = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json(query);
+                res.json({ text: query });
             }
             catch (error) {
                 console.log('ERROR ---->', error);

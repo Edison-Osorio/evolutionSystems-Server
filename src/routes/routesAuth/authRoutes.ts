@@ -14,11 +14,13 @@ class AuthRoutes {
 
   config(): void {
     this.router.post("/signup", signup);
+    
 
     this.router.post("/signin", signin);
     this.router.post("/getOnUser", getOnUser);
     this.router.put("/updateUser", updateUser);
   }
+  
 }
 
 const authRoutes = new AuthRoutes();

@@ -13,20 +13,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminDocenteController {
-    // 1 listar
+class AdminFacturaController {
+    //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM docente');
+            const query = yield datadase_1.default.query('SELECT servicio.tipo_ser,servicio.desc_ser, factura.cod_fac,factura.cod_ser,factura.fec_fac FROM factura INNER JOIN servicio ON factura.cod_ser=servicio.cod_ser');
             res.json(query);
         });
     }
-    // 2 crear
-    createDocente(req, res, next) {
+    // crear
+    createFactura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query(`INSERT INTO docente set ?`, [req.body]);
-                res.json({ message: 'Docente guardado' });
+                const query = yield datadase_1.default.query("INSERT INTO factura set ?", [req.body]);
+                res.json({ text: 'Se ha crado una nueva factura ' });
+            }
+            catch (error) {
+                console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    //eliminar
+    deleteFactura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_fac } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM factura WHERE cod_fac = ?', [cod_fac]);
+                res.json({ message: 'Se ha eliminado factura' });
+            }
+            catch (error) {
+                console.log('ERROR ----> ', error);
+                next();
+            }
+        });
+    }
+    //Actualizar
+    updateFactura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { cod_fac } = req.params;
+                console.log(req.body);
+                const query = yield datadase_1.default.query('UPDATE factura set ? WHERE cod_fac = ?', [req.body, cod_fac]);
+                res.json({ text: 'Se ha actualizado la factura' });
             }
             catch (error) {
                 console.log('ERROR ---->', error);
@@ -34,40 +63,11 @@ class AdminDocenteController {
             }
         });
     }
-    //3 borrar
-    deleteDocente(req, res, next) {
+    getOneFactura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM docente WHERE nif_doc = ?', [nif_doc]);
-                res.json({ message: 'Docente eliminado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //4 actualizar 
-    updateDocente(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
-                res.json({ message: 'Docente actualizado' });
-            }
-            catch (error) {
-                console.log('ERROR ---->', error);
-                next();
-            }
-        });
-    }
-    //5 listar por nif
-    getOneDocent(req, res, next) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
+                const { cod_fac } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM factura WHERE cod_fac = ? ', [cod_fac]);
                 res.json(query);
             }
             catch (error) {
@@ -77,5 +77,5 @@ class AdminDocenteController {
         });
     }
 }
-const adminDocenteController = new AdminDocenteController();
-exports.default = adminDocenteController;
+const adminFacturaController = new AdminFacturaController();
+exports.default = adminFacturaController;
