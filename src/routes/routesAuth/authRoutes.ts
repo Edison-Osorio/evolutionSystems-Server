@@ -1,4 +1,9 @@
-import { signin, signup, updateUser } from "../../controllers/auth/authController";
+import {
+  signin,
+  signup,
+  updateUser,
+  getOnUser,
+} from "../../controllers/auth/authController";
 import { Router } from "express";
 
 class AuthRoutes {
@@ -11,7 +16,8 @@ class AuthRoutes {
     this.router.post("/signup", signup);
 
     this.router.post("/signin", signin);
-    this.router.put("/updateUser/:id", updateUser);
+    this.router.post("/getOnUser", getOnUser);
+    this.router.put("/updateUser", updateUser);
   }
 }
 
