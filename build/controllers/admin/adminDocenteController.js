@@ -63,7 +63,7 @@ class AdminDocenteController {
         });
     }
     //5 listar por nif
-    getOneDocente(req, res, next) {
+    getOneDocent(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { nif_doc } = req.params;
