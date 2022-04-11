@@ -17,7 +17,8 @@ class AdminNotaController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final FROM nota INNER JOIN alumno ON nota.id_alu=alumno.id_alu');
+            const { cod_gra } = req.params;
+            const query = yield datadase_1.default.query('SELECT alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN grado ON alumno.cod_gra=grado.cod_gra WHERE alumno.cod_gra = ? ', [cod_gra]);
             res.json(query);
         });
     }

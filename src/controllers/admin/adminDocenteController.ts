@@ -39,7 +39,7 @@ class AdminDocenteController {
         try {
             const { nif_doc } = req.params;
             const query = await pool.query('UPDATE docente set ? WHERE nif_doc = ?', [req.body, nif_doc]);
-            res.json({ message: 'Docente actualizado' });
+            res.json({ query });
         } catch (error) {
             console.log('ERROR ---->', error);
             next();
@@ -52,7 +52,7 @@ class AdminDocenteController {
         try {
             const { nif_doc } = req.params;
             const query = await pool.query('SELECT * FROM docente WHERE nif_doc = ?', [nif_doc]);
-            res.json(query);
+            res.json(query[0]);
         } catch (error) {
             console.log('ERROR ---->', error);
             next();

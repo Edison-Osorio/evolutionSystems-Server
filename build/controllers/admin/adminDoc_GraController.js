@@ -21,6 +21,13 @@ class AdminDocente_GradoController {
             res.json(query);
         });
     }
+    listOneDocenteGrado(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { nif_doc } = req.params;
+            const query = yield datadase_1.default.query('SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra WHERE docente.nif_doc = ? ', [nif_doc]);
+            res.json(query);
+        });
+    }
     // crear
     createDocente_Grado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

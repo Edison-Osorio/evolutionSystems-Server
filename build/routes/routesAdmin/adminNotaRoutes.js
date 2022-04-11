@@ -11,7 +11,7 @@ class AdminNotaRoutes {
         this.config();
     }
     config() {
-        this.routes.get('/', adminNotaContrioller_1.default.list);
+        this.routes.get('/:cod_gra', adminNotaContrioller_1.default.list);
         this.routes.post('/add', adminNotaContrioller_1.default.createNota);
         this.routes.put('/update/:id_asi/:id_alu', adminNotaContrioller_1.default.updateNota);
         this.routes.delete('/delete/:id_asi/:id_alu', adminNotaContrioller_1.default.deleteNota);

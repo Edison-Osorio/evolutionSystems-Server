@@ -48,7 +48,7 @@ class AdminGradoController {
         try {
             const { cod_gra } = req.params;
             const query = await pool.query('SELECT * FROM grado WHERE cod_gra = ? ', [cod_gra]);
-            res.json(query)
+            res.json(query[0])
         } catch (error) {
             console.log('ERROR ---->', error);
             next();
