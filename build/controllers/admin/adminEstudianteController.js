@@ -21,6 +21,13 @@ class AdminEstudianteController {
             res.json(query);
         });
     }
+    listAlum(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { cod_gra } = req.params;
+            const query = yield datadase_1.default.query('SELECT alumno.id_alu,alumno.nom_alu, alumno.tel_alu, alumno.dire_alu, alumno.tel_alu,alumno.fec_alu, alumno.nom_pa, alumno.nom_ma, alumno.dat_ban_alu  FROM grado INNER JOIN  alumno ON grado.cod_gra=alumno.cod_gra WHERE alumno.cod_gra= ?', [cod_gra]);
+            res.json(query);
+        });
+    }
     //crear
     create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

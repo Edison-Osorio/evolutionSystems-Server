@@ -13,6 +13,7 @@ class DocenteRoutes {
     config() {
         this.router.put('/updateNote/:id_asi/:id_alu', docenteAsignaturaController_1.default.updateNota);
         this.router.get('/:nif_doc', docenteAsignaturaController_1.default.list);
+        this.router.get('/programador/:nif_doc', docenteAsignaturaController_1.default.listProgramador);
         this.router.get('/:nif_doc/:id_asi', docenteAsignaturaController_1.default.getOneAsignatura);
         this.router.get('/doc_gra/:nif_doc/:cod_gra', docenteAsignaturaController_1.default.listGroup);
     }

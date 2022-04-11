@@ -19,11 +19,24 @@ class DocenteAsignaturaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { nif_doc } = req.params;
-                const query = yield datadase_1.default.query('SELECT docente.nom_doc,nom_asi,desc_asi FROM asignatura INNER JOIN nota ON asignatura.id_asi=nota.id_asi INNER JOIN docente_asignatura ON asignatura.id_asi=docente_asignatura.id_asi INNER JOIN docente ON docente_asignatura.nif_doc=docente.nif_doc  WHERE docente_asignatura.nif_doc= ?', [nif_doc]);
+                const query = yield datadase_1.default.query("SELECT docente.nom_doc,nom_asi,desc_asi FROM asignatura INNER JOIN nota ON asignatura.id_asi=nota.id_asi INNER JOIN docente_asignatura ON asignatura.id_asi=docente_asignatura.id_asi INNER JOIN docente ON docente_asignatura.nif_doc=docente.nif_doc  WHERE docente_asignatura.nif_doc= ?", [nif_doc]);
                 res.json(query);
             }
             catch (error) {
-                console.log('ERROR -->', error);
+                console.log("ERROR -->", error);
+                next();
+            }
+        });
+    }
+    listProgramador(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { nif_doc } = req.params;
+                const query = yield datadase_1.default.query("SELECT horario.fec_hor, horario.hora, asignatura.nom_asi, grado.nom_grad, grado.desc_grad FROM horario INNER JOIN asignatura ON horario.cod_hor = asignatura.cod_hor INNER JOIN docente_asignatura ON asignatura.id_asi = docente_asignatura.id_asi INNER JOIN docente ON docente_asignatura.nif_doc = docente.nif_doc INNER JOIN docente_grado ON docente.nif_doc = docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra = grado.cod_gra WHERE docente.nif_doc = ?", [nif_doc]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("ERROR -->", error);
                 next();
             }
         });
@@ -33,13 +46,13 @@ class DocenteAsignaturaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { nif_doc, cod_gra } = req.params;
-                const query = yield datadase_1.default.query('SELECT grado.cod_gra,grado.nom_grad,grado.carac_grad FROM grado INNER JOIN docente_grado ON grado.cod_gra=docente_grado.cod_gra WHERE docente_grado.nif_doc= ? AND docente_grado.cod_gra= ?', [nif_doc, cod_gra]);
+                const query = yield datadase_1.default.query("SELECT grado.cod_gra,grado.nom_grad,grado.carac_grad FROM grado INNER JOIN docente_grado ON grado.cod_gra=docente_grado.cod_gra WHERE docente_grado.nif_doc= ? AND docente_grado.cod_gra= ?", [nif_doc, cod_gra]);
                 res.json({ text: query });
                 console.log(query);
                 console.log(req.params);
             }
             catch (error) {
-                console.log('error', error);
+                console.log("error", error);
                 next();
             }
         });
@@ -50,12 +63,12 @@ class DocenteAsignaturaController {
             try {
                 const { id_alu, id_asi } = req.params;
                 console.log(req.body);
-                const query = yield datadase_1.default.query('UPDATE nota set ? WHERE id_asi = ? AND id_alu = ?', [req.body, id_asi, id_alu]);
-                const procedure = yield datadase_1.default.query('call cali(?,?)', [id_asi, id_alu]);
-                res.json({ text: 'Se ha actualizado la asignatura al alumno al alumno' });
+                const query = yield datadase_1.default.query("UPDATE nota set ? WHERE id_asi = ? AND id_alu = ?", [req.body, id_asi, id_alu]);
+                const procedure = yield datadase_1.default.query("call cali(?,?)", [id_asi, id_alu]);
+                res.json({ text: "Se ha actualizado la asignatura al alumno al alumno" });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ---->", error);
                 next();
             }
         });
@@ -64,11 +77,11 @@ class DocenteAsignaturaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_asi } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM asignatura WHERE id_asi = ? ', [id_asi]);
+                const query = yield datadase_1.default.query("SELECT * FROM asignatura WHERE id_asi = ? ", [id_asi]);
                 res.json(query);
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ---->", error);
                 next();
             }
         });

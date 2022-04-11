@@ -85,11 +85,7 @@ export const getOnUser = async (
 ) => {
   const { documento, email } = req.body;
 
-  console.log("Este es el request body -->", req.body);
 
-  console.log("Este es el documento --->", documento);
-
-  console.log("Esta es el correo -->", email);
 
   const result = await pool.query(
     "SELECT * FROM usuario WHERE documento = ? AND email = ?",
@@ -108,9 +104,6 @@ export const getOnUser = async (
       }
 
       let data = JSON.stringify(result[0]);
-
-      console.log(data);
-      
 
       const token: string = jwt.sign(data, keyIncryp);
       res
@@ -137,10 +130,6 @@ export const updateUser = async (
     let { documento, email, contrasena } = req.body;
 
     contrasena = await encryptPassword(contrasena);
-
-    console.log({ contrasena });
-    console.log("Esta es la contraseña --->", contrasena);
-
     const result = await pool.query(
       "UPDATE usuario set ? WHERE documento = ? and email = ? ",
       [{ contrasena }, documento, email]

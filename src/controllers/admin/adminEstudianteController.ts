@@ -8,6 +8,12 @@ class AdminEstudianteController {
         res.json(query);
     }
 
+    public async listAlum(req: Request, res: Response) {
+        const { cod_gra } = req.params;
+        const query = await pool.query('SELECT alumno.id_alu,alumno.nom_alu, alumno.tel_alu, alumno.dire_alu, alumno.tel_alu,alumno.fec_alu, alumno.nom_pa, alumno.nom_ma, alumno.dat_ban_alu  FROM grado INNER JOIN  alumno ON grado.cod_gra=alumno.cod_gra WHERE alumno.cod_gra= ?', [cod_gra]);
+        res.json(query);
+    }
+
     //crear
     public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {

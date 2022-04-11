@@ -39,7 +39,7 @@ class Server {
     routes() {
         this.app.use(indexRoutes_1.default);
         this.app.use('/api/admin/estudiante', checkAuth_1.checkAuth, adminEstudianteRoutes_1.default); /*listo */
-        this.app.use('/api/admin/docente', adminDocenteRoutes_1.default); /**listo */
+        this.app.use('/api/admin/docente', checkAuth_1.checkAuth, adminDocenteRoutes_1.default); /**listo */
         this.app.use('/api/admin/servicios', checkAuth_1.checkAuth, adminServiciosRoutes_1.default); /*listo*/
         this.app.use('/api/admin/alu_ser', checkAuth_1.checkAuth, adminAlu_serRoutes_1.default); /*listo*/
         this.app.use('/api/admin/grado', checkAuth_1.checkAuth, adminGradoRoutes_1.default); /*listo */

@@ -12,6 +12,7 @@ class AdminDocente_GradoRoutes {
     }
     config() {
         this.router.get('/', adminDoc_GraController_1.default.list);
+        this.router.get('/:nif_doc', adminDoc_GraController_1.default.listOneDocenteGrado);
         this.router.post('/add', adminDoc_GraController_1.default.createDocente_Grado);
         this.router.put('/update/:cod_gra/:nif_doc', adminDoc_GraController_1.default.updateDocente_Grado);
         this.router.delete('/delete/:cod_gra/:nif_doc', adminDoc_GraController_1.default.deleteDocente_Grado);

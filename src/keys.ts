@@ -1,8 +1,8 @@
-export default{
-    database:{
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'colegio',
-    }
-}
+export default {
+  database: {
+    host: "localhost",
+    user: "edison",
+    password: "",
+    database: "colegio",
+  },
+};

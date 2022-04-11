@@ -72,9 +72,6 @@ const signin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 exports.signin = signin;
 const getOnUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { documento, email } = req.body;
-    console.log("Este es el request body -->", req.body);
-    console.log("Este es el documento --->", documento);
-    console.log("Esta es el correo -->", email);
     const result = yield datadase_1.default.query("SELECT * FROM usuario WHERE documento = ? AND email = ?", [documento, email]);
     try {
         if (result.length > 0 && result != null) {
@@ -86,7 +83,6 @@ const getOnUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
                 });
             }
             let data = JSON.stringify(result[0]);
-            console.log(data);
             const token = jsonwebtoken_1.default.sign(data, keyIncryp);
             res
                 .header("auth-token", token)
@@ -109,8 +105,6 @@ const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         let { documento, email, contrasena } = req.body;
         contrasena = yield (0, bcrypt_1.encryptPassword)(contrasena);
-        console.log({ contrasena });
-        console.log("Esta es la contraseña --->", contrasena);
         const result = yield datadase_1.default.query("UPDATE usuario set ? WHERE documento = ? and email = ? ", [{ contrasena }, documento, email]);
         let data = JSON.stringify(result[0]);
         const token = jsonwebtoken_1.default.sign({ data }, keyIncryp);

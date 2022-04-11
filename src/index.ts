@@ -41,7 +41,7 @@ class Server {
     routes(): void {
         this.app.use(indexRoutes);
         this.app.use('/api/admin/estudiante', checkAuth, adminEstudianteRoutes);/*listo */
-        this.app.use('/api/admin/docente', adminDocenteRoutes);/**listo */
+        this.app.use('/api/admin/docente',checkAuth, adminDocenteRoutes);/**listo */
         this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
         this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
         this.app.use('/api/admin/grado', checkAuth, adminGradoRoutes);/*listo */

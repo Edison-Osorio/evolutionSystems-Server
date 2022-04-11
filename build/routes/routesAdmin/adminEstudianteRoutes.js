@@ -13,6 +13,7 @@ class AdminRoutes {
     }
     config() {
         this.router.get('/', adminEstudianteController_1.default.list);
+        this.router.get('/:cod_gra', adminEstudianteController_1.default.listAlum);
         this.router.get('/:id_alu', adminEstudianteController_1.default.getOne);
         this.router.post('/add', adminEstudianteController_1.default.create);
         this.router.put('/update/:id_alu', adminEstudianteController_1.default.update);

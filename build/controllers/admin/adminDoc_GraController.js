@@ -17,16 +17,31 @@ class AdminDocente_GradoController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra');
+            const query = yield datadase_1.default.query("SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra");
             res.json(query);
+        });
+    }
+    listOneDocenteGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { nif_doc } = req.params;
+                const query = yield datadase_1.default.query("SELECT docente.nom_doc,docente.area_doc, grado.cod_gra, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra WHERE docente.nif_doc = ? ", [nif_doc]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error", error);
+                next();
+            }
         });
     }
     // crear
     createDocente_Grado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("INSERT INTO docente_grado set ?", [req.body]);
-                res.json({ text: 'Se le ha asignado un nuevo grado al docente' });
+                const query = yield datadase_1.default.query("INSERT INTO docente_grado set ?", [
+                    req.body,
+                ]);
+                res.json({ text: "Se le ha asignado un nuevo grado al docente" });
             }
             catch (error) {
                 console.log("ERROR ----> ", error);
@@ -39,11 +54,11 @@ class AdminDocente_GradoController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_gra, nif_doc } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM docente_grado WHERE cod_gra = ? AND nif_doc =?', [cod_gra, nif_doc]);
-                res.json({ message: 'Se le ha eliminado el grado al docente' });
+                const query = yield datadase_1.default.query("DELETE FROM docente_grado WHERE cod_gra = ? AND nif_doc =?", [cod_gra, nif_doc]);
+                res.json({ message: "Se le ha eliminado el grado al docente" });
             }
             catch (error) {
-                console.log('ERROR ----> ', error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
@@ -54,11 +69,11 @@ class AdminDocente_GradoController {
             try {
                 const { cod_gra, nif_doc } = req.params;
                 console.log(req.body);
-                const query = yield datadase_1.default.query('UPDATE docente_grado set ? WHERE cod_gra = ? AND nif_doc = ?', [req.body, cod_gra, nif_doc]);
-                res.json({ text: 'Se ha actualizado el grado al docente' });
+                const query = yield datadase_1.default.query("UPDATE docente_grado set ? WHERE cod_gra = ? AND nif_doc = ?", [req.body, cod_gra, nif_doc]);
+                res.json({ text: "Se ha actualizado el grado al docente" });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ---->", error);
                 next();
             }
         });

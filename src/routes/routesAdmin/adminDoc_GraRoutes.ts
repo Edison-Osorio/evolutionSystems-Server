@@ -9,6 +9,7 @@ class AdminDocente_GradoRoutes {
 
     config(): void {
         this.router.get('/', adminDocente_GradoController.list);
+        this.router.get('/:nif_doc', adminDocente_GradoController.listOneDocenteGrado)
         this.router.post('/add', adminDocente_GradoController.createDocente_Grado);
         this.router.put('/update/:cod_gra/:nif_doc', adminDocente_GradoController.updateDocente_Grado);
         this.router.delete('/delete/:cod_gra/:nif_doc', adminDocente_GradoController.deleteDocente_Grado)
