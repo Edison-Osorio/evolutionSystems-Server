@@ -3,6 +3,10 @@ import morgan from 'morgan';
 import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
 
+// Middlewares
+
+import {checkAuth} from './middleware/checkAuth'
+
 import adminEstudianteRoutes from "./routes/routesAdmin/adminEstudianteRoutes";
 import adminServiciosRoutes from "./routes/routesAdmin/adminServiciosRoutes";
 import adminAlu_SerRoutes from "./routes/routesAdmin/adminAlu_serRoutes";
@@ -36,19 +40,19 @@ class Server {
 
     routes(): void {
         this.app.use(indexRoutes);
-        this.app.use('/api/admin/estudiante', adminEstudianteRoutes);/*listo */
+        this.app.use('/api/admin/estudiante', checkAuth, adminEstudianteRoutes);/*listo */
         this.app.use('/api/admin/docente', adminDocenteRoutes);/**listo */
-        this.app.use('/api/admin/servicios', adminServiciosRoutes);/*listo*/
-        this.app.use('/api/admin/alu_ser', adminAlu_SerRoutes);/*listo*/
-        this.app.use('/api/admin/grado', adminGradoRoutes);/*listo */
-        this.app.use('/api/admin/asignatura', adminAsignaturaRoutes);/*listo */
-        this.app.use('/api/admin/horario', adminHorarioRoutes);/*listo*/
-        this.app.use('/api/admin/doc_gra', adminDocente_GradoRoutes);/*listo */
-        this.app.use('/api/admin/nota', adminNotaRoutes);/*listo */
-        this.app.use('/api/admin/doc_asi', adminDoc_AsiRoutes);/*listo */
-        this.app.use('/api/admin/factura', adminFacturaRoute);/*listo */
-        this.app.use('/api/docente/', routesDocente);/*listo */
-        this.app.use('/api/alumno/', alumnoRoutes);
+        this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
+        this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
+        this.app.use('/api/admin/grado', checkAuth, adminGradoRoutes);/*listo */
+        this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
+        this.app.use('/api/admin/horario', checkAuth, adminHorarioRoutes);/*listo*/
+        this.app.use('/api/admin/doc_gra', checkAuth, adminDocente_GradoRoutes);/*listo */
+        this.app.use('/api/admin/nota', checkAuth, adminNotaRoutes);/*listo */
+        this.app.use('/api/admin/doc_asi', checkAuth, adminDoc_AsiRoutes);/*listo */
+        this.app.use('/api/admin/factura', checkAuth, adminFacturaRoute);/*listo */
+        this.app.use('/api/docente/', checkAuth, routesDocente);/*listo */
+        this.app.use('/api/alumno/', checkAuth, alumnoRoutes);
         this.app.use('/api/auth', authRoutes)
 
     }

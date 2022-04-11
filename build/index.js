@@ -7,6 +7,8 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
+// Middlewares
+const checkAuth_1 = require("./middleware/checkAuth");
 const adminEstudianteRoutes_1 = __importDefault(require("./routes/routesAdmin/adminEstudianteRoutes"));
 const adminServiciosRoutes_1 = __importDefault(require("./routes/routesAdmin/adminServiciosRoutes"));
 const adminAlu_serRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAlu_serRoutes"));
@@ -36,19 +38,19 @@ class Server {
     }
     routes() {
         this.app.use(indexRoutes_1.default);
-        this.app.use('/api/admin/estudiante', adminEstudianteRoutes_1.default); /*listo */
+        this.app.use('/api/admin/estudiante', checkAuth_1.checkAuth, adminEstudianteRoutes_1.default); /*listo */
         this.app.use('/api/admin/docente', adminDocenteRoutes_1.default); /**listo */
-        this.app.use('/api/admin/servicios', adminServiciosRoutes_1.default); /*listo*/
-        this.app.use('/api/admin/alu_ser', adminAlu_serRoutes_1.default); /*listo*/
-        this.app.use('/api/admin/grado', adminGradoRoutes_1.default); /*listo */
-        this.app.use('/api/admin/asignatura', adminAsignaturaRoutes_1.default); /*listo */
-        this.app.use('/api/admin/horario', adminHorarioRoutes_1.default); /*listo*/
-        this.app.use('/api/admin/doc_gra', adminDoc_GraRoutes_1.default); /*listo */
-        this.app.use('/api/admin/nota', adminNotaRoutes_1.default); /*listo */
-        this.app.use('/api/admin/doc_asi', adminDoc_AsiRoutes_1.default); /*listo */
-        this.app.use('/api/admin/factura', adminFacturaRoute_1.default); /*listo */
-        this.app.use('/api/docente/', routesDocente_1.default); /*listo */
-        this.app.use('/api/alumno/', alumnoRoutes_1.default);
+        this.app.use('/api/admin/servicios', checkAuth_1.checkAuth, adminServiciosRoutes_1.default); /*listo*/
+        this.app.use('/api/admin/alu_ser', checkAuth_1.checkAuth, adminAlu_serRoutes_1.default); /*listo*/
+        this.app.use('/api/admin/grado', checkAuth_1.checkAuth, adminGradoRoutes_1.default); /*listo */
+        this.app.use('/api/admin/asignatura', checkAuth_1.checkAuth, adminAsignaturaRoutes_1.default); /*listo */
+        this.app.use('/api/admin/horario', checkAuth_1.checkAuth, adminHorarioRoutes_1.default); /*listo*/
+        this.app.use('/api/admin/doc_gra', checkAuth_1.checkAuth, adminDoc_GraRoutes_1.default); /*listo */
+        this.app.use('/api/admin/nota', checkAuth_1.checkAuth, adminNotaRoutes_1.default); /*listo */
+        this.app.use('/api/admin/doc_asi', checkAuth_1.checkAuth, adminDoc_AsiRoutes_1.default); /*listo */
+        this.app.use('/api/admin/factura', checkAuth_1.checkAuth, adminFacturaRoute_1.default); /*listo */
+        this.app.use('/api/docente/', checkAuth_1.checkAuth, routesDocente_1.default); /*listo */
+        this.app.use('/api/alumno/', checkAuth_1.checkAuth, alumnoRoutes_1.default);
         this.app.use('/api/auth', authRoutes_1.default);
     }
     start() {
