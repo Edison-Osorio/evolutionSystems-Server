@@ -17,7 +17,7 @@ class AdminEstudianteController {
     //crear
     public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            
+
             const query = await pool.query('INSERT INTO alumno set ? ', [req.body]);
             res.json({ message: 'Alumno guardado' });
         } catch (error) {
@@ -31,7 +31,7 @@ class AdminEstudianteController {
     public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { id_alu } = req.params;
-            const query = await pool.query('call deleteAlumno(?)', [id_alu]);
+            const query = await pool.query('DELETE FROM alumno WHERE id_alu = ? ', [id_alu]);
             //DElETE FROM alumno WHERE id_alu = ?
             res.json({ message: 'alumno eliminado' });
         } catch (error) {

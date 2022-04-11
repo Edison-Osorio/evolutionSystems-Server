@@ -13,6 +13,7 @@ class AdminRoutes {
     config(): void {
         this.router.get('/', adminEstudianteController.list);
         this.router.get('/:cod_gra',adminEstudianteController.listAlum)
+
         this.router.get('/:id_alu', adminEstudianteController.getOne);
 
         this.router.post('/add', adminEstudianteController.create);

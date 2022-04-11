@@ -46,7 +46,7 @@ class AdminEstudianteController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alu } = req.params;
-                const query = yield datadase_1.default.query('call deleteAlumno(?)', [id_alu]);
+                const query = yield datadase_1.default.query('DELETE FROM alumno WHERE id_alu = ? ', [id_alu]);
                 //DElETE FROM alumno WHERE id_alu = ?
                 res.json({ message: 'alumno eliminado' });
             }

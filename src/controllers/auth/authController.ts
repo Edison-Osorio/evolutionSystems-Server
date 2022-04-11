@@ -41,7 +41,6 @@ export const signin = async (
   try {
     if (result.length > 0 && result != null) {
       const user = result[0];
-
       if (!user)
         return res.json({
           ok: false,
