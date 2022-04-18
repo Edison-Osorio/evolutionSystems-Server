@@ -1,67 +1,96 @@
+import { NextFunction, Request, Response } from "express";
+import pool from "../../datadase";
 
-import { NextFunction, Request, Response } from 'express';
-import pool from '../../datadase';
-
-class AdminNotaController { // asignatura-alumno
-    //listar todos
-    public async list(req: Request, res: Response) {
-        const {cod_gra} = req.params
-        const query = await pool.query('SELECT alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN grado ON alumno.cod_gra=grado.cod_gra WHERE alumno.cod_gra = ? ', [cod_gra]);
-        res.json(query);
+class AdminNotaController {
+  // asignatura-alumno
+  //listar todos
+  public async list(req: Request, res: Response) {
+    const { cod_gra } = req.params;
+    const query = await pool.query(
+      "SELECT asignatura.id_asi,nota.id_periodo,nota.id_alu,alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN grado ON alumno.cod_gra=grado.cod_gra WHERE alumno.cod_gra = ? ",
+      [cod_gra]
+    );    
+    res.json(query);
+  }
+  
+  //listar uno
+  public async listOne(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { alu_id } = req.params;
+      const query = await pool.query("CALL getOneAlumno(?)", [alu_id]);
+      res.json(query);
+    } catch (error) {
+      console.log("ERROR ----->", error);
+      next();
     }
+  }
 
-    //listar uno
-    public async listOne(req: Request, res: Response, next: NextFunction) {
-        try {
-            const { alu_id } = req.params;
-            const query = await pool.query('CALL getOneAlumno(?)', [alu_id]);
-            res.json(query);
-        } catch (error) {
-            console.log('ERROR ----->', error)
-            next();
-        }
-
+  public async listTrimestres(req: Request, res: Response, next: NextFunction) {
+    try {     
+      const query = await pool.query("SELECT * FROM etapas");
+      
+      res.json(query);
+      
+    } catch (error) {
+      console.log("ERROR ----->", error);
+      next();
     }
+  }
 
-    // crear
-    public async createNota(req: Request, res: Response, next: NextFunction): Promise<void> {
-        try {
-            const query = await pool.query("INSERT INTO nota set ?", [req.body]);
-            res.json({ text: 'Se ha asignado una asignatura al alumno' });
-            res.json({text:query})
-        } catch (error) {
-            
-            console.log("ERROR ----> ", error)
-            next();
-        }
-
+  // crear
+  public async createNota(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const query = await pool.query("INSERT INTO nota set ?", [req.body]);
+      res.json({ text: "Se ha asignado una asignatura al alumno" });
+      res.json({ text: query });
+    } catch (error) {
+      console.log("ERROR ----> ", error);
+      next();
     }
-    //eliminar
-    public async deleteNota(req: Request, res: Response, next: NextFunction): Promise<any> {
-        try {
-            const { id_alu, id_asi } = req.params;
+  }
+  //eliminar
+  public async deleteNota(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
+    try {
+      const { id_alu, id_asi } = req.params;
 
-            const query = await pool.query('DELETE FROM nota WHERE id_asi = ? AND id_alu =?', [id_asi, id_alu]);
-            res.json({ message: 'Se ha eliminado la asignatura al alumno' });
-        } catch (error) {
-            console.log('ERROR ----> ', error);
-            next();
-        }
+      const query = await pool.query(
+        "DELETE FROM nota WHERE id_asi = ? AND id_alu =?",
+        [id_asi, id_alu]
+      );
+      res.json({ message: "Se ha eliminado la asignatura al alumno" });
+    } catch (error) {
+      console.log("ERROR ----> ", error);
+      next();
     }
-    //Actualizar
-    public async updateNota(req: Request, res: Response, next: NextFunction): Promise<void> {
-        try {
-            const { id_alu, id_asi } = req.params;
-            console.log(req.body);
-            const query = await pool.query('UPDATE nota set ? WHERE id_asi = ? AND id_alu = ?', [req.body, id_asi, id_alu]);
-            const procedure = await pool.query('call cali(?,?)', [id_asi, id_alu]);
-            res.json({ text: 'Se ha actualizado la asignatura al alumno al alumno' })
-        } catch (error) {
-            console.log('ERROR ---->', error);
-            next();
-        }
-
+  }
+  //Actualizar
+  public async updateNota(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { id_alu, id_asi, id_periodo } = req.params;
+      console.log(req.body);
+      const query = await pool.query(
+        "UPDATE nota set ? WHERE id_asi = ? AND id_alu = ? AND id_periodo = ?",
+        [req.body, id_asi, id_alu,id_periodo  ]
+      );
+      const procedure = await pool.query("call cali(?,?,?)", [id_alu, id_asi, id_periodo]);
+      res.json({ text: "Se ha actualizado la asignatura al alumno al alumno" });
+    } catch (error) {
+      console.log("ERROR ---->", error);
+      next();
     }
+  }
 }
 
 const adminNotaController = new AdminNotaController();

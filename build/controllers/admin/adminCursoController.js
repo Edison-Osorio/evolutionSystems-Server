@@ -18,7 +18,7 @@ class AdminGradoController {
     list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("SELECT * FROM curso");
+                const query = yield datadase_1.default.query("SELECT * FROM curso INNER JOIN ciclo on curso.id_ciclo = ciclo.id_ciclo");
                 res.json(query);
             }
             catch (error) {
@@ -39,11 +39,23 @@ class AdminGradoController {
             }
         });
     }
-    // crear
-    createGrado(req, res, next) {
+    listGrupo(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("INSERT INTO grado set ?", [req.body]);
+                const query = yield datadase_1.default.query('SELECT * FROM grupo');
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un error listando los grupos', error);
+                next();
+            }
+        });
+    }
+    // crear
+    createCurso(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("INSERT INTO curso set ?", [req.body]);
                 res.json({ text: "Se ha crado un nuevo grado" });
             }
             catch (error) {
@@ -53,7 +65,7 @@ class AdminGradoController {
         });
     }
     //eliminar
-    deleteGrado(req, res, next) {
+    deleteCurso(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_gra } = req.params;
@@ -69,7 +81,7 @@ class AdminGradoController {
         });
     }
     //Actualizar
-    updateGrado(req, res, next) {
+    updateCurso(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_gra } = req.params;
@@ -86,7 +98,7 @@ class AdminGradoController {
             }
         });
     }
-    getOneGrado(req, res, next) {
+    getOneCurso(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_gra } = req.params;

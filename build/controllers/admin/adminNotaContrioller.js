@@ -14,11 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
 class AdminNotaController {
+    // asignatura-alumno
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { cod_gra } = req.params;
-            const query = yield datadase_1.default.query('SELECT alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN grado ON alumno.cod_gra=grado.cod_gra WHERE alumno.cod_gra = ? ', [cod_gra]);
+            const query = yield datadase_1.default.query("SELECT asignatura.id_asi,nota.id_periodo,nota.id_alu,alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN grado ON alumno.cod_gra=grado.cod_gra WHERE alumno.cod_gra = ? ", [cod_gra]);
             res.json(query);
         });
     }
@@ -27,11 +28,23 @@ class AdminNotaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { alu_id } = req.params;
-                const query = yield datadase_1.default.query('CALL getOneAlumno(?)', [alu_id]);
+                const query = yield datadase_1.default.query("CALL getOneAlumno(?)", [alu_id]);
                 res.json(query);
             }
             catch (error) {
-                console.log('ERROR ----->', error);
+                console.log("ERROR ----->", error);
+                next();
+            }
+        });
+    }
+    listTrimestres(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("SELECT * FROM etapas");
+                res.json(query);
+            }
+            catch (error) {
+                console.log("ERROR ----->", error);
                 next();
             }
         });
@@ -41,7 +54,7 @@ class AdminNotaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query("INSERT INTO nota set ?", [req.body]);
-                res.json({ text: 'Se ha asignado una asignatura al alumno' });
+                res.json({ text: "Se ha asignado una asignatura al alumno" });
                 res.json({ text: query });
             }
             catch (error) {
@@ -55,11 +68,11 @@ class AdminNotaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alu, id_asi } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM nota WHERE id_asi = ? AND id_alu =?', [id_asi, id_alu]);
-                res.json({ message: 'Se ha eliminado la asignatura al alumno' });
+                const query = yield datadase_1.default.query("DELETE FROM nota WHERE id_asi = ? AND id_alu =?", [id_asi, id_alu]);
+                res.json({ message: "Se ha eliminado la asignatura al alumno" });
             }
             catch (error) {
-                console.log('ERROR ----> ', error);
+                console.log("ERROR ----> ", error);
                 next();
             }
         });
@@ -68,14 +81,14 @@ class AdminNotaController {
     updateNota(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu, id_asi } = req.params;
+                const { id_alu, id_asi, id_periodo } = req.params;
                 console.log(req.body);
-                const query = yield datadase_1.default.query('UPDATE nota set ? WHERE id_asi = ? AND id_alu = ?', [req.body, id_asi, id_alu]);
-                const procedure = yield datadase_1.default.query('call cali(?,?)', [id_asi, id_alu]);
-                res.json({ text: 'Se ha actualizado la asignatura al alumno al alumno' });
+                const query = yield datadase_1.default.query("UPDATE nota set ? WHERE id_asi = ? AND id_alu = ? AND id_periodo = ?", [req.body, id_asi, id_alu, id_periodo]);
+                const procedure = yield datadase_1.default.query("call cali(?,?,?)", [id_alu, id_asi, id_periodo]);
+                res.json({ text: "Se ha actualizado la asignatura al alumno al alumno" });
             }
             catch (error) {
-                console.log('ERROR ---->', error);
+                console.log("ERROR ---->", error);
                 next();
             }
         });
@@ -83,4 +96,4 @@ class AdminNotaController {
 }
 const adminNotaController = new AdminNotaController();
 exports.default = adminNotaController;
-/*select alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final FROM nota INNER JOIN alumno on nota.id_alu=alumno.id_alu WHERE alumno.id_alu=?; */ 
+/*select alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final FROM nota INNER JOIN alumno on nota.id_alu=alumno.id_alu WHERE alumno.id_alu=?; */

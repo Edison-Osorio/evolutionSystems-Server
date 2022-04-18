@@ -17,7 +17,7 @@ class AdminEstudianteController {
     //listar
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM alumno');
+            const query = yield datadase_1.default.query('SELECT alumno.*, curso.nombre_curso, grupo.nombre_grupo FROM curso INNER JOIN alumno on curso.id_curso = alumno.id_curso INNER JOIN grupo on alumno.id_grupo = grupo.id_grupo');
             res.json(query);
         });
     }

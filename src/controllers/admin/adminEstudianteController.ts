@@ -4,7 +4,7 @@ import pool from '../../datadase';
 class AdminEstudianteController {
     //listar
     public async list(req: Request, res: Response) {
-        const query = await pool.query('SELECT * FROM alumno');
+        const query = await pool.query('SELECT alumno.*, curso.nombre_curso, grupo.nombre_grupo FROM curso INNER JOIN alumno on curso.id_curso = alumno.id_curso INNER JOIN grupo on alumno.id_grupo = grupo.id_grupo');
         res.json(query);
     }
 

@@ -17,15 +17,21 @@ class AdminDocente_GradoController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra');
+            const query = yield datadase_1.default.query("SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra");
             res.json(query);
         });
     }
-    listOneDocenteGrado(req, res) {
+    listOneDocenteGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { nif_doc } = req.params;
-            const query = yield datadase_1.default.query('SELECT docente.nom_doc,docente.area_doc, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra WHERE docente.nif_doc = ? ', [nif_doc]);
-            res.json(query);
+            try {
+                const { nif_doc } = req.params;
+                const query = yield datadase_1.default.query("SELECT docente.nom_doc,docente.area_doc, grado.cod_gra, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra WHERE docente.nif_doc = ? ", [nif_doc]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error", error);
+                next();
+            }
         });
     }
     // crear

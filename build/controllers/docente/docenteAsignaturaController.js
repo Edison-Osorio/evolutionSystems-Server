@@ -41,6 +41,19 @@ class DocenteAsignaturaController {
             }
         });
     }
+    listAsignaturaDocente(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { nif_doc } = req.params;
+                const query = yield datadase_1.default.query("SELECT asignatura.id_asi, asignatura.nom_asi FROM asignatura INNER JOIN docente_asignatura ON asignatura.id_asi = docente_asignatura.id_asi INNER JOIN docente ON docente_asignatura.nif_doc = docente.nif_doc WHERE docente.nif_doc = ?", [nif_doc]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("ERROR -->", error);
+                next();
+            }
+        });
+    }
     //listar los grupos
     listGroup(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

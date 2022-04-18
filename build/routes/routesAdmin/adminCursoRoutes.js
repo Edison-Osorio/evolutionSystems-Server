@@ -13,10 +13,12 @@ class AdminGradoRoutes {
     }
     config() {
         this.router.get('/', adminCursoController_1.default.list);
-        this.router.get('/:cod_gra', adminCursoController_1.default.getOneGrado);
-        this.router.post('/add', adminCursoController_1.default.createGrado);
-        this.router.put('/update/:cod_gra', adminCursoController_1.default.updateGrado);
-        this.router.delete('/delete/:cod_gra', adminCursoController_1.default.deleteGrado);
+        this.router.get('/ciclo', adminCursoController_1.default.listCiclo);
+        this.router.get('/grupo', adminCursoController_1.default.listGrupo);
+        this.router.get('/:cod_gra', adminCursoController_1.default.getOneCurso);
+        this.router.post('/add', adminCursoController_1.default.createCurso);
+        this.router.put('/update/:cod_gra', adminCursoController_1.default.updateCurso);
+        this.router.delete('/delete/:cod_gra', adminCursoController_1.default.deleteCurso);
     }
 }
 const adminGradoRoutes = new AdminGradoRoutes();

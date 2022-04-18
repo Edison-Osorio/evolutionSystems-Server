@@ -37,6 +37,26 @@ class DocenteAsignaturaController {
     }
   }
 
+  public async listAsignaturaDocente(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { nif_doc } = req.params;
+
+      const query = await pool.query(
+        "SELECT asignatura.id_asi, asignatura.nom_asi FROM asignatura INNER JOIN docente_asignatura ON asignatura.id_asi = docente_asignatura.id_asi INNER JOIN docente ON docente_asignatura.nif_doc = docente.nif_doc WHERE docente.nif_doc = ?",
+        [nif_doc]
+      );
+
+      res.json(query);
+    } catch (error) {
+      console.log("ERROR -->", error);
+      next();
+    }
+  }
+
   //listar los grupos
   public async listGroup(
     req: Request,

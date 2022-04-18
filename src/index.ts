@@ -11,7 +11,7 @@ import adminEstudianteRoutes from "./routes/routesAdmin/adminEstudianteRoutes";
 import adminServiciosRoutes from "./routes/routesAdmin/adminServiciosRoutes";
 import adminAlu_SerRoutes from "./routes/routesAdmin/adminAlu_serRoutes";
 import adminDocenteRoutes from "./routes/routesAdmin/adminDocenteRoutes";
-import adminGradoRoutes from "./routes/routesAdmin/adminGradoRoutes";
+import adminCursoRoutes from "./routes/routesAdmin/adminCursoRoutes";
 import adminAsignaturaRoutes from "./routes/routesAdmin/adminAsignaturaRoutes";
 import adminHorarioRoutes from "./routes/routesAdmin/adminHorarioRoutes";
 import adminDocente_GradoRoutes from "./routes/routesAdmin/adminDoc_GraRoutes";
@@ -44,7 +44,7 @@ class Server {
         this.app.use('/api/admin/docente',checkAuth, adminDocenteRoutes);/**listo */
         this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
         this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
-        this.app.use('/api/admin/grado', checkAuth, adminGradoRoutes);/*listo */
+        this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
         this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
         this.app.use('/api/admin/horario', checkAuth, adminHorarioRoutes);/*listo*/
         this.app.use('/api/admin/doc_gra', checkAuth, adminDocente_GradoRoutes);/*listo */

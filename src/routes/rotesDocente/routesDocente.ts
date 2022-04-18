@@ -10,6 +10,7 @@ class DocenteRoutes {
     config(): void {
         this.router.put('/updateNote/:id_asi/:id_alu', docenteAsignaturaController.updateNota);
         this.router.get('/:nif_doc', docenteAsignaturaController.list);
+        this.router.get('/asignatura/:nif_doc', docenteAsignaturaController.listAsignaturaDocente)
         this.router.get('/programador/:nif_doc', docenteAsignaturaController.listProgramador)
         this.router.get('/:nif_doc/:id_asi', docenteAsignaturaController.getOneAsignatura);
         this.router.get('/doc_gra/:nif_doc/:cod_gra', docenteAsignaturaController.listGroup);
