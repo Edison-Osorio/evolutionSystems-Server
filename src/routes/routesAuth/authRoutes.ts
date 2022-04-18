@@ -1,8 +1,11 @@
 import {
   signin,
   signup,
-  updateUser,
+  updatePassword,
+  update,
   getOnUser,
+  listOnUser,
+  deleteUser 
 } from "../../controllers/auth/authController";
 import { Router } from "express";
 
@@ -15,10 +18,12 @@ class AuthRoutes {
   config(): void {
     this.router.post("/signup", signup);
     
-
+    this.router.get('/list/:id', listOnUser)
     this.router.post("/signin", signin);
     this.router.post("/getOnUser", getOnUser);
-    this.router.put("/updateUser", updateUser);
+    this.router.put("/updateUser", updatePassword);
+    this.router.put('/update/:id', update)
+    this.router.delete('/delete/:id', deleteUser)
   }
   
 }

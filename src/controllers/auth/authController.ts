@@ -28,6 +28,59 @@ export const signup = async (
   }
 };
 
+export const listOnUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const query = await pool.query(
+      "SELECT * FROM usuario WHERE documento = ?",
+      [id]
+    );
+    res.json(query[0]);
+  } catch (error) {
+    console.log("OCURRIO UN ERROR -->", error);
+    next();
+  }
+};
+
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {  
+    const { id } = req.params;
+  
+    const query = await pool.query('UPDATE usuario SET ? WHERE documento = ? ', [req.body, id])
+    res.json({text: 'Usuario Actualizado'})
+  } catch (error) {
+    console.log('Ocurrio un Error -->', error );
+    next()
+    
+  }
+};
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const query = await pool.query("DELETE FROM usuario WHERE documento = ?", [
+      id,
+    ]);
+    res.json({ text: "Se eliminó el usuario" });
+  } catch (error) {
+    console.log("Ocurrio un error -->", error);
+    next();
+  }
+};
+
 export const signin = async (
   req: Request,
   res: Response,
@@ -74,6 +127,7 @@ export const signin = async (
     return res.json({
       msg: "Ocurrio un error al autentificarse",
     });
+    next();
   }
 };
 
@@ -83,8 +137,6 @@ export const getOnUser = async (
   next: NextFunction
 ) => {
   const { documento, email } = req.body;
-
-
 
   const result = await pool.query(
     "SELECT * FROM usuario WHERE documento = ? AND email = ?",
@@ -120,7 +172,7 @@ export const getOnUser = async (
   }
 };
 
-export const updateUser = async (
+export const updatePassword = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -134,10 +186,12 @@ export const updateUser = async (
       [{ contrasena }, documento, email]
     );
 
-    let data = JSON.stringify(result[0])
+    let data = JSON.stringify(result[0]);
     const token: string = jwt.sign({ data }, keyIncryp);
 
-    res.header("auth-token", token).json({data, msg: "Contraseña actializada"});
+    res
+      .header("auth-token", token)
+      .json({ data, msg: "Contraseña actializada" });
   } catch (error) {
     console.log("el error es --->", error);
     next();

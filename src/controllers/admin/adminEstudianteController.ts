@@ -60,7 +60,7 @@ class AdminEstudianteController {
         try {
             const { id_alu } = req.params;
             const query = await pool.query('SELECT * FROM alumno WHERE id_alu =? ', [id_alu]);
-            res.json({ text: query });
+            res.json(query[0]);
         } catch (error) {
             console.log('ERROR ---->', error);
             next()

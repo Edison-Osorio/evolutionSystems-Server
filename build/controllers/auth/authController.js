@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.getOnUser = exports.signin = exports.signup = void 0;
+exports.updatePassword = exports.getOnUser = exports.signin = exports.deleteUser = exports.update = exports.listOnUser = exports.signup = void 0;
 const datadase_1 = __importDefault(require("../../datadase"));
 const bcrypt_1 = require("./bcrypt");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -33,6 +33,44 @@ const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.signup = signup;
+const listOnUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const query = yield datadase_1.default.query("SELECT * FROM usuario WHERE documento = ?", [id]);
+        res.json(query[0]);
+    }
+    catch (error) {
+        console.log("OCURRIO UN ERROR -->", error);
+        next();
+    }
+});
+exports.listOnUser = listOnUser;
+const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const query = yield datadase_1.default.query('UPDATE usuario SET ? WHERE documento = ? ', [req.body, id]);
+        res.json({ text: 'Usuario Actualizado' });
+    }
+    catch (error) {
+        console.log('Ocurrio un Error -->', error);
+        next();
+    }
+});
+exports.update = update;
+const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const query = yield datadase_1.default.query("DELETE FROM usuario WHERE documento = ?", [
+            id,
+        ]);
+        res.json({ text: "Se eliminó el usuario" });
+    }
+    catch (error) {
+        console.log("Ocurrio un error -->", error);
+        next();
+    }
+});
+exports.deleteUser = deleteUser;
 const signin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { documento, tipoDocumento } = req.body;
     const result = yield datadase_1.default.query("SELECT * FROM usuario WHERE documento = ? and tipoDocumento=  ? ", [documento, tipoDocumento]);
@@ -67,6 +105,7 @@ const signin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         return res.json({
             msg: "Ocurrio un error al autentificarse",
         });
+        next();
     }
 });
 exports.signin = signin;
@@ -101,18 +140,20 @@ const getOnUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.getOnUser = getOnUser;
-const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const updatePassword = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let { documento, email, contrasena } = req.body;
         contrasena = yield (0, bcrypt_1.encryptPassword)(contrasena);
         const result = yield datadase_1.default.query("UPDATE usuario set ? WHERE documento = ? and email = ? ", [{ contrasena }, documento, email]);
         let data = JSON.stringify(result[0]);
         const token = jsonwebtoken_1.default.sign({ data }, keyIncryp);
-        res.header("auth-token", token).json({ data, msg: "Contraseña actializada" });
+        res
+            .header("auth-token", token)
+            .json({ data, msg: "Contraseña actializada" });
     }
     catch (error) {
         console.log("el error es --->", error);
         next();
     }
 });
-exports.updateUser = updateUser;
+exports.updatePassword = updatePassword;

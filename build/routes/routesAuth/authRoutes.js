@@ -9,9 +9,12 @@ class AuthRoutes {
     }
     config() {
         this.router.post("/signup", authController_1.signup);
+        this.router.get('/list/:id', authController_1.listOnUser);
         this.router.post("/signin", authController_1.signin);
         this.router.post("/getOnUser", authController_1.getOnUser);
-        this.router.put("/updateUser", authController_1.updateUser);
+        this.router.put("/updateUser", authController_1.updatePassword);
+        this.router.put('/update/:id', authController_1.update);
+        this.router.delete('/delete/:id', authController_1.deleteUser);
     }
 }
 const authRoutes = new AuthRoutes();
