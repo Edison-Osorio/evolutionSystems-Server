@@ -47,7 +47,7 @@ class AdminHorarioController {
         try {
             const { cod_hor } = req.params;
             const query = await pool.query('SELECT * FROM horario WHERE cod_hor = ? ', [cod_hor]);
-            res.json(query)
+            res.json(query[0])
         } catch (error) {
             console.log('ERROR ---->', error);
             next();
