@@ -18,11 +18,25 @@ class AdminAlu_SerController {
     list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("SELECT alumno.nom_alu,servicio.tipo_ser,servicio.desc_ser FROM alumno_servicio INNER JOIN alumno ON alumno.id_alu=alumno_servicio.id_alu INNER JOIN servicio on servicio.cod_ser=alumno_servicio.cod_ser");
+                const query = yield datadase_1.default.query("SELECT alumno.id_alu,alumno.nom_alu,servicio.tipo_ser,servicio.desc_ser,servicio.cod_ser FROM alumno INNER JOIN alumno_servicio on alumno.id_alu=alumno_servicio.id_alumno INNER JOIN servicio ON alumno_servicio.cod_servicio=servicio.cod_ser");
                 res.json(query);
             }
             catch (error) {
-                console.log('Ocurrio un error');
+                console.log('Ocurrio un error', error);
+                next();
+            }
+        });
+    }
+    //obtener uno solo
+    getOne(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_alumno, cod_servicio } = req.params;
+                const query = yield datadase_1.default.query('SELECT * FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio = ? ', [id_alumno, cod_servicio]);
+                res.json(query[0]);
+            }
+            catch (error) {
+                console.log(error);
                 next();
             }
         });
@@ -46,8 +60,8 @@ class AdminAlu_SerController {
     deleteAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu, cod_ser } = req.params;
-                const query = yield datadase_1.default.query("DELETE FROM alumno_servicio WHERE id_alu = ? AND cod_ser =?", [id_alu, cod_ser]);
+                const { id_alumno, cod_servicio } = req.params;
+                const query = yield datadase_1.default.query("DELETE FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio =?", [id_alumno, cod_servicio]);
                 res.json({ message: "Se ha eliminado el servicio del alumno" });
             }
             catch (error) {
@@ -62,7 +76,7 @@ class AdminAlu_SerController {
             try {
                 const { id_alu, cod_ser } = req.params;
                 console.log(req.body);
-                const query = yield datadase_1.default.query("UPDATE alumno_servicio set ? WHERE id_alu = ? AND cod_ser = ?", [req.body, id_alu, cod_ser]);
+                const query = yield datadase_1.default.query("UPDATE alumno_servicio set ? WHERE id_alumno = ? AND cod_servicio = ?", [req.body, id_alu, cod_ser]);
                 res.json({ text: "Se ha actualizado el servicio al alumno" });
             }
             catch (error) {

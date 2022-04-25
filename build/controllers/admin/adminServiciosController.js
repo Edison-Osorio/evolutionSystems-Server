@@ -68,7 +68,7 @@ class AdminServiciosController {
             try {
                 const { cod_ser } = req.params;
                 const query = yield datadase_1.default.query('SELECT * FROM servicio WHERE cod_ser = ? ', [cod_ser]);
-                res.json(query);
+                res.json(query[0]);
             }
             catch (error) {
                 console.log('ERROR ---->', error);

@@ -9,8 +9,9 @@ class AdminAlu_Ser {
 
     config(): void {
         this.router.get('/', adminAlu_SerController.list);
+        this.router.get('/:id_alumno/:cod_servicio', adminAlu_SerController.getOne);
         this.router.post('/add', adminAlu_SerController.createAlu_Ser);
-        this.router.delete('/delete/:id_alu/:cod_ser', adminAlu_SerController.deleteAlu_Ser);
+        this.router.delete('/delete/:id_alumno/:cod_servicio', adminAlu_SerController.deleteAlu_Ser);
         this.router.put('/update/:id_alu/:cod_ser', adminAlu_SerController.updateAlu_Ser);
     }
 }
