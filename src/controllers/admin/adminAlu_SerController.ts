@@ -6,12 +6,23 @@ class AdminAlu_SerController {
   public async list(req: Request, res: Response, next: NextFunction) {
     try {
       const query = await pool.query(
-        "SELECT alumno.nom_alu,servicio.tipo_ser,servicio.desc_ser FROM alumno_servicio INNER JOIN alumno ON alumno.id_alu=alumno_servicio.id_alu INNER JOIN servicio on servicio.cod_ser=alumno_servicio.cod_ser"
+        "SELECT alumno.id_alu,alumno.nom_alu,servicio.tipo_ser,servicio.desc_ser,servicio.cod_ser FROM alumno INNER JOIN alumno_servicio on alumno.id_alu=alumno_servicio.id_alumno INNER JOIN servicio ON alumno_servicio.cod_servicio=servicio.cod_ser"
       );
       res.json(query);
     } catch (error) {
-        console.log('Ocurrio un error');
+        console.log('Ocurrio un error',error);
         next()
+    }
+  }
+  //obtener uno solo
+  public async getOne(req: Request,res: Response,next: NextFunction) {
+    try {
+      const {id_alumno,cod_servicio}=req.params
+      const query = await pool.query('SELECT * FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio = ? ',[id_alumno,cod_servicio]);
+      res.json(query[0])
+    } catch (error) {
+      console.log(error)
+      next();
     }
   }
   // crear
@@ -37,11 +48,11 @@ class AdminAlu_SerController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const { id_alu, cod_ser } = req.params;
+      const { id_alumno, cod_servicio } = req.params;
 
       const query = await pool.query(
-        "DELETE FROM alumno_servicio WHERE id_alu = ? AND cod_ser =?",
-        [id_alu, cod_ser]
+        "DELETE FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio =?",
+        [id_alumno, cod_servicio]
       );
       res.json({ message: "Se ha eliminado el servicio del alumno" });
     } catch (error) {
@@ -59,7 +70,7 @@ class AdminAlu_SerController {
       const { id_alu, cod_ser } = req.params;
       console.log(req.body);
       const query = await pool.query(
-        "UPDATE alumno_servicio set ? WHERE id_alu = ? AND cod_ser = ?",
+        "UPDATE alumno_servicio set ? WHERE id_alumno = ? AND cod_servicio = ?",
         [req.body, id_alu, cod_ser]
       );
       res.json({ text: "Se ha actualizado el servicio al alumno" });
