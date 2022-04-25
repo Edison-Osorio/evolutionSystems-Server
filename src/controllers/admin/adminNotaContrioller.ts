@@ -7,12 +7,13 @@ class AdminNotaController {
   public async list(req: Request, res: Response) {
     const { cod_gra } = req.params;
     const query = await pool.query(
-      "SELECT asignatura.id_asi,nota.id_periodo,nota.id_alu,alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN grado ON alumno.cod_gra=grado.cod_gra WHERE alumno.cod_gra = ? ",
+      "SELECT asignatura.id_asi,nota.id_periodo,nota.id_alu,alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN curso ON alumno.id_curso=curso.id_curso WHERE alumno.id_curso = ? ",
       [cod_gra]
-    );    
+    );
     res.json(query);
   }
-  
+
+
   //listar uno
   public async listOne(req: Request, res: Response, next: NextFunction) {
     try {
@@ -26,11 +27,10 @@ class AdminNotaController {
   }
 
   public async listTrimestres(req: Request, res: Response, next: NextFunction) {
-    try {     
-      const query = await pool.query("SELECT * FROM etapas");
-      
+    try {
+      const query = await pool.query("SELECT * FROM periodo");
+
       res.json(query);
-      
     } catch (error) {
       console.log("ERROR ----->", error);
       next();
@@ -45,8 +45,7 @@ class AdminNotaController {
   ): Promise<void> {
     try {
       const query = await pool.query("INSERT INTO nota set ?", [req.body]);
-      res.json({ text: "Se ha asignado una asignatura al alumno" });
-      res.json({ text: query });
+      res.json({ text: "Se ha asignado una asignatura al alumno", query: query, msg: "Notas creadas"  });
     } catch (error) {
       console.log("ERROR ----> ", error);
       next();
@@ -82,9 +81,13 @@ class AdminNotaController {
       console.log(req.body);
       const query = await pool.query(
         "UPDATE nota set ? WHERE id_asi = ? AND id_alu = ? AND id_periodo = ?",
-        [req.body, id_asi, id_alu,id_periodo  ]
+        [req.body, id_asi, id_alu, id_periodo]
       );
-      const procedure = await pool.query("call cali(?,?,?)", [id_alu, id_asi, id_periodo]);
+      const procedure = await pool.query("call cali(?,?,?)", [
+        id_alu,
+        id_asi,
+        id_periodo,
+      ]);
       res.json({ text: "Se ha actualizado la asignatura al alumno al alumno" });
     } catch (error) {
       console.log("ERROR ---->", error);

@@ -6,7 +6,7 @@ class AdminGradoController {
 
   public async list(req: Request, res: Response, next:NextFunction) {
     try {
-      const query = await pool.query("SELECT * FROM curso INNER JOIN ciclo on curso.id_ciclo = ciclo.id_ciclo");
+      const query = await pool.query("SELECT curso.*, grupo.nombre_grupo FROM grupo INNER JOIN curso  on curso.id_grupo = grupo.id_grupo INNER JOIN ciclo on curso.id_ciclo = ciclo.id_ciclo order by curso.nombre_curso ASC");
       res.json(query);
     } catch (error) {
       console.log("Ocurrio un error -->", error);
@@ -48,13 +48,14 @@ class AdminGradoController {
   ): Promise<void> {
     try {
       const query = await pool.query("INSERT INTO curso set ?", [req.body]);
-      res.json({ text: "Se ha crado un nuevo grado" });
+      res.json({ text: "Se ha crado un nuevo curso" });
     } catch (error) {
       console.log("ERROR ----> ", error);
       next();
     }
   }
   //eliminar
+
   public async deleteCurso(
     req: Request,
     res: Response,
@@ -63,7 +64,7 @@ class AdminGradoController {
     try {
       const { cod_gra } = req.params;
 
-      const query = await pool.query("DELETE FROM grado WHERE cod_gra = ?", [
+      const query = await pool.query("DELETE FROM curso WHERE id_curso = ?", [
         cod_gra,
       ]);
       res.json({ message: "Se ha eliminado el grado" });

@@ -12,6 +12,8 @@ class AdminAsignaturaRoutes {
     }
     config() {
         this.router.get('/', adminAsignaturaController_1.default.list);
+        this.router.get('/asignatura/:id_curso', adminAsignaturaController_1.default.listAsignatura);
+        this.router.get('/asignatura-curso/:id_curso', adminAsignaturaController_1.default.listAsignaturasCurso);
         this.router.get('/:id_asi', adminAsignaturaController_1.default.getOneAsignatura);
         this.router.post('/add', adminAsignaturaController_1.default.createAsignatura);
         this.router.put('/update/:id_asi', adminAsignaturaController_1.default.updateAsignatura);

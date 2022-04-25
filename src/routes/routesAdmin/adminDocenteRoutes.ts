@@ -9,6 +9,7 @@ class AdminDocenteRoutes {
 
     config(): void {
         this.router.get('/', adminDocenteController.list);
+        this.router.get('/categoria', adminDocenteController.listCategorias)
         this.router.get('/:nif_doc', adminDocenteController.getOneDocent);
         this.router.post('/add', adminDocenteController.createDocente);
         this.router.put('/update/:nif_doc', adminDocenteController.updateDocente);

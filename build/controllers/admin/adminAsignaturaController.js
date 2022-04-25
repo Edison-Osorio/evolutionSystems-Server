@@ -15,10 +15,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
 class AdminAsignaturaController {
     //listar todos
-    list(req, res) {
+    list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT docente.nom_doc,nom_asi,desc_asi,horario.hora,horario.fec_hor FROM asignatura INNER JOIN horario ON asignatura.cod_hor=horario.cod_hor INNER JOIN docente_asignatura ON asignatura.id_asi=docente_asignatura.id_asi INNER JOIN docente ON docente_asignatura.nif_doc=docente.nif_doc');
-            res.json(query);
+            try {
+                const query = yield datadase_1.default.query('SELECT * FROM asignatura ');
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un error --> ', error);
+                next();
+            }
+        });
+    }
+    // Obtenemos la asignaturas segun el grado 
+    listAsignatura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_curso } = req.params;
+                const query = yield datadase_1.default.query("SELECT asignatura.id_asi, asignatura.nom_asi FROM asignatura INNER JOIN asignatura_alumno ON asignatura.id_asi = asignatura_alumno.id_asi INNER JOIN alumno ON asignatura_alumno.id_alu = alumno.id_alu WHERE alumno.id_curso = ?", [id_curso]);
+                console.log('Se hizo esta consulta');
+                res.json(query);
+            }
+            catch (error) {
+                console.log("ERROR -->", error);
+                next();
+            }
+        });
+    }
+    // Listamos todas las asignaturas segun un identificador de un curso
+    listAsignaturasCurso(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_curso } = req.params;
+                console.log(id_curso);
+                const query = yield datadase_1.default.query("SELECT asignatura.id_asi, asignatura.nom_asi FROM curso INNER JOIN curso_asignatura on curso.id_curso = curso_asignatura.id_curso_cs INNER JOIN asignatura ON curso_asignatura.id_asignatura_cs = asignatura.id_asi WHERE curso.id_curso = ?", [id_curso]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un error -->', error);
+                next();
+            }
         });
     }
     // crear

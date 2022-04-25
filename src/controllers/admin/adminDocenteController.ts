@@ -1,12 +1,28 @@
-import { NextFunction } from 'express';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import pool from '../../datadase';
 
 class AdminDocenteController {
-    // 1 listar
-    public async list(req: Request, res: Response) {
-        const query = await pool.query('SELECT * FROM docente');
-        res.json(query);
+    // 1 listar docentes
+    public async list(req: Request, res: Response, next:NextFunction) {
+        try {     
+            const query = await pool.query('SELECT docente.*, categoria.tipo FROM docente INNER JOIN categoria ON docente.id_categoria = categoria.id_categoria');
+            res.json(query);
+        } catch (error) {
+            console.log('Ocurri un error -->', error);
+            next()
+            
+        }
+    }
+
+    // Listar coategorias
+    public async listCategorias(req: Request, res: Response, next:NextFunction){
+    try {
+        const query = await pool.query('SELECT * FROM categoria')
+        res.json(query) 
+    } catch (error) {
+       console.log('Ocurrio un Error -->', error);
+        next()
+    }
     }
 
     // 2 crear

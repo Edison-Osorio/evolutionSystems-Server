@@ -18,7 +18,7 @@ class AdminGradoController {
     list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("SELECT * FROM curso INNER JOIN ciclo on curso.id_ciclo = ciclo.id_ciclo");
+                const query = yield datadase_1.default.query("SELECT curso.*, grupo.nombre_grupo FROM grupo INNER JOIN curso  on curso.id_grupo = grupo.id_grupo INNER JOIN ciclo on curso.id_ciclo = ciclo.id_ciclo order by curso.nombre_curso ASC");
                 res.json(query);
             }
             catch (error) {
@@ -56,7 +56,7 @@ class AdminGradoController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query("INSERT INTO curso set ?", [req.body]);
-                res.json({ text: "Se ha crado un nuevo grado" });
+                res.json({ text: "Se ha crado un nuevo curso" });
             }
             catch (error) {
                 console.log("ERROR ----> ", error);
@@ -69,7 +69,7 @@ class AdminGradoController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_gra } = req.params;
-                const query = yield datadase_1.default.query("DELETE FROM grado WHERE cod_gra = ?", [
+                const query = yield datadase_1.default.query("DELETE FROM curso WHERE id_curso = ?", [
                     cod_gra,
                 ]);
                 res.json({ message: "Se ha eliminado el grado" });

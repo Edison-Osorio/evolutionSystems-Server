@@ -14,11 +14,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
 class AdminDocenteController {
-    // 1 listar
-    list(req, res) {
+    // 1 listar docentes
+    list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query('SELECT * FROM docente');
-            res.json(query);
+            try {
+                const query = yield datadase_1.default.query('SELECT docente.*, categoria.tipo FROM docente INNER JOIN categoria ON docente.id_categoria = categoria.id_categoria');
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurri un error -->', error);
+                next();
+            }
+        });
+    }
+    // Listar coategorias
+    listCategorias(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query('SELECT * FROM categoria');
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un Error -->', error);
+                next();
+            }
         });
     }
     // 2 crear
