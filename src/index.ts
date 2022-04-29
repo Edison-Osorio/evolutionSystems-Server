@@ -21,6 +21,7 @@ import adminFacturaRoute from "./routes/routesAdmin/adminFacturaRoute";
 import routesDocente from "./routes/rotesDocente/routesDocente";
 import alumnoRoutes from "./routes/routesAlumno/alumnoRoutes";
 import authRoutes from "./routes/routesAuth/authRoutes";
+import adminBecaRoutes from "./routes/routesAdmin/adminBecaRoutes";
 
 class Server {
     public app: Application;
@@ -53,6 +54,7 @@ class Server {
         this.app.use('/api/admin/factura', checkAuth, adminFacturaRoute);/*listo */
         this.app.use('/api/docente/', checkAuth, routesDocente);/*listo */
         this.app.use('/api/alumno/', checkAuth, alumnoRoutes);
+        this.app.use('/api/admin/beca/',checkAuth,adminBecaRoutes)
         this.app.use('/api/auth', authRoutes)
 
     }

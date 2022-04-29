@@ -23,6 +23,7 @@ const adminFacturaRoute_1 = __importDefault(require("./routes/routesAdmin/adminF
 const routesDocente_1 = __importDefault(require("./routes/rotesDocente/routesDocente"));
 const alumnoRoutes_1 = __importDefault(require("./routes/routesAlumno/alumnoRoutes"));
 const authRoutes_1 = __importDefault(require("./routes/routesAuth/authRoutes"));
+const adminBecaRoutes_1 = __importDefault(require("./routes/routesAdmin/adminBecaRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -51,6 +52,7 @@ class Server {
         this.app.use('/api/admin/factura', checkAuth_1.checkAuth, adminFacturaRoute_1.default); /*listo */
         this.app.use('/api/docente/', checkAuth_1.checkAuth, routesDocente_1.default); /*listo */
         this.app.use('/api/alumno/', checkAuth_1.checkAuth, alumnoRoutes_1.default);
+        this.app.use('/api/admin/beca/', checkAuth_1.checkAuth, adminBecaRoutes_1.default);
         this.app.use('/api/auth', authRoutes_1.default);
     }
     start() {

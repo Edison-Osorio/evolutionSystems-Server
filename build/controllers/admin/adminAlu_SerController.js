@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
 class AdminAlu_SerController {
-    //listar todos
+    //listar todos los alumnos con servicio
     list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -27,7 +27,7 @@ class AdminAlu_SerController {
             }
         });
     }
-    //obtener uno solo
+    //obtener un solo alumno con servicio
     getOne(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -41,7 +41,7 @@ class AdminAlu_SerController {
             }
         });
     }
-    // crear
+    // asignarle un servicio a un alumno
     createAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -56,7 +56,7 @@ class AdminAlu_SerController {
             }
         });
     }
-    //eliminar
+    //eliminarle el servicio al alumno
     deleteAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -70,7 +70,7 @@ class AdminAlu_SerController {
             }
         });
     }
-    //Actualizar
+    //Actualizarle el servivio a un alumno
     updateAlu_Ser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

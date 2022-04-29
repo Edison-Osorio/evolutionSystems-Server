@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
 class AdminAsignaturaController {
-    //listar todos
+    //listar todas las asignaturas
     list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -57,7 +57,7 @@ class AdminAsignaturaController {
             }
         });
     }
-    // crear
+    // crear una asignatura 
     createAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -70,7 +70,7 @@ class AdminAsignaturaController {
             }
         });
     }
-    //eliminar
+    //eliminar una asignatura 
     deleteAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -84,7 +84,7 @@ class AdminAsignaturaController {
             }
         });
     }
-    //Actualizar
+    //Actualizar asignatura 
     updateAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -99,6 +99,7 @@ class AdminAsignaturaController {
             }
         });
     }
+    //obtener una asignatura 
     getOneAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
