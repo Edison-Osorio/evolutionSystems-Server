@@ -19,8 +19,10 @@ import adminNotaRoutes from "./routes/routesAdmin/adminNotaRoutes";
 import adminDoc_AsiRoutes from "./routes/routesAdmin/adminDoc_AsiRoutes";
 import adminFacturaRoute from "./routes/routesAdmin/adminFacturaRoute";
 import routesDocente from "./routes/rotesDocente/routesDocente";
-import alumnoRoutes from "./routes/routesAlumno/alumnoRoutes";
+import alumnoRouter from "./routes/routesAlumno/alumnoRoutes";
 import authRoutes from "./routes/routesAuth/authRoutes";
+import asignaturaRouter from './routes/routesAsignatura/asignaturaRoutes';
+import gradoRouter from './routes/routesGrado/gradoRoutes';
 
 class Server {
     public app: Application;
@@ -44,15 +46,17 @@ class Server {
         this.app.use('/api/admin/docente',checkAuth, adminDocenteRoutes);/**listo */
         this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
         this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
-        this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
-        this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
+    //  this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
+     this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
         this.app.use('/api/admin/horario', checkAuth, adminHorarioRoutes);/*listo*/
         this.app.use('/api/admin/doc_gra', checkAuth, adminDocente_GradoRoutes);/*listo */
         this.app.use('/api/admin/nota', checkAuth, adminNotaRoutes);/*listo */
         this.app.use('/api/admin/doc_asi', checkAuth, adminDoc_AsiRoutes);/*listo */
         this.app.use('/api/admin/factura', checkAuth, adminFacturaRoute);/*listo */
-        this.app.use('/api/docente/', checkAuth, routesDocente);/*listo */
-        this.app.use('/api/alumno/', checkAuth, alumnoRoutes);
+        this.app.use('/api/docente', checkAuth, routesDocente);/*listo */
+        this.app.use('/api/alumno', checkAuth, alumnoRouter);
+        this.app.use('/api/grado', gradoRouter)
+        this.app.use('/api/asignatura', checkAuth, asignaturaRouter)
         this.app.use('/api/auth', authRoutes)
 
     }

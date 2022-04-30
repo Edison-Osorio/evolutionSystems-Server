@@ -13,7 +13,6 @@ const adminEstudianteRoutes_1 = __importDefault(require("./routes/routesAdmin/ad
 const adminServiciosRoutes_1 = __importDefault(require("./routes/routesAdmin/adminServiciosRoutes"));
 const adminAlu_serRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAlu_serRoutes"));
 const adminDocenteRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDocenteRoutes"));
-const adminCursoRoutes_1 = __importDefault(require("./routes/routesAdmin/adminCursoRoutes"));
 const adminAsignaturaRoutes_1 = __importDefault(require("./routes/routesAdmin/adminAsignaturaRoutes"));
 const adminHorarioRoutes_1 = __importDefault(require("./routes/routesAdmin/adminHorarioRoutes"));
 const adminDoc_GraRoutes_1 = __importDefault(require("./routes/routesAdmin/adminDoc_GraRoutes"));
@@ -23,6 +22,8 @@ const adminFacturaRoute_1 = __importDefault(require("./routes/routesAdmin/adminF
 const routesDocente_1 = __importDefault(require("./routes/rotesDocente/routesDocente"));
 const alumnoRoutes_1 = __importDefault(require("./routes/routesAlumno/alumnoRoutes"));
 const authRoutes_1 = __importDefault(require("./routes/routesAuth/authRoutes"));
+const asignaturaRoutes_1 = __importDefault(require("./routes/routesAsignatura/asignaturaRoutes"));
+const gradoRoutes_1 = __importDefault(require("./routes/routesGrado/gradoRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -42,15 +43,17 @@ class Server {
         this.app.use('/api/admin/docente', checkAuth_1.checkAuth, adminDocenteRoutes_1.default); /**listo */
         this.app.use('/api/admin/servicios', checkAuth_1.checkAuth, adminServiciosRoutes_1.default); /*listo*/
         this.app.use('/api/admin/alu_ser', checkAuth_1.checkAuth, adminAlu_serRoutes_1.default); /*listo*/
-        this.app.use('/api/admin/curso', checkAuth_1.checkAuth, adminCursoRoutes_1.default); /*listo */
+        //  this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
         this.app.use('/api/admin/asignatura', checkAuth_1.checkAuth, adminAsignaturaRoutes_1.default); /*listo */
         this.app.use('/api/admin/horario', checkAuth_1.checkAuth, adminHorarioRoutes_1.default); /*listo*/
         this.app.use('/api/admin/doc_gra', checkAuth_1.checkAuth, adminDoc_GraRoutes_1.default); /*listo */
         this.app.use('/api/admin/nota', checkAuth_1.checkAuth, adminNotaRoutes_1.default); /*listo */
         this.app.use('/api/admin/doc_asi', checkAuth_1.checkAuth, adminDoc_AsiRoutes_1.default); /*listo */
         this.app.use('/api/admin/factura', checkAuth_1.checkAuth, adminFacturaRoute_1.default); /*listo */
-        this.app.use('/api/docente/', checkAuth_1.checkAuth, routesDocente_1.default); /*listo */
-        this.app.use('/api/alumno/', checkAuth_1.checkAuth, alumnoRoutes_1.default);
+        this.app.use('/api/docente', checkAuth_1.checkAuth, routesDocente_1.default); /*listo */
+        this.app.use('/api/alumno', checkAuth_1.checkAuth, alumnoRoutes_1.default);
+        this.app.use('/api/grado', gradoRoutes_1.default);
+        this.app.use('/api/asignatura', checkAuth_1.checkAuth, asignaturaRoutes_1.default);
         this.app.use('/api/auth', authRoutes_1.default);
     }
     start() {

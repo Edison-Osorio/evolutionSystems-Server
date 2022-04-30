@@ -17,7 +17,7 @@ class AdminDocente_GradoController {
     try {
       const { nif_doc } = req.params;
       const query = await pool.query(
-        "SELECT docente.nom_doc,docente.area_doc, grado.cod_gra, grado.nom_grad,grado.desc_grad FROM docente INNER JOIN docente_grado ON docente.nif_doc=docente_grado.nif_doc INNER JOIN grado ON docente_grado.cod_gra=grado.cod_gra WHERE docente.nif_doc = ? ",
+        " = ? ",
         [nif_doc]
       );
       res.json(query);

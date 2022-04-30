@@ -5,6 +5,6 @@ exports.default = {
         host: "localhost",
         user: "edison",
         password: "",
-        database: "proyecto",
+        database: "evolutionSystems",
     },
 };

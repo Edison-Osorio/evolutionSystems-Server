@@ -12,10 +12,10 @@ class AdminNotaRoutes {
     }
     config() {
         this.routes.get("/trimestres/", adminNotaContrioller_1.default.listTrimestres);
-        this.routes.get("/:cod_gra", adminNotaContrioller_1.default.list);
+        this.routes.get("/:id_curso/:id_grupo", adminNotaContrioller_1.default.list);
         this.routes.post("/add", adminNotaContrioller_1.default.createNota);
         this.routes.put("/update/:id_asi/:id_alu/:id_periodo", adminNotaContrioller_1.default.updateNota);
-        this.routes.delete("/delete/:id_asi/:id_alu", adminNotaContrioller_1.default.deleteNota);
+        this.routes.delete("/delete/:id_alu", adminNotaContrioller_1.default.deleteNota);
         this.routes.get("/:alu_id", adminNotaContrioller_1.default.listOne);
     }
 }

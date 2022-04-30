@@ -4,19 +4,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const docenteAsignaturaController_1 = __importDefault(require("../../controllers/docente/docenteAsignaturaController"));
+const docenteController_1 = __importDefault(require("../../controllers/docente/docenteController"));
 class DocenteRoutes {
     constructor() {
         this.router = (0, express_1.Router)();
         this.config();
     }
     config() {
-        this.router.put('/updateNote/:id_asi/:id_alu', docenteAsignaturaController_1.default.updateNota);
-        this.router.get('/:nif_doc', docenteAsignaturaController_1.default.list);
-        this.router.get('/asignatura/:nif_doc', docenteAsignaturaController_1.default.listAsignaturaDocente);
-        this.router.get('/programador/:nif_doc', docenteAsignaturaController_1.default.listProgramador);
-        this.router.get('/:nif_doc/:id_asi', docenteAsignaturaController_1.default.getOneAsignatura);
-        this.router.get('/doc_gra/:nif_doc/:cod_gra', docenteAsignaturaController_1.default.listGroup);
+        // Routes of docente
+        this.router.get('/', docenteController_1.default.listDocente);
+        this.router.get('/:nif_docente', docenteController_1.default.listOnDocente);
+        this.router.put('/update/:nif_docente', docenteController_1.default.updateDocente);
+        this.router.delete('/delete/:nif_docente', docenteController_1.default.deleteDocente);
+        // this.router.put('/updateNote/:id_asi/:id_alu', docenteAsignaturaController.updateNota);
+        // this.router.get('/:nif_doc', docenteAsignaturaController.list);
+        // this.router.get('/asignatura/:nif_doc', docenteAsignaturaController.listAsignaturaDocente)
+        // this.router.get('/programador/:nif_doc', docenteAsignaturaController.listProgramador)
+        // this.router.get('/:nif_doc/:id_asi', docenteAsignaturaController.getOneAsignatura);
+        // this.router.get('/doc_gra/:nif_doc/:cod_gra', docenteAsignaturaController.listGroup);
     }
 }
 const docenteRoutes = new DocenteRoutes();

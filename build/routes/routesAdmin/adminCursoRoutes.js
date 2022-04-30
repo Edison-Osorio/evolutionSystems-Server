@@ -15,8 +15,11 @@ class AdminGradoRoutes {
         this.router.get('/', adminCursoController_1.default.list);
         this.router.get('/ciclo', adminCursoController_1.default.listCiclo);
         this.router.get('/grupo', adminCursoController_1.default.listGrupo);
+        this.router.get('/curso-grupo', adminCursoController_1.default.listCursoGrupo);
+        this.router.get('/crusoGrupo/:id_curso', adminCursoController_1.default.listOnCursoGrupos);
         this.router.get('/:cod_gra', adminCursoController_1.default.getOneCurso);
         this.router.post('/add', adminCursoController_1.default.createCurso);
+        this.router.post('/addGrupoCurso', adminCursoController_1.default.createGrupoCurso);
         this.router.put('/update/:cod_gra', adminCursoController_1.default.updateCurso);
         this.router.delete('/delete/:cod_gra', adminCursoController_1.default.deleteCurso);
     }

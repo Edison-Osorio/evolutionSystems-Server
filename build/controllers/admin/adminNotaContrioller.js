@@ -18,8 +18,8 @@ class AdminNotaController {
     //listar todos
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { cod_gra } = req.params;
-            const query = yield datadase_1.default.query("SELECT asignatura.id_asi,nota.id_periodo,nota.id_alu,alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN curso ON alumno.id_curso=curso.id_curso WHERE alumno.id_curso = ? ", [cod_gra]);
+            const { id_curso, id_grupo } = req.params;
+            const query = yield datadase_1.default.query("SELECT asignatura.id_asi,nota.id_periodo,nota.id_alu,alumno.nom_alu, nota1,nota2,nota3,nota4,nota5,nota_final,asignatura.nom_asi FROM nota INNER JOIN asignatura ON nota.id_asi=asignatura.id_asi INNER JOIN alumno ON nota.id_alu=alumno.id_alu INNER JOIN matricula ON alumno.id_alu=matricula.id_alumno_m INNER JOIN curso ON matricula.id_curso_m = curso.id_curso INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE curso.id_curso = ? AND grupo.id_grupo = ? ", [id_curso, id_grupo]);
             res.json(query);
         });
     }
@@ -67,7 +67,7 @@ class AdminNotaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alu, id_asi } = req.params;
-                const query = yield datadase_1.default.query("DELETE FROM nota WHERE id_asi = ? AND id_alu =?", [id_asi, id_alu]);
+                const query = yield datadase_1.default.query("DELETE FROM nota WHERE id_alu =?", [id_asi, id_alu]);
                 res.json({ message: "Se ha eliminado la asignatura al alumno" });
             }
             catch (error) {

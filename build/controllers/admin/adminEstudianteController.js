@@ -17,7 +17,7 @@ class AdminEstudianteController {
     //listar
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield datadase_1.default.query("SELECT alumno.*, curso.nombre_curso, grupo.nombre_grupo FROM grupo INNER JOIN curso  on curso.id_grupo = grupo.id_grupo INNER JOIN  alumno on curso.id_curso = alumno.id_curso");
+            const query = yield datadase_1.default.query("SELECT alumno.*, curso.id_curso, curso.nombre_curso, grupo.id_grupo, grupo.nombre_grupo FROM alumno INNER JOIN matricula ON alumno.id_alu = matricula.id_alumno_m INNER JOIN curso ON matricula.id_curso_m = curso.id_curso INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo");
             res.json(query);
         });
     }
@@ -34,7 +34,6 @@ class AdminEstudianteController {
             }
         });
     }
-    //
     //crear
     create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -44,6 +43,17 @@ class AdminEstudianteController {
             }
             catch (error) {
                 console.log("ERROR ---->", error);
+                next();
+            }
+        });
+    }
+    createMatricula(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("INSERT INTO matricula SET ? ", [req.body]);
+            }
+            catch (error) {
+                console.log('Ocurrio un error al insertar matricula en el controlador Estudiante --> ', error);
                 next();
             }
         });
@@ -62,6 +72,19 @@ class AdminEstudianteController {
             catch (error) {
                 console.log("ERROR ---->", error);
                 next();
+            }
+        });
+    }
+    // ELIMINAMOS LA MATRICULA DEL ALUMNO
+    deleteMatricula(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_alumno_m, id_curso_m } = req.params;
+                const query = yield datadase_1.default.query("DELETE FROM matricula WHERE id_alumno_m = ? AND id_curso_m = ? ", [id_alumno_m, id_curso_m]);
+                res.json({ message: 'Matricula eliminada' });
+            }
+            catch (error) {
+                console.log('Ocurrio un error en el controlador de estudiante al eliminar matricula --> ', error);
             }
         });
     }

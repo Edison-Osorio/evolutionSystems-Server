@@ -16,7 +16,9 @@ class AdminAsignaturaRoutes {
         this.router.get('/asignatura-curso/:id_curso', adminAsignaturaController_1.default.listAsignaturasCurso);
         this.router.get('/:id_asi', adminAsignaturaController_1.default.getOneAsignatura);
         this.router.post('/add', adminAsignaturaController_1.default.createAsignatura);
+        this.router.post('/addAsignacion', adminAsignaturaController_1.default.createCursoAsignatura);
         this.router.put('/update/:id_asi', adminAsignaturaController_1.default.updateAsignatura);
+        this.router.delete('/delete-asignacion/:id_asignatura_cs/:id_curso_cs', adminAsignaturaController_1.default.deleteAsignacion);
         this.router.delete('/delete/:id_asi', adminAsignaturaController_1.default.deleteAsignatura);
     }
 }

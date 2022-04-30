@@ -47,8 +47,7 @@ class AdminAsignaturaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_curso } = req.params;
-                console.log(id_curso);
-                const query = yield datadase_1.default.query("SELECT asignatura.id_asi, asignatura.nom_asi FROM curso INNER JOIN curso_asignatura on curso.id_curso = curso_asignatura.id_curso_cs INNER JOIN asignatura ON curso_asignatura.id_asignatura_cs = asignatura.id_asi WHERE curso.id_curso = ?", [id_curso]);
+                const query = yield datadase_1.default.query("SELECT asignatura.id_asi, asignatura.nom_asi FROM curso INNER JOIN curso_asignatura on curso.id_curso = curso_asignatura.id_curso_cs INNER JOIN asignatura ON curso_asignatura.id_asignatura_cs = asignatura.id_asi WHERE curso.id_curso = ? ORDER BY asignatura.id_asi asc", [id_curso]);
                 res.json(query);
             }
             catch (error) {
@@ -66,6 +65,33 @@ class AdminAsignaturaController {
             }
             catch (error) {
                 console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    // Insertamos en la tabla curso asignatura para asignarle una asignatura a un curso
+    createCursoAsignatura(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("INSERT INTO curso_asignatura SET ?", [req.body]);
+                res.json({ msg: 'Se ha asignado correctamente la asignatura' });
+            }
+            catch (error) {
+                console.log('Ocurrio un error --> ', error);
+                next();
+            }
+        });
+    }
+    // Eliminamos las asignaciones segun el curso y la materia
+    deleteAsignacion(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_asignatura_cs, id_curso_cs } = req.params;
+                const query = yield datadase_1.default.query("DELETE FROM curso_asignatura WHERE id_asignatura_cs = ? AND id_curso_cs = ? ", [id_asignatura_cs, id_curso_cs]);
+                res.json({ msg: 'Asignatura eliminada del curso' });
+            }
+            catch (error) {
+                console.log('Ocurrio un error --> ', error);
                 next();
             }
         });

@@ -22,15 +22,12 @@ class AdminAsignaturaController {
       ) {
         try {
           const { id_curso } = req.params;
-
           const query = await pool.query(
           "SELECT asignatura.id_asi, asignatura.nom_asi FROM asignatura INNER JOIN asignatura_alumno ON asignatura.id_asi = asignatura_alumno.id_asi INNER JOIN alumno ON asignatura_alumno.id_alu = alumno.id_alu WHERE alumno.id_curso = ?",
             [id_curso]
           );
 
           console.log('Se hizo esta consulta');
-          
-    
           res.json(query);
         } catch (error) {
           console.log("ERROR -->", error);
@@ -42,17 +39,12 @@ class AdminAsignaturaController {
       public async listAsignaturasCurso(req: Request, res: Response, next: NextFunction) {
           try {
               const {id_curso} = req.params
-              console.log(id_curso);
               
-
-             const query = await pool.query("SELECT asignatura.id_asi, asignatura.nom_asi FROM curso INNER JOIN curso_asignatura on curso.id_curso = curso_asignatura.id_curso_cs INNER JOIN asignatura ON curso_asignatura.id_asignatura_cs = asignatura.id_asi WHERE curso.id_curso = ?", [id_curso])
-
+             const query = await pool.query("SELECT asignatura.id_asi, asignatura.nom_asi FROM curso INNER JOIN curso_asignatura on curso.id_curso = curso_asignatura.id_curso_cs INNER JOIN asignatura ON curso_asignatura.id_asignatura_cs = asignatura.id_asi WHERE curso.id_curso = ? ORDER BY asignatura.id_asi asc", [id_curso])
              res.json(query)
           } catch (error) {
               console.log('Ocurrio un error -->', error);
               next()
-              
-              
           }
       }
 
@@ -67,6 +59,33 @@ class AdminAsignaturaController {
         }
 
     }
+
+    // Insertamos en la tabla curso asignatura para asignarle una asignatura a un curso
+    public async createCursoAsignatura(req: Request, res: Response, next: NextFunction){
+        try {
+            const query = await pool.query("INSERT INTO curso_asignatura SET ?", [req.body])
+            res.json({msg:'Se ha asignado correctamente la asignatura'})
+        } catch (error) {
+           console.log('Ocurrio un error --> ', error);
+           next()
+            
+        }
+    }
+
+    // Eliminamos las asignaciones segun el curso y la materia
+    public async deleteAsignacion(req: Request, res: Response, next: NextFunction){
+        try {
+            const {id_asignatura_cs,id_curso_cs}= req.params
+            const query = await pool.query("DELETE FROM curso_asignatura WHERE id_asignatura_cs = ? AND id_curso_cs = ? ", [id_asignatura_cs, id_curso_cs])
+            res.json({msg: 'Asignatura eliminada del curso'})
+        } catch (error) {
+            console.log('Ocurrio un error --> ', error);
+            next()
+        }
+
+    }
+
+
     //eliminar
     public async deleteAsignatura(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {

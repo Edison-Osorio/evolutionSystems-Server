@@ -18,7 +18,7 @@ class AdminGradoController {
     list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("SELECT curso.*, grupo.nombre_grupo FROM grupo INNER JOIN curso  on curso.id_grupo = grupo.id_grupo INNER JOIN ciclo on curso.id_ciclo = ciclo.id_ciclo order by curso.nombre_curso ASC");
+                const query = yield datadase_1.default.query("SELECT * FROM curso ORDER BY nombre_curso ASC");
                 res.json(query);
             }
             catch (error) {
@@ -51,6 +51,33 @@ class AdminGradoController {
             }
         });
     }
+    // Listamos lo grupos uniendo la tabla intermedia entre grupos y cursos
+    listCursoGrupo(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("SELECT curso.*, grupo.* FROM grupo INNER JOIN curso_grupo ON grupo.id_grupo = curso_grupo.id_grupo_cg INNER JOIN  curso ON curso_grupo.id_curso_cg = curso.id_curso");
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un erro en el controlador de curso -->', error);
+                next();
+            }
+        });
+    }
+    // LISTAMOS LOS GRUPOS SEGUN EL CODIGO DEL CURSO
+    listOnCursoGrupos(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_curso } = req.params;
+                const query = yield datadase_1.default.query("SELECT curso.*, grupo.* FROM grupo INNER JOIN curso_grupo ON grupo.id_grupo = curso_grupo.id_grupo_cg INNER JOIN  curso ON curso_grupo.id_curso_cg = curso.id_curso WHERE curso.id_curso = ? ", [id_curso]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un error en el contrador de curso al buscar grupos por un curso -->', error);
+                next();
+            }
+        });
+    }
     // crear
     createCurso(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -60,6 +87,20 @@ class AdminGradoController {
             }
             catch (error) {
                 console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    // ASIGNAMOS UN GRUPO A LOS CURSOS
+    createGrupoCurso(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log('Esta es la isecion de grupos', req.body);
+                const query = yield datadase_1.default.query("INSERT INTO curso_grupo SET ? ", [req.body]);
+                res.json({ msg: 'Grupo creado' });
+            }
+            catch (error) {
+                console.log('Ocurrio un error en el controlador de curso al insertar un grupoCruso --> ', error);
                 next();
             }
         });
