@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import pool from "../../datadase";
 
 class AdminAlu_SerController {
-  //listar todos
+  //listar todos los alumnos con servicio
   public async list(req: Request, res: Response, next: NextFunction) {
     try {
       const query = await pool.query(
@@ -10,22 +10,22 @@ class AdminAlu_SerController {
       );
       res.json(query);
     } catch (error) {
-        console.log('Ocurrio un error',error);
-        next()
+      console.log('Ocurrio un error', error);
+      next()
     }
   }
-  //obtener uno solo
-  public async getOne(req: Request,res: Response,next: NextFunction) {
+  //obtener un solo alumno con servicio
+  public async getOne(req: Request, res: Response, next: NextFunction) {
     try {
-      const {id_alumno,cod_servicio}=req.params
-      const query = await pool.query('SELECT * FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio = ? ',[id_alumno,cod_servicio]);
+      const { id_alumno, cod_servicio } = req.params
+      const query = await pool.query('SELECT * FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio = ? ', [id_alumno, cod_servicio]);
       res.json(query[0])
     } catch (error) {
       console.log(error)
       next();
     }
   }
-  // crear
+  // asignarle un servicio a un alumno
   public async createAlu_Ser(
     req: Request,
     res: Response,
@@ -41,7 +41,7 @@ class AdminAlu_SerController {
       next();
     }
   }
-  //eliminar
+  //eliminarle el servicio al alumno
   public async deleteAlu_Ser(
     req: Request,
     res: Response,
@@ -49,7 +49,6 @@ class AdminAlu_SerController {
   ): Promise<any> {
     try {
       const { id_alumno, cod_servicio } = req.params;
-
       const query = await pool.query(
         "DELETE FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio =?",
         [id_alumno, cod_servicio]
@@ -60,7 +59,7 @@ class AdminAlu_SerController {
       next();
     }
   }
-  //Actualizar
+  //Actualizarle el servivio a un alumno
   public async updateAlu_Ser(
     req: Request,
     res: Response,

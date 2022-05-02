@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
 class AdminAsignaturaController {
-    //listar todos
+    //listar todas las asignaturas
     list(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -42,7 +42,6 @@ class AdminAsignaturaController {
             }
         });
     }
-    // Listamos todas las asignaturas segun un identificador de un curso
     listAsignaturasCurso(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -69,7 +68,6 @@ class AdminAsignaturaController {
             }
         });
     }
-    // Insertamos en la tabla curso asignatura para asignarle una asignatura a un curso
     createCursoAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -110,7 +108,7 @@ class AdminAsignaturaController {
             }
         });
     }
-    //Actualizar
+    //Actualizar asignatura 
     updateAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -125,6 +123,7 @@ class AdminAsignaturaController {
             }
         });
     }
+    //obtener una asignatura 
     getOneAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
