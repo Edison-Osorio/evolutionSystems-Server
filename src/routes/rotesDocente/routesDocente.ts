@@ -1,5 +1,4 @@
 import { Router } from "express";
-import docenteAsignaturaController from "../../controllers/docente/docenteAsignaturaController";
 import docenteController from '../../controllers/docente/docenteController';
 
 class DocenteRoutes {
@@ -12,7 +11,9 @@ class DocenteRoutes {
 
         // Routes of docente
         this.router.get('/', docenteController.listDocente)
+        this.router.get('/categoria', docenteController.listCategoria)
         this.router.get('/:nif_docente', docenteController.listOnDocente)
+        this.router.post('/add-docente', docenteController.createDocente)
         this.router.put('/update/:nif_docente', docenteController.updateDocente)
         this.router.delete('/delete/:nif_docente', docenteController.deleteDocente)
 

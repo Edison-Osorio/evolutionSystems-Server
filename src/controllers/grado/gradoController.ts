@@ -28,15 +28,27 @@ class GradoController {
       next();
     }
   }
+  //Lista todos los grupos de todos los grados 
+public async listAllGruposGrados(req: Request, res: Response,next:NextFunction) {
+  try {
+    const query = await pool.query(
+      "SELECT grado.*, grupo.* FROM grado INNER JOIN grado_grupo ON grado.id_grado = grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg = grupo.id_grupo")
+    res.json(query)
+  } catch (error) {
+      console.log("Ocurrio un error en el contrador del Grado al listar los grados con los grupos --> ", error);
+      next()
+  }
+}
   // Obtenemos todos los grados con sus grupos
-  public async listGradosGrupos(
+  public async listGradoGrupos(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
+      const {id_grado}= req.params
       const query = await pool.query(
-        "SELECT grado.*, grupo.* FROM grado INNER JOIN grado_grupo ON grado.id_grado = grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg = grupo.id_grupo"
+        "SELECT grado.*, grupo.* FROM grado INNER JOIN grado_grupo ON grado.id_grado = grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg = grupo.id_grupo WHERE id_grado = ? ", [id_grado]
       );
       res.json(query);
     } catch (error) {
@@ -76,7 +88,7 @@ class GradoController {
     }
   }
 
-  //
+  //Le asignamos un grupo a un grupo
   public async createGrupoGrado(req: Request, res: Response, next: NextFunction) {
     try {
       const query = await pool.query("INSERT INTO grado_grupo SET ? ", [

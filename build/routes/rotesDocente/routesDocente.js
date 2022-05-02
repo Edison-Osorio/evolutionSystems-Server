@@ -13,7 +13,9 @@ class DocenteRoutes {
     config() {
         // Routes of docente
         this.router.get('/', docenteController_1.default.listDocente);
+        this.router.get('/categoria', docenteController_1.default.listCategoria);
         this.router.get('/:nif_docente', docenteController_1.default.listOnDocente);
+        this.router.post('/add-docente', docenteController_1.default.createDocente);
         this.router.put('/update/:nif_docente', docenteController_1.default.updateDocente);
         this.router.delete('/delete/:nif_docente', docenteController_1.default.deleteDocente);
         // this.router.put('/updateNote/:id_asi/:id_alu', docenteAsignaturaController.updateNota);

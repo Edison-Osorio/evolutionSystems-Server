@@ -42,20 +42,20 @@ class Server {
 
     routes(): void {
         this.app.use(indexRoutes);
-        this.app.use('/api/admin/estudiante', checkAuth, adminEstudianteRoutes);/*listo */
-        this.app.use('/api/admin/docente',checkAuth, adminDocenteRoutes);/**listo */
-        this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
-        this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
-    //  this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
-     this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
-        this.app.use('/api/admin/horario', checkAuth, adminHorarioRoutes);/*listo*/
-        this.app.use('/api/admin/doc_gra', checkAuth, adminDocente_GradoRoutes);/*listo */
-        this.app.use('/api/admin/nota', checkAuth, adminNotaRoutes);/*listo */
+    //     // this.app.use('/api/admin/estudiante', checkAuth, adminEstudianteRoutes);/*listo */
+    //     // this.app.use('/api/admin/docente',checkAuth, adminDocenteRoutes);/**listo */
+    //     this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
+    //     this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
+    // //  this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
+    // //  this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
+    //     this.app.use('/api/admin/horario', checkAuth, adminHorarioRoutes);/*listo*/
+    //     this.app.use('/api/admin/doc_gra', checkAuth, adminDocente_GradoRoutes);/*listo */
+    //     this.app.use('/api/admin/nota', checkAuth, adminNotaRoutes);/*listo */
         this.app.use('/api/admin/doc_asi', checkAuth, adminDoc_AsiRoutes);/*listo */
         this.app.use('/api/admin/factura', checkAuth, adminFacturaRoute);/*listo */
         this.app.use('/api/docente', checkAuth, routesDocente);/*listo */
         this.app.use('/api/alumno', checkAuth, alumnoRouter);
-        this.app.use('/api/grado', gradoRouter)
+        this.app.use('/api/grado', checkAuth ,gradoRouter)
         this.app.use('/api/asignatura', checkAuth, asignaturaRouter)
         this.app.use('/api/auth', authRoutes)
 

@@ -27,6 +27,20 @@ class AsignaturaController {
             }
         });
     }
+    // Listamos las asignaturas segun el grado
+    listAsignaturaGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_grado } = req.params;
+                const query = yield datadase_1.default.query("SELECT * FROM asignatura WHERE id_grado_a = ? ", [id_grado]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del Asignatura al listar las asignaturas por el identificador del grado --> ", error);
+                next();
+            }
+        });
+    }
     // Creamos una asignatura
     createAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -34,6 +48,7 @@ class AsignaturaController {
                 const query = yield datadase_1.default.query("INSERT INTO asignatura SET ? ", [
                     req.body,
                 ]);
+                res.json({ msg: 'Asignatura creada' });
             }
             catch (error) {
                 console.log("Ocurrio un error en el contrador de la asignatura a crear una asignatura --> ", error);

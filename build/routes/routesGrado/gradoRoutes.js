@@ -8,12 +8,13 @@ const gradoController_1 = __importDefault(require("../../controllers/grado/grado
 class GradoRouter {
     constructor() {
         this.router = (0, express_1.Router)();
-        this.config;
+        this.config();
     }
     config() {
-        this.router.get('/', gradoController_1.default.listGrado);
+        this.router.get('/grado', gradoController_1.default.listGrado);
         this.router.get('/grupo', gradoController_1.default.listGrupo);
-        this.router.get('/grado-grupo', gradoController_1.default.listGradosGrupos);
+        this.router.get('/grado-grupo', gradoController_1.default.listAllGruposGrados);
+        this.router.get('/grado-grupo/:id_grado', gradoController_1.default.listGradoGrupos);
         this.router.post('/add-grado', gradoController_1.default.createGrado);
         this.router.post('/add-grupo', gradoController_1.default.createGrupo);
         this.router.post('/add-grupo-grado', gradoController_1.default.createGrupoGrado);

@@ -5,7 +5,7 @@ class DocenteController {
   //Listamos todos los docentes
   public async listDocente(req: Request, res: Response, next: NextFunction) {
     try {
-      const query = await pool.query("SELECT * FROM docente");
+      const query = await pool.query("SELECT * FROM docente INNER JOIN categoria ON docente.id_categoria_d = categoria.id_categoria ");
       res.json(query);
     } catch (error) {
       console.log(
@@ -32,6 +32,27 @@ class DocenteController {
       next();
     }
   }
+// Listamos las categorias
+public async listCategoria(req: Request, res: Response,next:NextFunction) {
+  try {
+      const query = await pool.query("SELECT * FROM categoria")
+      res.json(query)
+  } catch (error) {
+      console.log("Ocurrio un error en el contrador del Docente al listar las categorias --> ", error);
+      next()
+  }
+}
+
+  // Creamos un docente
+public async createDocente(req: Request, res: Response,next:NextFunction) {
+  try {
+      const query = await pool.query("INSERT INTO docente SET ? ", [req.body])
+      res.json({msg:'Docente creado'})
+  } catch (error) {
+      console.log("Ocurrio un error en el contrador del Docente al crear un docente --> ", error);
+      next()
+  }
+}
   //Actualizamos un docente
   public async updateDocente(req: Request, res: Response, next: NextFunction) {
     try {

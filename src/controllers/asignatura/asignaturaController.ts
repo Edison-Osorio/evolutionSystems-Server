@@ -15,12 +15,24 @@ class AsignaturaController {
       next();
     }
   }
+  // Listamos las asignaturas segun el grado
+public async listAsignaturaGrado(req: Request, res: Response,next:NextFunction) {
+  try {
+      const {id_grado} = req.params
+      const query = await pool.query("SELECT * FROM asignatura WHERE id_grado_a = ? ", [id_grado])
+      res.json(query)
+  } catch (error) {
+      console.log("Ocurrio un error en el contrador del Asignatura al listar las asignaturas por el identificador del grado --> ", error);
+      next()
+  }
+}
   // Creamos una asignatura
   public async createAsignatura(req: Request,res: Response,next: NextFunction) {
     try {
       const query = await pool.query("INSERT INTO asignatura SET ? ", [
         req.body,
       ]);
+      res.json({msg: 'Asignatura creada'})
     } catch (error) {
       console.log(
         "Ocurrio un error en el contrador de la asignatura a crear una asignatura --> ",

@@ -40,11 +40,25 @@ class GradoController {
             }
         });
     }
-    // Obtenemos todos los grados con sus grupos
-    listGradosGrupos(req, res, next) {
+    //Lista todos los grupos de todos los grados 
+    listAllGruposGrados(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query("SELECT grado.*, grupo.* FROM grado INNER JOIN grado_grupo ON grado.id_grado = grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg = grupo.id_grupo");
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del Grado al listar los grados con los grupos --> ", error);
+                next();
+            }
+        });
+    }
+    // Obtenemos todos los grados con sus grupos
+    listGradoGrupos(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_grado } = req.params;
+                const query = yield datadase_1.default.query("SELECT grado.*, grupo.* FROM grado INNER JOIN grado_grupo ON grado.id_grado = grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg = grupo.id_grupo WHERE id_grado = ? ", [id_grado]);
                 res.json(query);
             }
             catch (error) {
@@ -79,7 +93,7 @@ class GradoController {
             }
         });
     }
-    //
+    //Le asignamos un grupo a un grupo
     createGrupoGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

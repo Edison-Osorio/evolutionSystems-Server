@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import pool from "../../datadase";
 
-class AlumnoController {
+class AdminAlumnoController {
   // Listamos todos los alumnos de la tabla de alumno
   public async listAlumnos(req: Request, res: Response, next: NextFunction) {
     try {
@@ -9,13 +9,14 @@ class AlumnoController {
       res.json(query);
     } catch (error) {
       console.log(
-        "Ocurrio un error en el contrador del Alumno en listar --> ",
+        "Ocurrio un error en el contrador del adminAlumno en listar --> ",
         error
       );
       next();
     }
   }
-  //Listamos un alumno según de su identifador
+
+  // Listamos un alumno según su identificador
   public async listOneAlumno(req: Request, res: Response, next: NextFunction) {
     try {
       const { id_alumno } = req.params;
@@ -26,7 +27,7 @@ class AlumnoController {
       res.json(query[0]);
     } catch (error) {
       console.log(
-        " Ocurrio un error en el contrador del Alumno al listar un solo alumno --> ",
+        " Ocurrio un error en el contrador del adminAlumno al listar un solo alumno --> ",
         error
       );
     }
@@ -44,35 +45,32 @@ class AlumnoController {
       next();
     }
   }
-  // Actualizamos un alumno según su indentificador
-  public async updateAlumno(req: Request, res: Response, next: NextFunction) {
+
+  // Actualizamos un alumno segun su identificador
+  public async updateAlumno(req: Request, res: Response,next:NextFunction) {
     try {
-      const { id_alumno } = req.params;
-      const query = await pool.query("UPDATE alumno set ? WHERE id_alu = ?", [
-        req.body,
-        id_alumno,
-      ]);
-      res.json({msg: 'Alumno Actualizo'})
+        const {id_alumno} = req.params
+        const query = await pool.query("UPDATE alumno SET ? WHERE id_alumno = ? ", [req.body, id_alumno])
+        res.json({msg:'Alumno Actualizado'})
     } catch (error) {
-      console.log(
-        "Ocurrio un error en el contrador del Alumno al actualizar un alumno --> ",
-        error
-      );
-      next();
+        console.log(" Ocurrio un error en el contrador del Alumno al actualizar un alumno--> ", error);
+        
     }
-  }
-// 
+}
+
+// Eliminamos el alumno
 public async deleteAlumno(req: Request, res: Response,next:NextFunction) {
   try {
-      const {id_alumno} = req.params
-      const query = await pool.query("DELETE FROM alumno WHERE id_alumno = ? ", [id_alumno])
+        const {id_alumno} = req.params
+        const query = await pool.query("")
   } catch (error) {
-      console.log("Ocurrio un error en el contrador del Alumno al eliminar un alumno --> ", error);
+      console.log("Ocurrio un error en el contrador del Alumno al eliminar un alumno un alumno --> ", error);
       next()
   }
 }
-  
+
+
 }
 
-const alumnoController = new AlumnoController();
-export default alumnoController;
+const adminAlumnoController = new AdminAlumnoController();
+export default adminAlumnoController;

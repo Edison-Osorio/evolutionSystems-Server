@@ -11,7 +11,8 @@ class AsignaturaRouter{
 
         // Routes of asignatura
         this.router.get('/', asignaturaController.listAsignatura)
-        this.router.post('/add_asignatura', asignaturaController.createAsignatura)
+        this.router.get('/asignatura-grado/:id_grado', asignaturaController.listAsignaturaGrado)
+        this.router.post('/add-asignatura', asignaturaController.createAsignatura)
         this.router.post('/add-asignatura-docente', asignaturaController.docenteAsignatura)
         this.router.put('/update/:id_asignatura', asignaturaController.updateAsignatura)
         this.router.delete('/delete/:id_asignatura', asignaturaController.deleteAsignatura)

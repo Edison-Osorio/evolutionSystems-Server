@@ -1,17 +1,18 @@
-import { Router } from "express";
+import {Router} from 'express'
 import gradoController from "../../controllers/grado/gradoController";
 
 class GradoRouter {
   router: Router = Router(); 
 
   constructor() {
-    this.config;
+    this.config();
   }
 
   config() :void {
-      this.router.get('/', gradoController.listGrado)
+      this.router.get('/grado', gradoController.listGrado)
       this.router.get('/grupo', gradoController.listGrupo)
-      this.router.get('/grado-grupo', gradoController.listGradosGrupos)
+      this.router.get('/grado-grupo', gradoController.listAllGruposGrados)
+      this.router.get('/grado-grupo/:id_grado', gradoController.listGradoGrupos)
       this.router.post('/add-grado', gradoController.createGrado)
       this.router.post('/add-grupo', gradoController.createGrupo)
       this.router.post('/add-grupo-grado', gradoController.createGrupoGrado)

@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AlumnoController {
+class AdminAlumnoController {
     // Listamos todos los alumnos de la tabla de alumno
     listAlumnos(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,12 +22,12 @@ class AlumnoController {
                 res.json(query);
             }
             catch (error) {
-                console.log("Ocurrio un error en el contrador del Alumno en listar --> ", error);
+                console.log("Ocurrio un error en el contrador del adminAlumno en listar --> ", error);
                 next();
             }
         });
     }
-    //Listamos un alumno según de su identifador
+    // Listamos un alumno según su identificador
     listOneAlumno(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -36,7 +36,7 @@ class AlumnoController {
                 res.json(query[0]);
             }
             catch (error) {
-                console.log(" Ocurrio un error en el contrador del Alumno al listar un solo alumno --> ", error);
+                console.log(" Ocurrio un error en el contrador del adminAlumno al listar un solo alumno --> ", error);
             }
         });
     }
@@ -53,36 +53,32 @@ class AlumnoController {
             }
         });
     }
-    // Actualizamos un alumno según su indentificador
+    // Actualizamos un alumno segun su identificador
     updateAlumno(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno } = req.params;
-                const query = yield datadase_1.default.query("UPDATE alumno set ? WHERE id_alu = ?", [
-                    req.body,
-                    id_alumno,
-                ]);
-                res.json({ msg: 'Alumno Actualizo' });
+                const query = yield datadase_1.default.query("UPDATE alumno SET ? WHERE id_alumno = ? ", [req.body, id_alumno]);
+                res.json({ msg: 'Alumno Actualizado' });
             }
             catch (error) {
-                console.log("Ocurrio un error en el contrador del Alumno al actualizar un alumno --> ", error);
-                next();
+                console.log(" Ocurrio un error en el contrador del Alumno al actualizar un alumno--> ", error);
             }
         });
     }
-    // 
+    // Eliminamos el alumno
     deleteAlumno(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno } = req.params;
-                const query = yield datadase_1.default.query("DELETE FROM alumno WHERE id_alumno = ? ", [id_alumno]);
+                const query = yield datadase_1.default.query("");
             }
             catch (error) {
-                console.log("Ocurrio un error en el contrador del Alumno al eliminar un alumno --> ", error);
+                console.log("Ocurrio un error en el contrador del Alumno al eliminar un alumno un alumno --> ", error);
                 next();
             }
         });
     }
 }
-const alumnoController = new AlumnoController();
-exports.default = alumnoController;
+const adminAlumnoController = new AdminAlumnoController();
+exports.default = adminAlumnoController;

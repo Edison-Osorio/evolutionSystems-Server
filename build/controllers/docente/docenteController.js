@@ -18,7 +18,7 @@ class DocenteController {
     listDocente(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("SELECT * FROM docente");
+                const query = yield datadase_1.default.query("SELECT * FROM docente INNER JOIN categoria ON docente.id_categoria_d = categoria.id_categoria ");
                 res.json(query);
             }
             catch (error) {
@@ -37,6 +37,32 @@ class DocenteController {
             }
             catch (error) {
                 console.log("Ocurrio un error en el contrador del docente al lista un docente --> ", error);
+                next();
+            }
+        });
+    }
+    // Listamos las categorias
+    listCategoria(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("SELECT * FROM categoria");
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del Docente al listar las categorias --> ", error);
+                next();
+            }
+        });
+    }
+    // Creamos un docente
+    createDocente(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("INSERT INTO docente SET ? ", [req.body]);
+                res.json({ msg: 'Docente creado' });
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del Docente al crear un docente --> ", error);
                 next();
             }
         });
