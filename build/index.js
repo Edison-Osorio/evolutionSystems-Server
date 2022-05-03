@@ -9,10 +9,14 @@ const cors_1 = __importDefault(require("cors"));
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
 // Middlewares
 const checkAuth_1 = require("./middleware/checkAuth");
-const routesDocente_1 = __importDefault(require("./routes/rotesDocente/routesDocente"));
+const adminServiciosRoutes_1 = __importDefault(require("./routes/routesServicios/adminServiciosRoutes"));
+const adminAlu_serRoutes_1 = __importDefault(require("./routes/routesAlumno_Servicio/adminAlu_serRoutes"));
+const routesDocente_1 = __importDefault(require("./routes/routesDocente/routesDocente"));
 const alumnoRoutes_1 = __importDefault(require("./routes/routesAlumno/alumnoRoutes"));
+const authRoutes_1 = __importDefault(require("./routes/routesAuth/authRoutes"));
 const asignaturaRoutes_1 = __importDefault(require("./routes/routesAsignatura/asignaturaRoutes"));
 const gradoRoutes_1 = __importDefault(require("./routes/routesGrado/gradoRoutes"));
+const adminBecaRoutes_1 = __importDefault(require("./routes/routesBeca/adminBecaRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -30,8 +34,8 @@ class Server {
         this.app.use(indexRoutes_1.default);
         //     // this.app.use('/api/admin/estudiante', checkAuth, adminEstudianteRoutes);/*listo */
         //     // this.app.use('/api/admin/docente',checkAuth, adminDocenteRoutes);/**listo */
-        //     this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
-        //     this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
+        this.app.use('/api/admin/servicios', checkAuth_1.checkAuth, adminServiciosRoutes_1.default); /*listo*/
+        this.app.use('/api/admin/alumno_servicio', checkAuth_1.checkAuth, adminAlu_serRoutes_1.default); /*listo*/
         // //  this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
         // //  this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
         //     this.app.use('/api/admin/horario', checkAuth, adminHorarioRoutes);/*listo*/
@@ -43,6 +47,8 @@ class Server {
         this.app.use('/api/alumno', checkAuth_1.checkAuth, alumnoRoutes_1.default);
         this.app.use('/api/grado', checkAuth_1.checkAuth, gradoRoutes_1.default);
         this.app.use('/api/asignatura', checkAuth_1.checkAuth, asignaturaRoutes_1.default);
+        this.app.use('/api/admin/beca/', checkAuth_1.checkAuth, adminBecaRoutes_1.default);
+        this.app.use('/api/auth', authRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

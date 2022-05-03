@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import adminServiciosController from '../../controllers/admin/adminServiciosController';
+import adminServiciosController from '../../controllers/servicios/adminServiciosController';
 
 class AdminServiciosRoutes {
     router: Router = Router();
@@ -9,7 +9,7 @@ class AdminServiciosRoutes {
 
 
     config(): void {
-        this.router.get('/', adminServiciosController.list);
+        this.router.get('/', adminServiciosController.listarServicios);
         this.router.get('/:cod_ser', adminServiciosController.getOneServicio);
         this.router.post('/add', adminServiciosController.createServicio);
         this.router.put('/update/:cod_ser', adminServiciosController.updateServicio);

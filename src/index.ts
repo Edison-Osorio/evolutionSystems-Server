@@ -8,8 +8,8 @@ import indexRoutes from './routes/indexRoutes';
 import {checkAuth} from './middleware/checkAuth'
 
 import adminEstudianteRoutes from "./routes/routesAdmin/adminEstudianteRoutes";
-import adminServiciosRoutes from "./routes/routesAdmin/adminServiciosRoutes";
-import adminAlu_SerRoutes from "./routes/routesAdmin/adminAlu_serRoutes";
+import adminServiciosRoutes from "./routes/routesServicios/adminServiciosRoutes";
+import adminAlu_SerRoutes from "./routes/routesAlumno_Servicio/adminAlu_serRoutes";
 import adminDocenteRoutes from "./routes/routesAdmin/adminDocenteRoutes";
 import adminCursoRoutes from "./routes/routesAdmin/adminCursoRoutes";
 import adminAsignaturaRoutes from "./routes/routesAdmin/adminAsignaturaRoutes";
@@ -18,12 +18,12 @@ import adminDocente_GradoRoutes from "./routes/routesAdmin/adminDoc_GraRoutes";
 import adminNotaRoutes from "./routes/routesAdmin/adminNotaRoutes";
 import adminDoc_AsiRoutes from "./routes/routesAdmin/adminDoc_AsiRoutes";
 import adminFacturaRoute from "./routes/routesAdmin/adminFacturaRoute";
-import routesDocente from "./routes/rotesDocente/routesDocente";
+import routesDocente from "./routes/routesDocente/routesDocente";
 import alumnoRouter from "./routes/routesAlumno/alumnoRoutes";
 import authRoutes from "./routes/routesAuth/authRoutes";
 import asignaturaRouter from './routes/routesAsignatura/asignaturaRoutes';
 import gradoRouter from './routes/routesGrado/gradoRoutes';
-import adminBecaRoutes from "./routes/routesAdmin/adminBecaRoutes";
+import adminBecaRoutes from "./routes/routesBeca/adminBecaRoutes";
 
 class Server {
     public app: Application;
@@ -45,8 +45,8 @@ class Server {
         this.app.use(indexRoutes);
     //     // this.app.use('/api/admin/estudiante', checkAuth, adminEstudianteRoutes);/*listo */
     //     // this.app.use('/api/admin/docente',checkAuth, adminDocenteRoutes);/**listo */
-    //     this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
-    //     this.app.use('/api/admin/alu_ser', checkAuth, adminAlu_SerRoutes);/*listo*/
+         this.app.use('/api/admin/servicios', checkAuth, adminServiciosRoutes);/*listo*/
+         this.app.use('/api/admin/alumno_servicio', checkAuth, adminAlu_SerRoutes);/*listo*/
     // //  this.app.use('/api/admin/curso', checkAuth, adminCursoRoutes);/*listo */
     // //  this.app.use('/api/admin/asignatura', checkAuth, adminAsignaturaRoutes);/*listo */
     //     this.app.use('/api/admin/horario', checkAuth, adminHorarioRoutes);/*listo*/
@@ -58,6 +58,8 @@ class Server {
         this.app.use('/api/alumno', checkAuth, alumnoRouter);
         this.app.use('/api/grado', checkAuth ,gradoRouter)
         this.app.use('/api/asignatura', checkAuth, asignaturaRouter)
+        this.app.use('/api/admin/beca/',checkAuth,adminBecaRoutes)
+        this.app.use('/api/auth', authRoutes)
     }
 
     start(): void {
