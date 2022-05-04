@@ -5,7 +5,7 @@ class GradoController {
   //Listamos todos los grados
   public async listGrado(req: Request, res: Response, next: NextFunction) {
     try {
-      const query = await pool.query("SELECT * FROM grado");
+      const query = await pool.query("SELECT grado.*, ciclo.* FROM grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo");
       res.json(query);
     } catch (error) {
       console.log(
@@ -54,6 +54,20 @@ public async listAllGruposGrados(req: Request, res: Response,next:NextFunction) 
     } catch (error) {
       console.log(
         "Ocurrio un error en el contrador del grado al listar los grupos con sus grados --> ",
+        error
+      );
+      next();
+    }
+  }
+
+  //Listamos todos los ciclos 
+  public async listCiclos(req: Request, res: Response, next: NextFunction) {
+    try {
+      const query = await pool.query("SELECT * FROM ciclo");
+      res.json(query);
+    } catch (error) {
+      console.log(
+        "Ocurrio un error en el contrador del grado al listar los ciclos --> ",
         error
       );
       next();

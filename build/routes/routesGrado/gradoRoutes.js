@@ -13,6 +13,7 @@ class GradoRouter {
     config() {
         this.router.get('/grado', gradoController_1.default.listGrado);
         this.router.get('/grupo', gradoController_1.default.listGrupo);
+        this.router.get('/ciclo', gradoController_1.default.listCiclos);
         this.router.get('/grado-grupo', gradoController_1.default.listAllGruposGrados);
         this.router.get('/grado-grupo/:id_grado', gradoController_1.default.listGradoGrupos);
         this.router.post('/add-grado', gradoController_1.default.createGrado);

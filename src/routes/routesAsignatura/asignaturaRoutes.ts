@@ -12,10 +12,12 @@ class AsignaturaRouter{
         // Routes of asignatura
         this.router.get('/', asignaturaController.listAsignatura)
         this.router.get('/asignatura-grado/:id_grado', asignaturaController.listAsignaturaGrado)
+        this.router.get('/asignatura-docente/:id_grado', asignaturaController.listAsignaturaDocente)
         this.router.post('/add-asignatura', asignaturaController.createAsignatura)
         this.router.post('/add-asignatura-docente', asignaturaController.docenteAsignatura)
         this.router.put('/update/:id_asignatura', asignaturaController.updateAsignatura)
         this.router.delete('/delete/:id_asignatura', asignaturaController.deleteAsignatura)
+        this.router.delete('/delete-asignatura-docente/:id_asignatura/:id_docente', asignaturaController.deleteAsignaturaDocente)
     }
 
 

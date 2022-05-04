@@ -26,9 +26,6 @@ const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (err) {
         console.log("Hey ocurrio un error ", err);
-        res.json({
-            msg: "Ocurrio un error al registrar el usuario, revise que la información si sea la requerida",
-        });
         next();
     }
 });

@@ -18,7 +18,7 @@ class GradoController {
     listGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("SELECT * FROM grado");
+                const query = yield datadase_1.default.query("SELECT grado.*, ciclo.* FROM grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo");
                 res.json(query);
             }
             catch (error) {
@@ -63,6 +63,19 @@ class GradoController {
             }
             catch (error) {
                 console.log("Ocurrio un error en el contrador del grado al listar los grupos con sus grados --> ", error);
+                next();
+            }
+        });
+    }
+    //Listamos todos los ciclos 
+    listCiclos(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = yield datadase_1.default.query("SELECT * FROM ciclo");
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del grado al listar los ciclos --> ", error);
                 next();
             }
         });

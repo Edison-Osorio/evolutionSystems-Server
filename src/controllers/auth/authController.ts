@@ -20,10 +20,6 @@ export const signup = async (
     res.header("auth-token", token).json(result);
   } catch (err) {
     console.log("Hey ocurrio un error ", err);
-
-    res.json({
-      msg: "Ocurrio un error al registrar el usuario, revise que la información si sea la requerida",
-    });
     next();
   }
 };

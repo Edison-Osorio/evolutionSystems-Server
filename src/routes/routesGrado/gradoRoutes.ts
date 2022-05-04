@@ -11,6 +11,7 @@ class GradoRouter {
   config() :void {
       this.router.get('/grado', gradoController.listGrado)
       this.router.get('/grupo', gradoController.listGrupo)
+      this.router.get('/ciclo', gradoController.listCiclos)
       this.router.get('/grado-grupo', gradoController.listAllGruposGrados)
       this.router.get('/grado-grupo/:id_grado', gradoController.listGradoGrupos)
       this.router.post('/add-grado', gradoController.createGrado)

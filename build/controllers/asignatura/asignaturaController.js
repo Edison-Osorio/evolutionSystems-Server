@@ -41,6 +41,20 @@ class AsignaturaController {
             }
         });
     }
+    // Listamos las asignaturas con su docente segun el grado
+    listAsignaturaDocente(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_grado } = req.params;
+                const query = yield datadase_1.default.query("SELECT docente.nif_docente, docente.nombre_docente,asignatura.id_asignatura, asignatura.nombre_asignatura FROM asignatura INNER JOIN asignatura_docente ON asignatura.id_asignatura = asignatura_docente.id_asignatura_ad INNER JOIN docente ON asignatura_docente.id_docente_ad = docente.nif_docente WHERE asignatura.id_grado_a =  ? ", [id_grado]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del Asignatura al listar las asignaturas con su docente  // Listamos las asignaturas segun el grado por el identificador del grado --> ", error);
+                next();
+            }
+        });
+    }
     // Creamos una asignatura
     createAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,6 +75,7 @@ class AsignaturaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query("INSERT INTO asignatura_docente SET ? ", [req.body]);
+                res.json({ msg: 'Asignatura asignada al Docente' });
             }
             catch (error) {
                 console.log("Ocurrio un error en el contrador del Alumno al actualizar un alumno --> ", error);
@@ -92,6 +107,20 @@ class AsignaturaController {
             }
             catch (error) {
                 console.log("Ocurrio un error en el contrador del Asignatura al eliminar una asignatura --> ", error);
+                next();
+            }
+        });
+    }
+    // Listamos las asignaturas segun el grado
+    deleteAsignaturaDocente(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_asignatura, id_docente } = req.params;
+                const query = yield datadase_1.default.query("DELETE FROM asignatura_docente WHERE id_asignatura_ad = ? AND id_docente_ad = ? ", [id_asignatura, id_docente]);
+                res.json({ msg: 'Asignatura eliminada del docente' });
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del Asignatura al eliminar una asignatura asignada a un grado --> ", error);
                 next();
             }
         });
