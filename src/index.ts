@@ -7,12 +7,17 @@ import { checkAuth } from "./middleware/checkAuth";
 
 // Routes of Controllers
 import indexRoutes from "./routes/indexRoutes";
-import routesDocente from "./routes/rotesDocente/routesDocente";
 import alumnoRouter from "./routes/routesAlumno/alumnoRoutes";
 import authRoutes from "./routes/routesAuth/authRoutes";
 import asignaturaRouter from "./routes/routesAsignatura/asignaturaRoutes";
 import gradoRouter from "./routes/routesGrado/gradoRoutes";
 import notaRoutes from "./routes/routesNota/notaRoutes";
+import routesDocente from "./routes/routesDocente/routesDocente";
+import alumnoServicioRoutes from "./routes/routesAlumno_Servicio/alumnoServicioRoutes";
+import becaRoutes from "./routes/routesBeca/becaRoutes";
+import serviciosRoutes from './routes/routesServicios/serviciosRoutes';
+import horarioRoutes from './routes/routesHorario/horarioRoutes';
+
 
 class Server {
   public app: Application;
@@ -32,11 +37,15 @@ class Server {
 
   routes(): void {
     this.app.use(indexRoutes);
-    this.app.use("/api/docente", checkAuth, routesDocente); /*listo */
+    this.app.use("/api/docente", checkAuth, routesDocente); 
     this.app.use("/api/alumno", checkAuth, alumnoRouter);
     this.app.use("/api/grado", checkAuth, gradoRouter);
     this.app.use("/api/asignatura", checkAuth, asignaturaRouter);
     this.app.use("/api/nota", checkAuth, notaRoutes);
+    this.app.use('/api/beca/',checkAuth,becaRoutes)
+    this.app.use('/api/alumno_servicio', checkAuth, alumnoServicioRoutes);
+    this.app.use('/api/servicios', checkAuth, serviciosRoutes);
+    this.app.use('/api/horario', checkAuth, horarioRoutes)
     this.app.use("/api/auth", authRoutes);
   }
 

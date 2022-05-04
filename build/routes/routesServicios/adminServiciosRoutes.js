@@ -11,7 +11,7 @@ class AdminServiciosRoutes {
         this.config();
     }
     config() {
-        this.router.get('/', adminServiciosController_1.default.list);
+        this.router.get('/', adminServiciosController_1.default.listarServicios);
         this.router.get('/:cod_ser', adminServiciosController_1.default.getOneServicio);
         this.router.post('/add', adminServiciosController_1.default.createServicio);
         this.router.put('/update/:cod_ser', adminServiciosController_1.default.updateServicio);

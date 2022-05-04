@@ -13,15 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminServiciosController {
-    // listar
-    list(req, res) {
+class ServiciosController {
+    // listar todos los servicios
+    listarServicios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const query = yield datadase_1.default.query('SELECT * FROM servicio');
             res.json(query);
         });
     }
-    //crear
+    //crear servicios
     createServicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -34,12 +34,12 @@ class AdminServiciosController {
             }
         });
     }
-    //eliminar
+    //eliminar servicio
     deleteServicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_ser } = req.params;
-                const query = yield datadase_1.default.query('DELETE FROM servicio WHERE cod_ser = ?', [cod_ser]);
+                const query = yield datadase_1.default.query('DELETE FROM servicio WHERE id_servicio = ?', [cod_ser]);
                 res.json({ text: 'Servicio eliminado con exito' });
             }
             catch (error) {
@@ -48,7 +48,7 @@ class AdminServiciosController {
             }
         });
     }
-    //actualizar 
+    //actualizar servicio
     updateServicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -77,5 +77,5 @@ class AdminServiciosController {
         });
     }
 }
-const adminServiciosController = new AdminServiciosController;
-exports.default = adminServiciosController;
+const serviciosController = new ServiciosController;
+exports.default = serviciosController;

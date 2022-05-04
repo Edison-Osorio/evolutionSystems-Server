@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminBecaController {
+class BecaController {
     //obtener las becas disponibles
     listarBecasDisponibles(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -28,7 +28,7 @@ class AdminBecaController {
         });
     }
     // obtener todas las becas
-    list(req, res, next) {
+    listarBecas(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query("SELECT * FROM beca ");
@@ -41,7 +41,7 @@ class AdminBecaController {
         });
     }
     // listar alumnos con becas y el servicio que los cubre 
-    listOne(req, res, next) {
+    listOneBeca(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query('SELECT beca.codigo_beca,beca.descripcion,alumno.id_alumno,alumno.nombre_alumno FROM alumno INNER JOIN alumno_beca ON alumno.id_alumno=alumno_beca.id_alumno_ab INNER JOIN beca ON alumno_beca.codigo_beca_ab=beca.codigo_beca ');
@@ -54,7 +54,7 @@ class AdminBecaController {
         });
     }
     //crear becas
-    create(req, res, next) {
+    createBeca(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query('INSERT INTO beca SET  ?', [req.body]);
@@ -67,7 +67,7 @@ class AdminBecaController {
         });
     }
     //eliminar becas
-    delete(req, res, next) {
+    deleteBeca(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_beca } = req.params;
@@ -81,7 +81,7 @@ class AdminBecaController {
         });
     }
     //actualizar becas 
-    update(req, res, next) {
+    updateBeca(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { cod_beca } = req.params;
@@ -95,7 +95,7 @@ class AdminBecaController {
         });
     }
     // obtener uno 
-    getOne(req, res, next) {
+    getOnebeca(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { codigo_beca } = req.params;
@@ -142,5 +142,5 @@ class AdminBecaController {
         });
     }
 }
-const adminbecaController = new AdminBecaController();
-exports.default = adminbecaController;
+const becaController = new BecaController();
+exports.default = becaController;

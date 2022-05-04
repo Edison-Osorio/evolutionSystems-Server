@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminAlu_SerController {
-    //listar todos los alumnos con servicio
-    list(req, res, next) {
+class AlumnoSerController {
+    //listar todos los alumnos con servicios
+    listarAlumno_Servicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query("SELECT alumno.id_alumno,alumno.nombre_alumno,servicio.tipo_servicio,servicio.descripcion_servicio,servicio.id_servicio FROM alumno INNER JOIN alumno_servicio on alumno.id_alumno=alumno_servicio.id_alumno_as INNER JOIN servicio ON alumno_servicio.codigo_servicio_as=servicio.id_servicio");
@@ -28,7 +28,7 @@ class AdminAlu_SerController {
         });
     }
     //obtener un solo alumno con servicio
-    getOne(req, res, next) {
+    getOneAlumno_Servicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno, cod_servicio } = req.params;
@@ -42,7 +42,7 @@ class AdminAlu_SerController {
         });
     }
     // asignarle un servicio a un alumno
-    createAlu_Ser(req, res, next) {
+    createAlumno_Servicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = yield datadase_1.default.query("INSERT INTO alumno_servicio set ?", [
@@ -57,7 +57,7 @@ class AdminAlu_SerController {
         });
     }
     //eliminarle el servicio al alumno
-    deleteAlu_Ser(req, res, next) {
+    deleteAlumno_Servicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno, cod_servicio } = req.params;
@@ -71,7 +71,7 @@ class AdminAlu_SerController {
         });
     }
     //Actualizarle el servivio a un alumno
-    updateAlu_Ser(req, res, next) {
+    updateAlumno_Servicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alu, cod_ser } = req.params;
@@ -86,5 +86,5 @@ class AdminAlu_SerController {
         });
     }
 }
-const adminAlu_SerController = new AdminAlu_SerController();
-exports.default = adminAlu_SerController;
+const alumnoServicioController = new AlumnoSerController();
+exports.default = alumnoServicioController;
