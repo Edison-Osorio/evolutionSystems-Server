@@ -17,6 +17,8 @@ import alumnoServicioRoutes from "./routes/routesAlumno_Servicio/alumnoServicioR
 import becaRoutes from "./routes/routesBeca/becaRoutes";
 import serviciosRoutes from './routes/routesServicios/serviciosRoutes';
 import horarioRoutes from './routes/routesHorario/horarioRoutes';
+import adminAsignaturaRoutes from "./routes/routesAdmin/adminAsignaturaRoutes";
+import routesAdministrador from "./routes/routesAdministrador/routesAdministrador";
 
 
 class Server {
@@ -46,6 +48,7 @@ class Server {
     this.app.use('/api/alumno_servicio', checkAuth, alumnoServicioRoutes);
     this.app.use('/api/servicios', checkAuth, serviciosRoutes);
     this.app.use('/api/horario', checkAuth, horarioRoutes)
+    this.app.use('/api/administrador', checkAuth, routesAdministrador)
     this.app.use("/api/auth", authRoutes);
   }
 

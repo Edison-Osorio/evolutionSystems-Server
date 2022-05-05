@@ -1,7 +1,7 @@
 export default {
   database: {
     host: "localhost",
-    user: "edison",
+    user: "root", 
     password: "",
     database: "evolutionSystems",
   },
