@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import pool from '../../datadase';
+import pool from '../datadase';
 
 class AdminHorarioController {
     //listar todos

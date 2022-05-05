@@ -1,5 +1,5 @@
 import { Router } from "express";
-import adminHorarioController from "../../controllers/admin/adminHorarioController";
+import adminHorarioController from "../controllers/adminHorarioController";
 
 class AdminHorarioRoutes {
     router: Router = Router();

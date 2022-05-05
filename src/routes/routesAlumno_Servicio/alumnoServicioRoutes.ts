@@ -1,5 +1,5 @@
 import { Router } from "express";
-import alumnoServicioController from "../../controllers/alumno_Servicio/Alumno_ServicioController";
+import alumnoServicioController from "../../controllers/alumno_Servicio/alumno_ServicioController";
 
 
 

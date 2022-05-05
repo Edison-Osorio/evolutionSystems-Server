@@ -17,7 +17,6 @@ import alumnoServicioRoutes from "./routes/routesAlumno_Servicio/alumnoServicioR
 import becaRoutes from "./routes/routesBeca/becaRoutes";
 import serviciosRoutes from './routes/routesServicios/serviciosRoutes';
 import horarioRoutes from './routes/routesHorario/horarioRoutes';
-import adminAsignaturaRoutes from "./routes/routesAdmin/adminAsignaturaRoutes";
 import routesAdministrador from "./routes/routesAdministrador/routesAdministrador";
 
 
