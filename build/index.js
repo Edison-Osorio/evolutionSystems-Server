@@ -21,6 +21,7 @@ const becaRoutes_1 = __importDefault(require("./routes/routesBeca/becaRoutes"));
 const serviciosRoutes_1 = __importDefault(require("./routes/routesServicios/serviciosRoutes"));
 const horarioRoutes_1 = __importDefault(require("./routes/routesHorario/horarioRoutes"));
 const routesAdministrador_1 = __importDefault(require("./routes/routesAdministrador/routesAdministrador"));
+const routesSolicitudes_1 = __importDefault(require("./routes/routesSolicitudes/routesSolicitudes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -46,6 +47,7 @@ class Server {
         this.app.use('/api/servicios', checkAuth_1.checkAuth, serviciosRoutes_1.default);
         this.app.use('/api/horario', checkAuth_1.checkAuth, horarioRoutes_1.default);
         this.app.use('/api/administrador', checkAuth_1.checkAuth, routesAdministrador_1.default);
+        this.app.use('/api/solicitudes', checkAuth_1.checkAuth, routesSolicitudes_1.default);
         this.app.use("/api/auth", authRoutes_1.default);
     }
     start() {

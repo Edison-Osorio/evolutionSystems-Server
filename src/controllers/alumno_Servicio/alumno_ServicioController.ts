@@ -19,7 +19,8 @@ class AlumnoSerController {
   public async getOneAlumno_Servicio(req: Request, res: Response, next: NextFunction) {
     try {
       const { id_alumno, cod_servicio } = req.params
-      const query = await pool.query('SELECT * FROM alumno_servicio WHERE id_alumno = ? AND cod_servicio = ? ', [id_alumno, cod_servicio]);
+      console.log(id_alumno);
+      const query = await pool.query('SELECT * FROM alumno_servicio WHERE id_alumno_as = ? AND codigo_servicio_as = ? ', [id_alumno, cod_servicio]);
       res.json(query[0])
     } catch (error) {
       console.log(error)
@@ -82,6 +83,33 @@ class AlumnoSerController {
       next();
     }
   }
+
+  // alumno y servicios
+  public async alumnoAndService(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_alumno } = req.params
+      const query = await pool.query('SELECT alumno.id_alumno,alumno.nombre_alumno,servicio.id_servicio,servicio.tipo_servicio,servicio.descripcion_servicio,servicio.valor FROM alumno INNER JOIN alumno_servicio ON alumno.id_alumno=alumno_servicio.id_alumno_as INNER JOIN servicio ON alumno_servicio.codigo_servicio_as=servicio.id_servicio WHERE alumno.id_alumno= ?', [id_alumno])
+      res.json(query);
+    } catch (error) {
+      console.log('!ERROR --> ', error)
+      next()
+    }
+  }
+
+  // servicios fuera del alumno
+  public async alumnoOutService(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_alumno } = req.params
+      const query = await pool.query('SELECT * FROM servicio WHERE servicio.id_servicio NOT IN (SELECT alumno_servicio.codigo_servicio_as FROM alumno_servicio WHERE alumno_servicio.id_alumno_as=?)', [id_alumno])
+      res.json(query)
+    } catch (error) {
+
+      console.log('!ERROR --> ', error);
+      next()
+    }
+
+  }
+
 }
 
 const alumnoServicioController = new AlumnoSerController();

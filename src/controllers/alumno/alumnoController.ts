@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import pool from "../../datadase";
 
-class AdminAlumnoController {
+class AlumnoController {
   // Listamos todos los alumnos de la tabla de alumno
   public async listAlumnos(req: Request, res: Response, next: NextFunction) {
     try {
@@ -22,6 +22,22 @@ class AdminAlumnoController {
       const { id_alumno } = req.params;
       const query = await pool.query(
         "SELECT * FROM alumno WHERE id_alumno = ? ",
+        [id_alumno]
+      );
+      res.json(query[0]);
+    } catch (error) {
+      console.log(
+        " Ocurrio un error en el contrador del adminAlumno al listar un solo alumno --> ",
+        error
+      );
+    }
+  }
+  // Listamos un alumno según su identificador con su grado
+  public async listOneAlumnoWhitGrado(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_alumno } = req.params;
+      const query = await pool.query(
+        "SELECT alumno.nombre_alumno,alumno.id_alumno, alumno.fecha_nacimiento,grupo.nombre_grupo,grado.nombre_grado FROM alumno INNER JOIN matricula ON alumno.id_alumno=matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m=grado.id_grado INNER JOIN grado_grupo ON grado.id_grado=grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg=grupo.id_grupo WHERE grupo.id_grupo=matricula.id_grupo_m AND alumno.id_alumno=? ",
         [id_alumno]
       );
       res.json(query[0]);
@@ -72,5 +88,5 @@ public async deleteAlumno(req: Request, res: Response,next:NextFunction) {
 
 }
 
-const adminAlumnoController = new AdminAlumnoController();
-export default adminAlumnoController;
+const alumnoController = new AlumnoController();
+export default alumnoController;

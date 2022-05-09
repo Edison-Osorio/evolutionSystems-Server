@@ -18,7 +18,7 @@ import becaRoutes from "./routes/routesBeca/becaRoutes";
 import serviciosRoutes from './routes/routesServicios/serviciosRoutes';
 import horarioRoutes from './routes/routesHorario/horarioRoutes';
 import routesAdministrador from "./routes/routesAdministrador/routesAdministrador";
-
+import routesSolicitudes from "./routes/routesSolicitudes/routesSolicitudes";
 
 class Server {
   public app: Application;
@@ -48,6 +48,7 @@ class Server {
     this.app.use('/api/servicios', checkAuth, serviciosRoutes);
     this.app.use('/api/horario', checkAuth, horarioRoutes)
     this.app.use('/api/administrador', checkAuth, routesAdministrador)
+    this.app.use('/api/solicitudes',checkAuth,routesSolicitudes)
     this.app.use("/api/auth", authRoutes);
   }
 

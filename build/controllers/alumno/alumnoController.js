@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const datadase_1 = __importDefault(require("../../datadase"));
-class AdminAlumnoController {
+class AlumnoController {
     // Listamos todos los alumnos de la tabla de alumno
     listAlumnos(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -33,6 +33,19 @@ class AdminAlumnoController {
             try {
                 const { id_alumno } = req.params;
                 const query = yield datadase_1.default.query("SELECT * FROM alumno WHERE id_alumno = ? ", [id_alumno]);
+                res.json(query[0]);
+            }
+            catch (error) {
+                console.log(" Ocurrio un error en el contrador del adminAlumno al listar un solo alumno --> ", error);
+            }
+        });
+    }
+    // Listamos un alumno según su identificador con su grado
+    listOneAlumnoWhitGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_alumno } = req.params;
+                const query = yield datadase_1.default.query("SELECT alumno.nombre_alumno,alumno.id_alumno, alumno.fecha_nacimiento,grupo.nombre_grupo,grado.nombre_grado FROM alumno INNER JOIN matricula ON alumno.id_alumno=matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m=grado.id_grado INNER JOIN grado_grupo ON grado.id_grado=grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg=grupo.id_grupo WHERE grupo.id_grupo=matricula.id_grupo_m AND alumno.id_alumno=? ", [id_alumno]);
                 res.json(query[0]);
             }
             catch (error) {
@@ -80,5 +93,5 @@ class AdminAlumnoController {
         });
     }
 }
-const adminAlumnoController = new AdminAlumnoController();
-exports.default = adminAlumnoController;
+const alumnoController = new AlumnoController();
+exports.default = alumnoController;

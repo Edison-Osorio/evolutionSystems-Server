@@ -1,5 +1,6 @@
 import { Router } from "express";
-import alumnoController from "../../controllers/alumno/AlumnoController";
+//import alumnoController from "../../controllers/alumnoControlleralumno/AlumnoController";
+import alumnoController from "../../controllers/alumno/alumnoController";
 import matriculaController from '../../controllers/matricula/matriculaController';
 
 
@@ -14,6 +15,7 @@ class AlumnoRouter {
         // Routes of alumnos
         this.router.get('/', alumnoController.listAlumnos)
         this.router.get('/onAlumno/:id_alumno', alumnoController.listOneAlumno)
+        this.router.get('/onAlumno/grado/:id_alumno', alumnoController.listOneAlumnoWhitGrado)
         this.router.post('/add-alumno', alumnoController.createAlumno)
         this.router.put('/update-alumno/:id_alumno', alumnoController.updateAlumno)
         this.router.delete('/delete-alumno/:id_alumno', alumnoController.deleteAlumno)

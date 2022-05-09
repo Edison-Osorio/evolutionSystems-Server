@@ -15,6 +15,7 @@ class BecaRoutes {
         this.router.get('/becas-disponibles', becaController_1.default.listarBecasDisponibles);
         this.router.get('/:codigo_beca', becaController_1.default.getOnebeca);
         this.router.get('/alumno/alumno_beca', becaController_1.default.listOneBeca);
+        this.router.get('/alumno/alumno_beca/:id_alumno', becaController_1.default.getBecaAlumno);
         this.router.post('/add', becaController_1.default.createBeca);
         this.router.post('/beca_alumno/add', becaController_1.default.createBecaAlumno);
         this.router.delete('/delete/:cod_beca', becaController_1.default.deleteBeca);
