@@ -40,6 +40,19 @@ class AdminAlumnoController {
             }
         });
     }
+    //Listamos los alumnos segun el grado y el grupo
+    listAlumnoGradoGrupo(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_grado, id_grupo } = req.params;
+                const query = yield datadase_1.default.query("SELECT alumno.* FROM alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m WHERE matricula.id_grado_m = ? AND matricula.id_grupo_m = ?  ", [id_grado, id_grupo]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un error en el controlador de Alumno al listar los alumnos según el grado y el grupo');
+            }
+        });
+    }
     //   Creamos un alumno en la tabla alumno
     createAlumno(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

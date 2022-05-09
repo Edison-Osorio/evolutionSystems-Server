@@ -6,11 +6,17 @@ class NotaController {
   //listar todos
   public async listNotas(req: Request, res: Response, next:NextFunction) {
     const { id_grado, id_grupo } = req.params;
-    const query = await pool.query(
-      "SELECT alumno.nombre_alumno,  nota.* FROM nota INNER JOIN asignatura ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN alumno ON nota.id_alumno_n = alumno.id_alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado= ? AND grupo.id_grupo = ?",
-      [id_grado, id_grupo]
-    );
-    res.json(query);
+
+    try {
+      const query = await pool.query(
+        "SELECT alumno.nombre_alumno,  nota.* FROM nota INNER JOIN asignatura ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN alumno ON nota.id_alumno_n = alumno.id_alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado= ? AND grupo.id_grupo = ?",
+        [id_grado, id_grupo]
+      );
+      res.json(query);
+    } catch (error) {
+      console.log('Ocurrio un error en el controlador de notas la listar las notas --> ', error);
+      next()
+    }
   }
   //listar uno
   public async listOne(req: Request, res: Response, next: NextFunction) {

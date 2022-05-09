@@ -8,7 +8,14 @@ class HorarioRoutes{
      this.config()
  }
  config(){
-
+ this.router.get('/', horarioController.listHorario)
+ this.router.get('/on-horario/:id_horario', horarioController.listOneHorario)
+ this.router.get('/horario-grado-grupo/:id_grado/:id_grupo', horarioController.listHorarioGradoGrupo)
+ this.router.post('/add-horario', horarioController.createHorario)
+ this.router.post('/add-horario-asignatura', horarioController.createAsignaturaHorario)
+ this.router.put('/update-horario/:id_horario', horarioController.updateHorario)
+ this.router.delete('/delete-horario/:id_horario', horarioController.deleteHorario)
+ this.router.delete('/delete-horario-asignatura/:id_horario/:id_asignatura', horarioController.deleteAsignaturaHorario)
  }
 }
 

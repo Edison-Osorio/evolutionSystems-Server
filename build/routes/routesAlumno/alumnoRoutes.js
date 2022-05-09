@@ -15,6 +15,7 @@ class AlumnoRouter {
         // Routes of alumnos
         this.router.get('/', AlumnoController_1.default.listAlumnos);
         this.router.get('/onAlumno/:id_alumno', AlumnoController_1.default.listOneAlumno);
+        this.router.get('/alumnos-grado-grupo/:id_grado/:id_grupo', AlumnoController_1.default.listAlumnoGradoGrupo);
         this.router.post('/add-alumno', AlumnoController_1.default.createAlumno);
         this.router.put('/update-alumno/:id_alumno', AlumnoController_1.default.updateAlumno);
         this.router.delete('/delete-alumno/:id_alumno', AlumnoController_1.default.deleteAlumno);

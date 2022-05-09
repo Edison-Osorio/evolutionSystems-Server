@@ -19,8 +19,14 @@ class NotaController {
     listNotas(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id_grado, id_grupo } = req.params;
-            const query = yield datadase_1.default.query("SELECT alumno.nombre_alumno,  nota.* FROM nota INNER JOIN asignatura ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN alumno ON nota.id_alumno_n = alumno.id_alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado= ? AND grupo.id_grupo = ?", [id_grado, id_grupo]);
-            res.json(query);
+            try {
+                const query = yield datadase_1.default.query("SELECT alumno.nombre_alumno,  nota.* FROM nota INNER JOIN asignatura ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN alumno ON nota.id_alumno_n = alumno.id_alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado= ? AND grupo.id_grupo = ?", [id_grado, id_grupo]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log('Ocurrio un error en el controlador de notas la listar las notas --> ', error);
+                next();
+            }
         });
     }
     //listar uno
