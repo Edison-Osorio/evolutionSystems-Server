@@ -111,6 +111,18 @@ class BecaController {
     }
   }
 
+  //obtener la beca de un alumno 
+  public async getBecaAlumno(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_alumno } = req.params
+      const query = await pool.query('SELECT alumno.id_alumno, alumno.nombre_alumno, beca.descripcion,servicio.id_servicio,servicio.tipo_servicio,beca.codigo_beca FROM alumno INNER JOIN alumno_beca ON alumno.id_alumno=alumno_beca.id_alumno_ab INNER JOIN beca ON alumno_beca.codigo_beca_ab=beca.codigo_beca INNER JOIN beca_servicio ON beca.codigo_beca=beca_servicio.codigo_beca_bs INNER JOIN servicio ON beca_servicio.codigo_servicio_bs=servicio.id_servicio WHERE alumno_beca.id_alumno_ab=? AND alumno_beca.codigo_beca_ab=beca_servicio.codigo_beca_bs LIMIT 1',[id_alumno])
+      res.json(query)
+    } catch (error) {
+      console.log('!ERROR --> ', error);
+      next()
+    }
+  }
+
 }
 
 const becaController = new BecaController();

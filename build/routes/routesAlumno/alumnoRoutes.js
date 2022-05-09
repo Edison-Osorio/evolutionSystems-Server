@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const AlumnoController_1 = __importDefault(require("../../controllers/alumno/AlumnoController"));
+//import alumnoController from "../../controllers/alumnoControlleralumno/AlumnoController";
+const alumnoController_1 = __importDefault(require("../../controllers/alumno/alumnoController"));
 const matriculaController_1 = __importDefault(require("../../controllers/matricula/matriculaController"));
 class AlumnoRouter {
     constructor() {
@@ -13,12 +14,12 @@ class AlumnoRouter {
     }
     config() {
         // Routes of alumnos
-        this.router.get('/', AlumnoController_1.default.listAlumnos);
-        this.router.get('/onAlumno/:id_alumno', AlumnoController_1.default.listOneAlumno);
-        this.router.get('/alumnos-grado-grupo/:id_grado/:id_grupo', AlumnoController_1.default.listAlumnoGradoGrupo);
-        this.router.post('/add-alumno', AlumnoController_1.default.createAlumno);
-        this.router.put('/update-alumno/:id_alumno', AlumnoController_1.default.updateAlumno);
-        this.router.delete('/delete-alumno/:id_alumno', AlumnoController_1.default.deleteAlumno);
+        this.router.get('/', alumnoController_1.default.listAlumnos);
+        this.router.get('/onAlumno/:id_alumno', alumnoController_1.default.listOneAlumno);
+        this.router.get('/onAlumno/grado/:id_alumno', alumnoController_1.default.listOneAlumnoWhitGrado);
+        this.router.post('/add-alumno', alumnoController_1.default.createAlumno);
+        this.router.put('/update-alumno/:id_alumno', alumnoController_1.default.updateAlumno);
+        this.router.delete('/delete-alumno/:id_alumno', alumnoController_1.default.deleteAlumno);
         // Routes of Matricula
         this.router.post('/add-matricula', matriculaController_1.default.createMatricula);
         this.router.put('/update-matricula', matriculaController_1.default.updateMatricula);
