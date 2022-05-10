@@ -55,6 +55,20 @@ class HorarioController {
             }
         });
     }
+    // Listamos los horarios según el identificador del docente
+    listHorarioGradoGrupoDocente(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { nif_docente } = req.params;
+                const query = yield datadase_1.default.query("SELECT asignatura.*, asignatura_horario.id_grupo_h,grado.nombre_grado, grupo.nombre_grupo, horario.* FROM horario INNER JOIN asignatura_horario ON horario.id_horario = asignatura_horario.id_horario_ah INNER JOIN asignatura ON asignatura_horario.id_asignatura_ah = asignatura.id_asignatura INNER JOIN asignatura_docente ON asignatura_docente.id_asignatura_ad = asignatura.id_asignatura INNER JOIN docente ON docente.nif_docente = asignatura_docente.id_docente_ad INNER JOIN grupo ON grupo.id_grupo = asignatura_horario.id_grupo_h INNER JOIN grado ON grado.id_grado = asignatura.id_grado_a WHERE nif_docente = ? ORDER BY horario.dia ASC ", [nif_docente]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el controlador de horario al listar un horario segun el identificador del docente --> ", error);
+                next();
+            }
+        });
+    }
     //  Creamos un horario
     createHorario(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

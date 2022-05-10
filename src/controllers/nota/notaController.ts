@@ -29,6 +29,19 @@ class NotaController {
       next();
     }
   }
+
+   //listamos todas notas de un alumno
+   public async listNotasAlumno(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_alumno} = req.params;
+      const query = await pool.query("SELECT asignatura.nombre_asignatura, nota.* FROM matricula  INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN asignatura ON asignatura.id_grado_a = grado.id_grado INNER JOIN nota ON nota.id_asignatura_n = asignatura.id_asignatura WHERE matricula.id_alumno_m = ? and nota.id_alumno_n = ? ", [id_alumno, id_alumno]);
+      res.json(query);
+    } catch (error) {
+      console.log("Ocurrio un error en el controlador de notas la listar las notas de un alumno ----->", error);
+      next();
+    }
+  }
+
   public async listPeriodo(req: Request, res: Response, next: NextFunction) {
     try {
       const query = await pool.query("SELECT * FROM periodo");

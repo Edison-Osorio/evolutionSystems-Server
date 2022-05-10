@@ -14,6 +14,7 @@ class GradoRouter {
       this.router.get('/ciclo', gradoController.listCiclos)
       this.router.get('/grado-grupo', gradoController.listAllGruposGrados)
       this.router.get('/grado-grupo/:id_grado', gradoController.listGradoGrupos)
+      this.router.get('/grados-docente/:nif_docente', gradoController.listDocenteGrado)
       this.router.post('/add-grado', gradoController.createGrado)
       this.router.post('/add-grupo', gradoController.createGrupo)
       this.router.post('/add-grupo-grado', gradoController.createGrupoGrado)

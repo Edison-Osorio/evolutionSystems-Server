@@ -13,6 +13,7 @@ class AsignaturaRouter{
         this.router.get('/', asignaturaController.listAsignatura)
         this.router.get('/asignatura-grado/:id_grado', asignaturaController.listAsignaturaGrado)
         this.router.get('/asignatura-docente/:id_grado', asignaturaController.listAsignaturaDocente)
+        this.router.get('/asignatura-docente-grado/:nif_docente/:id_grado', asignaturaController.listAsignaturaDocenteGrado)
         this.router.post('/add-asignatura', asignaturaController.createAsignatura)
         this.router.post('/add-asignatura-docente', asignaturaController.docenteAsignatura)
         this.router.put('/update/:id_asignatura', asignaturaController.updateAsignatura)

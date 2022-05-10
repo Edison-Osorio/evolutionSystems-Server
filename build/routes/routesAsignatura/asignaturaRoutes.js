@@ -15,6 +15,7 @@ class AsignaturaRouter {
         this.router.get('/', asignaturaController_1.default.listAsignatura);
         this.router.get('/asignatura-grado/:id_grado', asignaturaController_1.default.listAsignaturaGrado);
         this.router.get('/asignatura-docente/:id_grado', asignaturaController_1.default.listAsignaturaDocente);
+        this.router.get('/asignatura-docente-grado/:nif_docente/:id_grado', asignaturaController_1.default.listAsignaturaDocenteGrado);
         this.router.post('/add-asignatura', asignaturaController_1.default.createAsignatura);
         this.router.post('/add-asignatura-docente', asignaturaController_1.default.docenteAsignatura);
         this.router.put('/update/:id_asignatura', asignaturaController_1.default.updateAsignatura);

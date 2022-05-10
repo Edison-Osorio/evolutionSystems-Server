@@ -74,6 +74,22 @@ public async listAllGruposGrados(req: Request, res: Response,next:NextFunction) 
     }
   }
 
+    //Listamos todos los grados segun el docente 
+    public async listDocenteGrado(req: Request, res: Response, next: NextFunction) {
+      try {
+        const {nif_docente} = req.params
+
+        const query = await pool.query("SELECT * FROM docente INNER JOIN asignatura_docente ON docente.nif_docente = asignatura_docente.id_docente_ad INNER JOIN asignatura ON asignatura_docente.id_asignatura_ad = asignatura.id_asignatura INNER JOIN grado ON asignatura.id_grado_a = grado.id_grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo WHERE nif_docente = ? GROUP BY id_grado_a",[nif_docente]);
+         res.json(query);
+      } catch (error) {
+        console.log(
+          "Ocurrio un error en el contrador del grado al listar los ciclos --> ",
+          error
+        );
+        next();
+      }
+    }
+
   // Creamos un grado
   public async createGrado(req: Request, res: Response, next: NextFunction) {
     try {

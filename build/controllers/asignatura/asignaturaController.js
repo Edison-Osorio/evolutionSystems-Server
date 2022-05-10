@@ -55,6 +55,20 @@ class AsignaturaController {
             }
         });
     }
+    // Listamos las asignaturas según el grado y el docente
+    listAsignaturaDocenteGrado(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_grado, nif_docente } = req.params;
+                const query = yield datadase_1.default.query("SELECT * FROM docente INNER JOIN asignatura_docente ON docente.nif_docente = asignatura_docente.id_docente_ad INNER JOIN asignatura ON asignatura_docente.id_asignatura_ad = asignatura.id_asignatura WHERE nif_docente = ? AND id_grado_a = ? ", [nif_docente, id_grado]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el contrador del Asignatura al listar las asignaturas según el docente y el grado --> ", error);
+                next();
+            }
+        });
+    }
     // Creamos una asignatura
     createAsignatura(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

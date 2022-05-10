@@ -40,6 +40,19 @@ class AlumnoController {
             }
         });
     }
+    //Listamos los alumnos segun el grado y el grupo
+    listAlumnoGradoGrupo(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_grado, id_grupo } = req.params;
+                const query = yield datadase_1.default.query("SELECT alumno.* FROM alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m WHERE matricula.id_grado_m = ? AND matricula.id_grupo_m = ?  ", [id_grado, id_grupo]);
+                res.json(query);
+            }
+            catch (error) {
+                console.log("Ocurrio un error en el controlador de Alumno al listar los alumnos según el grado y el grupo");
+            }
+        });
+    }
     // Listamos un alumno según su identificador con su grado
     listOneAlumnoWhitGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -71,8 +84,11 @@ class AlumnoController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno } = req.params;
-                const query = yield datadase_1.default.query("UPDATE alumno SET ? WHERE id_alumno = ? ", [req.body, id_alumno]);
-                res.json({ msg: 'Alumno Actualizado' });
+                const query = yield datadase_1.default.query("UPDATE alumno SET ? WHERE id_alumno = ? ", [
+                    req.body,
+                    id_alumno,
+                ]);
+                res.json({ msg: "Alumno Actualizado" });
             }
             catch (error) {
                 console.log(" Ocurrio un error en el contrador del Alumno al actualizar un alumno--> ", error);

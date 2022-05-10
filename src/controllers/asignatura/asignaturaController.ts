@@ -38,7 +38,17 @@ public async listAsignaturaGrado(req: Request, res: Response,next:NextFunction) 
         next()
     }
   }
-
+  // Listamos las asignaturas según el grado y el docente
+  public async listAsignaturaDocenteGrado(req: Request, res: Response,next:NextFunction) {
+    try {
+        const {id_grado, nif_docente} = req.params
+        const query = await pool.query("SELECT * FROM docente INNER JOIN asignatura_docente ON docente.nif_docente = asignatura_docente.id_docente_ad INNER JOIN asignatura ON asignatura_docente.id_asignatura_ad = asignatura.id_asignatura WHERE nif_docente = ? AND id_grado_a = ? ", [nif_docente,id_grado])
+        res.json(query)
+    } catch (error) {
+        console.log("Ocurrio un error en el contrador del Asignatura al listar las asignaturas según el docente y el grado --> ", error);
+        next()
+    }
+  }
   // Creamos una asignatura
   public async createAsignatura(req: Request,res: Response,next: NextFunction) {
     try {
