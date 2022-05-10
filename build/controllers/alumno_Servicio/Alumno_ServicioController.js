@@ -22,7 +22,7 @@ class AlumnoSerController {
                 res.json(query);
             }
             catch (error) {
-                console.log('Ocurrio un error', error);
+                console.log("Ocurrio un error", error);
                 next();
             }
         });
@@ -33,7 +33,7 @@ class AlumnoSerController {
             try {
                 const { id_alumno, cod_servicio } = req.params;
                 console.log(id_alumno);
-                const query = yield datadase_1.default.query('SELECT * FROM alumno_servicio WHERE id_alumno_as = ? AND codigo_servicio_as = ? ', [id_alumno, cod_servicio]);
+                const query = yield datadase_1.default.query("SELECT * FROM alumno_servicio WHERE id_alumno_as = ? AND codigo_servicio_as = ? ", [id_alumno, cod_servicio]);
                 res.json(query[0]);
             }
             catch (error) {
@@ -46,9 +46,7 @@ class AlumnoSerController {
     createAlumno_Servicio(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("INSERT INTO alumno_servicio set ?", [
-                    req.body,
-                ]);
+                const query = yield datadase_1.default.query("INSERT INTO alumno_servicio set ?", [req.body]);
                 res.json({ text: "Se ha asignado un servicio al alumno" });
             }
             catch (error) {
@@ -63,6 +61,22 @@ class AlumnoSerController {
             try {
                 const { id_alumno, cod_servicio } = req.params;
                 const query = yield datadase_1.default.query("DELETE FROM alumno_servicio WHERE id_alumno_as = ? AND codigo_servicio_as =?", [id_alumno, cod_servicio]);
+                res.json({ message: "Se ha eliminado el servicio del alumno" });
+            }
+            catch (error) {
+                console.log("ERROR ----> ", error);
+                next();
+            }
+        });
+    }
+    //eliminarle el servicio al alumno según el identificador del alumno
+    deleteAlumno_ServicioAlumno(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_alumno } = req.params;
+                const query = yield datadase_1.default.query("DELETE FROM alumno_servicio WHERE id_alumno_as = ? ", [
+                    id_alumno,
+                ]);
                 res.json({ message: "Se ha eliminado el servicio del alumno" });
             }
             catch (error) {
@@ -91,11 +105,11 @@ class AlumnoSerController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno } = req.params;
-                const query = yield datadase_1.default.query('SELECT alumno.id_alumno,alumno.nombre_alumno,servicio.id_servicio,servicio.tipo_servicio,servicio.descripcion_servicio,servicio.valor FROM alumno INNER JOIN alumno_servicio ON alumno.id_alumno=alumno_servicio.id_alumno_as INNER JOIN servicio ON alumno_servicio.codigo_servicio_as=servicio.id_servicio WHERE alumno.id_alumno= ?', [id_alumno]);
+                const query = yield datadase_1.default.query("SELECT alumno.id_alumno,alumno.nombre_alumno,servicio.id_servicio,servicio.tipo_servicio,servicio.descripcion_servicio,servicio.valor FROM alumno INNER JOIN alumno_servicio ON alumno.id_alumno=alumno_servicio.id_alumno_as INNER JOIN servicio ON alumno_servicio.codigo_servicio_as=servicio.id_servicio WHERE alumno.id_alumno= ?", [id_alumno]);
                 res.json(query);
             }
             catch (error) {
-                console.log('!ERROR --> ', error);
+                console.log("!ERROR --> ", error);
                 next();
             }
         });
@@ -105,11 +119,11 @@ class AlumnoSerController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno } = req.params;
-                const query = yield datadase_1.default.query('SELECT * FROM servicio WHERE servicio.id_servicio NOT IN (SELECT alumno_servicio.codigo_servicio_as FROM alumno_servicio WHERE alumno_servicio.id_alumno_as=?)', [id_alumno]);
+                const query = yield datadase_1.default.query("SELECT * FROM servicio WHERE servicio.id_servicio NOT IN (SELECT alumno_servicio.codigo_servicio_as FROM alumno_servicio WHERE alumno_servicio.id_alumno_as=?)", [id_alumno]);
                 res.json(query);
             }
             catch (error) {
-                console.log('!ERROR --> ', error);
+                console.log("!ERROR --> ", error);
                 next();
             }
         });

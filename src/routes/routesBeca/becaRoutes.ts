@@ -18,6 +18,7 @@ class BecaRoutes {
         this.router.post('/beca_alumno/add', becaController.createBecaAlumno)
         this.router.delete('/delete/:cod_beca', becaController.deleteBeca)
         this.router.delete('/beca_alumno/delete/:codigo_beca/:id_alumno', becaController.deleteBecaAlumno)
+        this.router.delete('/delete-alumno-beca/:id_alumno', becaController.deleteBecaAlumnosAlumno)
         this.router.put('/update/:cod_beca', becaController.updateBeca)
     }
 } const becaRoutes = new BecaRoutes();

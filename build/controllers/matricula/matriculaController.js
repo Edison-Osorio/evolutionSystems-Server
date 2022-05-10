@@ -45,8 +45,8 @@ class MatriculaController {
     deleteMatricula(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_matricula } = req.params;
-                const query = yield datadase_1.default.query("DELETE FROM matricula WHERE id_matricula = ? ", [id_matricula]);
+                const { id_alumno } = req.params;
+                const query = yield datadase_1.default.query("DELETE FROM matricula WHERE id_alumno_m = ? ", [id_alumno]);
                 res.json({ msg: 'Matricula eliminada' });
             }
             catch (error) {

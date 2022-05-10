@@ -60,7 +60,7 @@ const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const query = yield datadase_1.default.query("DELETE FROM usuario WHERE documento = ?", [
             id,
         ]);
-        res.json({ text: "Se eliminó el usuario" });
+        res.json({ msg: "Se eliminó el usuario" });
     }
     catch (error) {
         console.log("Ocurrio un error -->", error);

@@ -111,6 +111,18 @@ class BecaController {
     }
   }
 
+   //eliminar beca del alumno según el identificador de la beca
+   public async deleteBecaAlumnosAlumno(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_alumno } = req.params
+      const query1 = await pool.query('DELETE FROM alumno_beca WHERE id_alumno_ab =? ', [id_alumno])
+      res.json(query1)
+    } catch (error) {
+      console.log('!ERROR ', error)
+      next()
+    }
+  }
+  
   //obtener la beca de un alumno 
   public async getBecaAlumno(req: Request, res: Response, next: NextFunction) {
     try {

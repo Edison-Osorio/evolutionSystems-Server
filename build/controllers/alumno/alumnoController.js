@@ -100,7 +100,8 @@ class AlumnoController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_alumno } = req.params;
-                const query = yield datadase_1.default.query("");
+                const query = yield datadase_1.default.query("DELETE FROM alumno WHERE id_alumno = ? ", [id_alumno]);
+                res.json({ msg: 'Alumno Eliminado!' });
             }
             catch (error) {
                 console.log("Ocurrio un error en el contrador del Alumno al eliminar un alumno un alumno --> ", error);

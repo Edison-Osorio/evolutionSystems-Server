@@ -69,9 +69,9 @@ class NotaController {
   //eliminar
   public async deleteNota(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const { id_alu, id_asi } = req.params;
+      const { id_alumno } = req.params;
 
-      const query = await pool.query("DELETE FROM nota WHERE id_alu =?", [id_asi, id_alu]);
+      const query = await pool.query("DELETE FROM nota WHERE id_alumno_n =?", [ id_alumno]);
       res.json({ message: "Se ha eliminado la asignatura al alumno" });
     } catch (error) {
       console.log("ERROR ----> ", error);

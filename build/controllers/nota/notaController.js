@@ -90,8 +90,8 @@ class NotaController {
     deleteNota(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_alu, id_asi } = req.params;
-                const query = yield datadase_1.default.query("DELETE FROM nota WHERE id_alu =?", [id_asi, id_alu]);
+                const { id_alumno } = req.params;
+                const query = yield datadase_1.default.query("DELETE FROM nota WHERE id_alumno_n =?", [id_alumno]);
                 res.json({ message: "Se ha eliminado la asignatura al alumno" });
             }
             catch (error) {

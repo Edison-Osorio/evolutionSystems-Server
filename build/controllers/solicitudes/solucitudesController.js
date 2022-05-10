@@ -54,6 +54,20 @@ class SolicitudesController {
             }
         });
     }
+    // Elimina la solicitud por medio del identificador del alumno 
+    eliminarSolicitudAlumno(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_alumno } = req.params;
+                const query = yield datadase_1.default.query('DELETE FROM mensaje WHERE id_alumno_m = ?', [id_alumno]);
+                res.json({ text: 'Se elimino con exito' });
+            }
+            catch (error) {
+                console.log('!ERROR --> ', error);
+                next();
+            }
+        });
+    }
     // contar solicitudes 
     contarSolicitudes(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

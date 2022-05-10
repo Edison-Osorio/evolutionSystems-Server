@@ -70,7 +70,7 @@ export const deleteUser = async (
     const query = await pool.query("DELETE FROM usuario WHERE documento = ?", [
       id,
     ]);
-    res.json({ text: "Se eliminó el usuario" });
+    res.json({ msg: "Se eliminó el usuario" });
   } catch (error) {
     console.log("Ocurrio un error -->", error);
     next();

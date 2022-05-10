@@ -36,6 +36,18 @@ class SolicitudesController {
             next()
         }
     }
+
+    // Elimina la solicitud por medio del identificador del alumno 
+    public async eliminarSolicitudAlumno(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id_alumno } = req.params
+            const query = await pool.query('DELETE FROM mensaje WHERE id_alumno_m = ?', [id_alumno])
+            res.json({ text: 'Se elimino con exito' })
+        } catch (error) {
+            console.log('!ERROR --> ', error);
+            next()
+        }
+    }
     
     // contar solicitudes 
     public async contarSolicitudes(req: Request, res: Response, next: NextFunction){

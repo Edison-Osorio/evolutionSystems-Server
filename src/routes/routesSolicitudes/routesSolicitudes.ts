@@ -11,6 +11,7 @@ class SolicitudesRoutes {
         this.router.get('/', solicitudesController.listSolicitudes)
         this.router.post('/add', solicitudesController.guardarSolicitud)
         this.router.delete('/delete/:id_mensaje', solicitudesController.eliminarSolicitud)
+        this.router.delete('/delete-mensaje-alumno/:id_alumno', solicitudesController.eliminarSolicitudAlumno)
         this.router.get('/total',solicitudesController.contarSolicitudes)
     }
 }

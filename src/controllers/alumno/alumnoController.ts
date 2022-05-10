@@ -89,7 +89,8 @@ class AlumnoController {
   public async deleteAlumno(req: Request, res: Response, next: NextFunction) {
     try {
       const { id_alumno } = req.params;
-      const query = await pool.query("");
+      const query = await pool.query("DELETE FROM alumno WHERE id_alumno = ? ",[id_alumno]);
+      res.json({msg:'Alumno Eliminado!'})
     } catch (error) {
       console.log(
         "Ocurrio un error en el contrador del Alumno al eliminar un alumno un alumno --> ",

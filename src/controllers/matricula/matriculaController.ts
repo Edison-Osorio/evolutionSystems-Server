@@ -24,12 +24,12 @@ public async updateMatricula (req: Request, res: Response,next:NextFunction) {
         next()
     }
   }
-
+  
   // Eliminamos la matricula
 public async deleteMatricula(req: Request, res: Response,next:NextFunction) {
     try {
-        const {id_matricula} = req.params
-        const query = await pool.query("DELETE FROM matricula WHERE id_matricula = ? ",[id_matricula])
+        const {id_alumno} = req.params
+        const query = await pool.query("DELETE FROM matricula WHERE id_alumno_m = ? ",[id_alumno])
         res.json({msg: 'Matricula eliminada'})
     } catch (error) {
         console.log("Ocurrio un error en el contrador del Alumno al actualizar un alumno --> ", error);

@@ -24,7 +24,7 @@ class AlumnoRouter {
         // Routes of Matricula
         this.router.post('/add-matricula', matriculaController.createMatricula)
         this.router.put('/update-matricula', matriculaController.updateMatricula)
-        this.router.delete('/delete-matricula', matriculaController.deleteMatricula)
+        this.router.delete('/delete-matricula/:id_alumno', matriculaController.deleteMatricula)
 
         // this.router.get('/notas/:id_alu', alumnoController.listNotas);
         // this.router.get('/horario/:id_alu', alumnoController.listHorario);

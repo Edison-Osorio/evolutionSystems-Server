@@ -14,6 +14,7 @@ class NotaRoutes {
         this.router.get('/periodo', notaController.listPeriodo)
         this.router.post('/add-nota', notaController.createNota)
         this.router.put('/update-nota/:id_alumno/:id_asignatura/:id_periodo', notaController.updateNota)
+        this.router.delete('/delete-nota/:id_alumno', notaController.deleteNota)
     }
 }
 

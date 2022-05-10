@@ -141,6 +141,20 @@ class BecaController {
             }
         });
     }
+    //eliminar beca del alumno según el identificador de la beca
+    deleteBecaAlumnosAlumno(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_alumno } = req.params;
+                const query1 = yield datadase_1.default.query('DELETE FROM alumno_beca WHERE id_alumno_ab =? ', [id_alumno]);
+                res.json(query1);
+            }
+            catch (error) {
+                console.log('!ERROR ', error);
+                next();
+            }
+        });
+    }
     //obtener la beca de un alumno 
     getBecaAlumno(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

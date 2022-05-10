@@ -16,6 +16,7 @@ class AlumnoServicio {
         this.router.get('/servicios/:id_alumno', alumnoServicioController.alumnoOutService); //obtiene los servicios del alumno
         this.router.post('/add', alumnoServicioController.createAlumno_Servicio);
         this.router.delete('/delete/:id_alumno/:cod_servicio', alumnoServicioController.deleteAlumno_Servicio);
+        this.router.delete('/delete-servicio-alumno/:id_alumno', alumnoServicioController.deleteAlumno_ServicioAlumno)
         this.router.put('/update/:id_alu/:cod_ser', alumnoServicioController.updateAlumno_Servicio);
         
     }

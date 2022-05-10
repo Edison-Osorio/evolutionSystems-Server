@@ -14,6 +14,7 @@ class SolicitudesRoutes {
         this.router.get('/', solucitudesController_1.default.listSolicitudes);
         this.router.post('/add', solucitudesController_1.default.guardarSolicitud);
         this.router.delete('/delete/:id_mensaje', solucitudesController_1.default.eliminarSolicitud);
+        this.router.delete('/delete-mensaje-alumno/:id_alumno', solucitudesController_1.default.eliminarSolicitudAlumno);
         this.router.get('/total', solucitudesController_1.default.contarSolicitudes);
     }
 }
