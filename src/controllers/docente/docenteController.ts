@@ -32,6 +32,23 @@ class DocenteController {
       next();
     }
   }
+  //Listamos un docente por su identificador para listarlo
+  public async listUnDocente(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { nif_docente } = req.params;
+      const query = await pool.query(
+        "SELECT * FROM docente WHERE nif_docente = ? ",
+        [nif_docente]
+      );
+      res.json(query);
+    } catch (error) {
+      console.log(
+        "Ocurrio un error en el contrador del docente al lista un docente --> ",
+        error
+      );
+      next();
+    }
+  }
 // Listamos las categorias
 public async listCategoria(req: Request, res: Response,next:NextFunction) {
   try {

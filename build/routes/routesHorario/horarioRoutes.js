@@ -15,6 +15,7 @@ class HorarioRoutes {
         this.router.get('/on-horario/:id_horario', horarioController_1.default.listOneHorario);
         this.router.get('/horario-grado-grupo/:id_grado/:id_grupo', horarioController_1.default.listHorarioGradoGrupo);
         this.router.get('/horario-docente-grado-grupo/:nif_docente', horarioController_1.default.listHorarioGradoGrupoDocente);
+        this.router.get('/horario-alumno/:id_alumno', horarioController_1.default.listHorarioAlumno);
         this.router.post('/add-horario', horarioController_1.default.createHorario);
         this.router.post('/add-horario-asignatura', horarioController_1.default.createAsignaturaHorario);
         this.router.put('/update-horario/:id_horario', horarioController_1.default.updateHorario);

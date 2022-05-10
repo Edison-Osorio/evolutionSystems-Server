@@ -13,6 +13,7 @@ class DocenteRoutes {
         this.router.get('/', docenteController.listDocente)
         this.router.get('/categoria', docenteController.listCategoria)
         this.router.get('/:nif_docente', docenteController.listOnDocente)
+        this.router.get('/unDocente/:nif_docente', docenteController.listUnDocente)
         this.router.post('/add-docente', docenteController.createDocente)
         this.router.put('/update/:nif_docente', docenteController.updateDocente)
         this.router.delete('/delete/:nif_docente', docenteController.deleteDocente)
