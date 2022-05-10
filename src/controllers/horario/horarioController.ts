@@ -47,6 +47,17 @@ class HorarioController {
     }
   }
 
+  // Listamos los horarios según el identificador del alumno
+  public async listHorarioAlumno(req: Request, res: Response, next: NextFunction){
+    try {
+      const {id_alumno}=req.params
+      const query = await pool.query('SELECT asignatura.nombre_asignatura,asignatura.descripcion_asignatura,docente.nombre_docente,horario.dia,horario.hora FROM alumno INNER JOIN matricula ON alumno.id_alumno=matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m=grado.id_grado INNER JOIN asignatura ON grado.id_grado=asignatura.id_grado_a INNER JOIN asignatura_horario ON asignatura.id_asignatura=asignatura_horario.id_asignatura_ah INNER JOIN horario ON asignatura_horario.id_horario_ah=horario.id_horario INNER JOIN asignatura_docente ON asignatura.id_asignatura=asignatura_docente.id_asignatura_ad INNER JOIN docente ON asignatura_docente.id_docente_ad=docente.nif_docente WHERE alumno.id_alumno=? ORDER BY horario.id_horario  ASC',[id_alumno])
+      res.json(query)
+    } catch (error) {
+      console.log('!ERROR --> ',error );
+      next()
+    }
+  }
 
   //  Creamos un horario
   public async createHorario(req: Request, res: Response, next: NextFunction) {
@@ -109,6 +120,8 @@ class HorarioController {
       next();
     }
   }
+
+  //
 }
 const horarioController = new HorarioController();
 export default horarioController;

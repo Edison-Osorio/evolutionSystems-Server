@@ -26,6 +26,19 @@ class AlumnoController {
       );
     }
   }
+  // Listamos un alumno según su identificador para listalos
+  public async listarUnAlumno(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_alumno } = req.params;
+      const query = await pool.query("SELECT * FROM alumno WHERE id_alumno = ? ", [id_alumno]);
+      res.json(query);
+    } catch (error) {
+      console.log(
+        " Ocurrio un error en el contrador del adminAlumno al listar un solo alumno --> ",
+        error
+      );
+    }
+  }
   //Listamos los alumnos segun el grado y el grupo
   public async listAlumnoGradoGrupo(req: Request, res: Response, next: NextFunction) {
     try {
