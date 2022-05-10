@@ -6,7 +6,7 @@ class SolicitudesController {
     // listar solicitudes 
     public async listSolicitudes(req: Request, res: Response, next: NextFunction) {
         try {
-            const query = await pool.query("SELECT alumno.nombre_alumno,servicio.tipo_servicio,mensaje.mensaje FROM alumno INNER JOIN mensaje ON alumno.id_alumno=mensaje.id_alumno_m INNER JOIN servicio ON mensaje.id_servicio_m=servicio.id_servicio")
+            const query = await pool.query("SELECT alumno.nombre_alumno,alumno.id_alumno,servicio.tipo_servicio,servicio.id_servicio,mensaje.mensaje,mensaje.id_mensaje FROM alumno INNER JOIN mensaje ON alumno.id_alumno=mensaje.id_alumno_m INNER JOIN servicio ON mensaje.id_servicio_m=servicio.id_servicio")
             res.json(query)
         } catch (error) {
             console.log("!ERROR -->", error)
@@ -40,7 +40,7 @@ class SolicitudesController {
     // contar solicitudes 
     public async contarSolicitudes(req: Request, res: Response, next: NextFunction){
         try {
-            const query = await pool.query('SELECT COUNT(mensaje) FROM mensaje')
+            const query = await pool.query('SELECT COUNT(mensaje) AS total FROM mensaje')
             res.json(query)
         } catch (error) {
             console.log('!ERROR --> ',error);

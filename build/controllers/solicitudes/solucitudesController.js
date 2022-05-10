@@ -18,7 +18,7 @@ class SolicitudesController {
     listSolicitudes(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query("SELECT alumno.nombre_alumno,servicio.tipo_servicio,mensaje.mensaje FROM alumno INNER JOIN mensaje ON alumno.id_alumno=mensaje.id_alumno_m INNER JOIN servicio ON mensaje.id_servicio_m=servicio.id_servicio");
+                const query = yield datadase_1.default.query("SELECT alumno.nombre_alumno,alumno.id_alumno,servicio.tipo_servicio,servicio.id_servicio,mensaje.mensaje,mensaje.id_mensaje FROM alumno INNER JOIN mensaje ON alumno.id_alumno=mensaje.id_alumno_m INNER JOIN servicio ON mensaje.id_servicio_m=servicio.id_servicio");
                 res.json(query);
             }
             catch (error) {
@@ -58,7 +58,7 @@ class SolicitudesController {
     contarSolicitudes(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = yield datadase_1.default.query('SELECT COUNT(mensaje) FROM mensaje');
+                const query = yield datadase_1.default.query('SELECT COUNT(mensaje) AS total FROM mensaje');
                 res.json(query);
             }
             catch (error) {
