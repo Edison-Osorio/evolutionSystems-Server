@@ -5,8 +5,10 @@ class GradoController {
   //Listamos todos los grados
   public async listGrado(req: Request, res: Response, next: NextFunction) {
     try {
-      const query = await pool.query("SELECT grado.*, ciclo.* , COUNT(matricula.id_grado_m) as alumnos FROM grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo INNER JOIN matricula ON matricula.id_grado_m = grado.id_grado INNER JOIN alumno ON matricula.id_alumno_m = alumno.id_alumno GROUP BY grado.id_grado");
-      res.json(query);
+
+      const query = await pool.query("SELECT grado.*, ciclo.* FROM grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo")
+      const query2 = await pool.query("SELECT grado.*, ciclo.* , COUNT(matricula.id_grado_m) as alumnos FROM grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo INNER JOIN matricula ON matricula.id_grado_m = grado.id_grado INNER JOIN alumno ON matricula.id_alumno_m = alumno.id_alumno GROUP BY grado.id_grado");
+      res.json({query ,query2});
     } catch (error) {
       console.log(
         "Ocurrio un error en el contrador del grado al listar los grados --> ",
@@ -48,9 +50,12 @@ public async listAllGruposGrados(req: Request, res: Response,next:NextFunction) 
     try {
       const {id_grado}= req.params
       const query = await pool.query(
-        "SELECT grado.*, grupo.*, COUNT(matricula.id_grupo_m) as alumnos FROM grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo INNER JOIN matricula ON matricula.id_grado_m = grado.id_grado INNER JOIN alumno ON matricula.id_alumno_m = alumno.id_alumno INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado = ? GROUP BY matricula.id_grupo_m ; ", [id_grado]
+        "SELECT grado.*, grupo.* FROM grado INNER JOIN grado_grupo ON grado.id_grado = grado_grupo.id_grado_grg INNER JOIN grupo ON grado_grupo.id_grupo_grg = grupo.id_grupo WHERE grado.id_grado = ? ", [id_grado]
       );
-      res.json(query);
+      const query2 = await pool.query(
+        "SELECT grado.*, grupo.*, COUNT(matricula.id_grupo_m) as alumnos FROM grado INNER JOIN ciclo ON grado.id_ciclo_g = ciclo.id_ciclo INNER JOIN matricula ON matricula.id_grado_m = grado.id_grado INNER JOIN alumno ON matricula.id_alumno_m = alumno.id_alumno INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado = ? GROUP BY matricula.id_grupo_m", [id_grado]
+      );
+      res.json({query, query2});
     } catch (error) {
       console.log(
         "Ocurrio un error en el contrador del grado al listar los grupos con sus grados --> ",

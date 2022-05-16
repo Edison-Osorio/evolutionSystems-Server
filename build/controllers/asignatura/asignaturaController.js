@@ -59,7 +59,7 @@ class AsignaturaController {
     listAsignaturaDocenteGrado(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_grado, nif_docente } = req.params;
+                const { nif_docente, id_grado } = req.params;
                 const query = yield datadase_1.default.query("SELECT * FROM docente INNER JOIN asignatura_docente ON docente.nif_docente = asignatura_docente.id_docente_ad INNER JOIN asignatura ON asignatura_docente.id_asignatura_ad = asignatura.id_asignatura WHERE nif_docente = ? AND id_grado_a = ? ", [nif_docente, id_grado]);
                 res.json(query);
             }

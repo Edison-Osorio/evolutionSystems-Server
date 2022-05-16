@@ -16,6 +16,7 @@ class AlumnoRouter {
         // Routes of alumnos
         this.router.get('/', alumnoController_1.default.listAlumnos);
         this.router.get('/onAlumno/:id_alumno', alumnoController_1.default.listOneAlumno);
+        this.router.get('/GradoAlumno/:id_alumno', alumnoController_1.default.listGradoAlumno);
         this.router.get('/unAlumno/:id_alumno', alumnoController_1.default.listarUnAlumno);
         this.router.get('/alumnos-grado-grupo/:id_grado/:id_grupo', alumnoController_1.default.listAlumnoGradoGrupo);
         this.router.get('/onAlumno/grado/:id_alumno', alumnoController_1.default.listOneAlumnoWhitGrado);

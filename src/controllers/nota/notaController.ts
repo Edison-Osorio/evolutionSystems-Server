@@ -9,7 +9,7 @@ class NotaController {
 
     try {
       const query = await pool.query(
-        "SELECT alumno.nombre_alumno,  nota.* FROM nota INNER JOIN asignatura ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN alumno ON nota.id_alumno_n = alumno.id_alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado= ? AND grupo.id_grupo = ?",
+        "SELECT alumno.nombre_alumno,grado.nombre_grado, grupo.nombre_grupo,  nota.* FROM nota INNER JOIN asignatura ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN alumno ON nota.id_alumno_n = alumno.id_alumno INNER JOIN matricula ON alumno.id_alumno = matricula.id_alumno_m INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN grupo ON matricula.id_grupo_m = grupo.id_grupo WHERE grado.id_grado= ? AND grupo.id_grupo = ?",
         [id_grado, id_grupo]
       );
       res.json(query);
@@ -34,7 +34,7 @@ class NotaController {
    public async listNotasAlumno(req: Request, res: Response, next: NextFunction) {
     try {
       const { id_alumno} = req.params;
-      const query = await pool.query("SELECT asignatura.nombre_asignatura, nota.* FROM matricula  INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN asignatura ON asignatura.id_grado_a = grado.id_grado INNER JOIN nota ON nota.id_asignatura_n = asignatura.id_asignatura WHERE matricula.id_alumno_m = ? and nota.id_alumno_n = ? ", [id_alumno, id_alumno]);
+      const query = await pool.query("SELECT asignatura.nombre_asignatura,grado.nombre_grado, grupo.nombre_grupo, alumno.nombre_alumno, nota.* FROM matricula  INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN asignatura ON asignatura.id_grado_a = grado.id_grado INNER JOIN nota ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN grupo ON grupo.id_grupo = matricula.id_grupo_m INNER JOIN alumno ON alumno.id_alumno = matricula.id_alumno_m WHERE matricula.id_alumno_m = ? and nota.id_alumno_n = ? ", [id_alumno, id_alumno]);
       res.json(query);
     } catch (error) {
       console.log("Ocurrio un error en el controlador de notas la listar las notas de un alumno ----->", error);

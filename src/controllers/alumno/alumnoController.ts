@@ -26,6 +26,20 @@ class AlumnoController {
       );
     }
   }
+
+  // listamos el grado de un alumno según su identificador
+  public async listGradoAlumno(req:Request, res:Response, next:NextFunction){
+    try {
+      const {id_alumno} = req.params
+      const query = await pool.query("SELECT asignatura.nombre_asignatura,grado.nombre_grado, grupo.nombre_grupo, alumno.nombre_alumno, nota.* FROM matricula  INNER JOIN grado ON matricula.id_grado_m = grado.id_grado INNER JOIN asignatura ON asignatura.id_grado_a = grado.id_grado INNER JOIN nota ON nota.id_asignatura_n = asignatura.id_asignatura INNER JOIN grupo ON grupo.id_grupo = matricula.id_grupo_m INNER JOIN alumno ON alumno.id_alumno = matricula.id_alumno_m WHERE matricula.id_alumno_m  = ?",[id_alumno])
+
+      res.json(query[0])
+    } catch (error) {
+      console.log('Ocurrio un error el el controlador de Alumno en la consulta de un grado de un alumno --> ', error);
+      next()
+    }
+  }
+
   // Listamos un alumno según su identificador para listalos
   public async listarUnAlumno(req: Request, res: Response, next: NextFunction) {
     try {
