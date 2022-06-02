@@ -91,7 +91,7 @@ class HorarioController {
                 res.json({ msg: "Horario Creado" });
             }
             catch (error) {
-                console.log("Ocurrio un error en el controlador de horario al crear un horario");
+                console.log("Ocurrio un error en el controlador de horario al crear un horario --> ", error);
                 next();
             }
         });

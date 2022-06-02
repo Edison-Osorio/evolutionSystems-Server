@@ -125,9 +125,4 @@ class AlumnoSerController {
             catch (error) {
                 console.log("!ERROR --> ", error);
                 next();
-            }
-        });
-    }
-}
-const alumnoServicioController = new AlumnoSerController();
-exports.default = alumnoServicioController;
+           

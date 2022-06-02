@@ -65,7 +65,7 @@ class HorarioController {
       const query = await pool.query("INSERT INTO horario SET ? ", [req.body]);
       res.json({ msg: "Horario Creado" });
     } catch (error) {
-      console.log("Ocurrio un error en el controlador de horario al crear un horario");
+      console.log("Ocurrio un error en el controlador de horario al crear un horario --> ", error);
       next();
     }
   }
